@@ -11,7 +11,7 @@ export interface CardProps {
 }
 
 export default function Card(props: CardProps) {
-    const { id,projectName, projectSummarize, releaseTime } = props
+    const { id, projectName, projectSummarize, releaseTime } = props
     const handleClick = () => {
         Taro.navigateTo({ url: `/pages/detail/index?id=${id}`, })
     }
