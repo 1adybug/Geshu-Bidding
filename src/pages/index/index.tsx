@@ -1,4 +1,5 @@
 import { View } from '@tarojs/components'
+import Search from '@/components/search';
 // import { useLoad } from '@tarojs/taro';
 import './index.less'
 import Card, { CardProps } from '../../components/card';
@@ -12,6 +13,7 @@ export default function Index() {
 
   return (
     <View className='index'>
+      <Search />
       <View className='main'>
         {ProjectList.map((project: CardProps) => {
           return (

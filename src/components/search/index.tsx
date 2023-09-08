@@ -4,9 +4,9 @@ import "./index.module.less"
 
 export default function Search() {
     return (
-      <View className='search'>
-        <input type='search' placeholder='请输入...' />
-        <img src={SearchIcon} alt='' />
-      </View>
+        <View className='search'>
+            <input type='search' placeholder='请输入项目名称' />
+            <img src={SearchIcon} alt='' />
+        </View>
     )
 }
