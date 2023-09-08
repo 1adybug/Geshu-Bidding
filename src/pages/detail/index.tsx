@@ -18,7 +18,7 @@ export default function Detail() {
     return (
         <View className='detail'>
             <DetailFirstSection projectName={obj?.projectName} address={obj?.address} releaseTime={obj?.releaseTime} />
-            <DetailSecondSection projectSummarize={obj?.projectSummarize} />
+            <DetailSecondSection projectSummarize={obj?.projectSummarize} purchaseBudget={obj?.purchaseBudget} estimatedPurchaseMonth={obj?.estimatedPurchaseMonth} isForSmallOrMediumEnterprise={obj?.isForSmallOrMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={obj?.toPurchaseEnergysavingOrEnvironmentalLabelingProducts} remark={obj?.remark} />
         </View>
     )
 }

@@ -1,0 +1,24 @@
+.project-detail-table {
+  width: 100%;
+  display: flex;
+  .table-header {
+    width: 70%;
+    border: 1px solid #000;
+  }
+  .table-body {
+    width: 30%;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+  .child {
+    padding: 10px;
+    text-align: center;
+  }
+  .table-header,
+  .table-body {
+    & .child:nth-child(-n + 4) {
+      border-bottom: 1px solid #000;
+    }
+  }
+}

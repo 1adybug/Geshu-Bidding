@@ -5,7 +5,12 @@
         "projectSummarize": "项目南北走向，北起健康西路，南至崔庄路，全长约558m，城市支路标准，设计速度30km/h，车行道宽度约为7.5m，两侧为绿地及厂房。 设计内容：道路工程，交安设施工程，排水工程，附属设施工程等。",
         "releaseTime": "2023-09-05",
         "estimatedPurchaseTime": "2023-10",
-        "address": "淮安"
+        "address": "淮安",
+        "purchaseBudget": 330,
+        "estimatedPurchaseMonth": "2023-10",
+        "isForSmallOrMediumEnterprise": true,
+        "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
+        "remark": ""
     },
     {
         "id": "1",
@@ -13,7 +18,12 @@
         "projectSummarize": "面积约为3.25平方公里，主要对朱坝街道目标定位、规模控制、建设用地布局、蓝绿空间管控、综合交通、公用设施、综合防灾、街区管控等单元作可行性规划，保障重大项目、重点载体、重点民生设施和基础设施的落地，优化用地布局和提高用地效率。",
         "releaseTime": "2023-09-05",
         "estimatedPurchaseTime": "2023-10",
-        "address": "淮安"
+        "address": "淮安",
+        "purchaseBudget": 1000,
+        "estimatedPurchaseMonth": "2023-10",
+        "isForSmallOrMediumEnterprise": true,
+        "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
+        "remark": ""
     },
     {
         "id": "2",
@@ -21,7 +31,12 @@
         "projectSummarize": "约210人每日三餐伙食保障",
         "releaseTime": "2023-09-05",
         "estimatedPurchaseTime": "2023-10",
-        "address": "淮安"
+        "address": "淮安",
+        "purchaseBudget": 500,
+        "estimatedPurchaseMonth": "2023-10",
+        "isForSmallOrMediumEnterprise": true,
+        "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
+        "remark": ""
     },
     {
         "id": "3",
@@ -29,7 +44,12 @@
         "projectSummarize": "在盱眙县公安局建设图像控制中心和第二套三级网高清视频会议系统",
         "releaseTime": "2023-09-05",
         "estimatedPurchaseTime": "2023-10",
-        "address": "淮安"
+        "address": "淮安",
+        "purchaseBudget": 860,
+        "estimatedPurchaseMonth": "2023-10",
+        "isForSmallOrMediumEnterprise": true,
+        "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
+        "remark": ""
     },
     {
         "id": "4",
@@ -37,7 +57,12 @@
         "projectSummarize": "面积约为3.25平方公里，主要对朱坝街道目标定位、规模控制、建设用地布局、蓝绿空间管控、综合交通、公用设施、综合防灾、街区管控等单元作可行性规划，保障重大项目、重点载体、重点民生设施和基础设施的落地，优化用地布局和提高用地效率。",
         "releaseTime": "2023-09-05",
         "estimatedPurchaseTime": "2023-10",
-        "address": "淮安"
+        "address": "淮安",
+        "purchaseBudget": 200,
+        "estimatedPurchaseMonth": "2023-10",
+        "isForSmallOrMediumEnterprise": true,
+        "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
+        "remark": ""
     },
     {
         "id": "5",
@@ -45,6 +70,11 @@
         "projectSummarize": "桂五镇中药材产业深加工厂房，新建二层砖混结构办公楼1栋585.6m2，1#一层钢结构厂房1栋1220m2，2#二层钢结构厂房1栋1300m2，具体详见工程量清单。",
         "releaseTime": "2023-09-05",
         "estimatedPurchaseTime": "2023-09",
-        "address": "淮安"
+        "address": "淮安",
+        "purchaseBudget": 600,
+        "estimatedPurchaseMonth": "2023-10",
+        "isForSmallOrMediumEnterprise": true,
+        "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
+        "remark": ""
     }
 ]
