@@ -8,9 +8,9 @@ export interface DetailSecondSectionFirstChildProps {
 export default function DetailSecondSectionFirstChild(props: DetailSecondSectionFirstChildProps) {
     const { projectSummarize } = props
     return (
-        <View className='main'>
+        <View className='detail-second-section-first-child-main'>
             <View className='title'>项目概括</View>
-            <View className='data'>{projectSummarize}</View>
+            <View className='data'>&nbsp;&nbsp;&nbsp;&nbsp;{projectSummarize}</View>
         </View>
     )
 }

@@ -7,13 +7,14 @@ export default defineAppConfig({
   ],
   window: {
     backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#fff",
+    navigationBarBackgroundColor: "#ff7700",
     navigationBarTitleText: "black",
     navigationBarTextStyle: "black",
   },
   tabBar: {
     position: "bottom",
     selectedColor: "#000",
+    borderStyle: "white",
     list: [
       {
         pagePath: "pages/index/index",

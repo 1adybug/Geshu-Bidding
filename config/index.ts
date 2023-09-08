@@ -2,9 +2,10 @@ import { defineConfig, type UserConfigExport } from "@tarojs/cli";
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 import devConfig from "./dev";
 import prodConfig from "./prod";
+// import "../src/tailwindcss.css"
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
-export default defineConfig(async (merge, {  }) => {
+export default defineConfig(async (merge, {}) => {
   const baseConfig: UserConfigExport = {
     projectName: "geshu-project-bidding",
     date: "2023-9-4",
@@ -54,6 +55,11 @@ export default defineConfig(async (merge, {  }) => {
             generateScopedName: "[name]__[local]___[hash:base64:5]",
           },
         },
+        autoprefixer: {
+          enable: true,
+        },
+        // 添加 tailwindcss 插件配置
+        tailwindcss: {},
       },
       webpackChain(chain) {
         chain.resolve.plugin("tsconfig-paths").use(TsconfigPathsPlugin);
