@@ -10,7 +10,9 @@
         "estimatedPurchaseMonth": "2023-10",
         "isForSmallOrMediumEnterprise": true,
         "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
-        "remark": ""
+        "remark": "",
+        "projectSource": "金湖县人民政府戴楼街道办事处",
+        "isCollected": false
     },
     {
         "id": "1",
@@ -23,7 +25,9 @@
         "estimatedPurchaseMonth": "2023-10",
         "isForSmallOrMediumEnterprise": true,
         "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
-        "remark": ""
+        "remark": "",
+        "projectSource": "淮安市洪泽区朱坝街道办事处",
+        "isCollected": true
     },
     {
         "id": "2",
@@ -36,7 +40,9 @@
         "estimatedPurchaseMonth": "2023-10",
         "isForSmallOrMediumEnterprise": true,
         "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
-        "remark": ""
+        "remark": "",
+        "projectSource": "淮安市公安局经济技术开发区分局本级(机关)",
+        "isCollected": false
     },
     {
         "id": "3",
@@ -49,7 +55,9 @@
         "estimatedPurchaseMonth": "2023-10",
         "isForSmallOrMediumEnterprise": true,
         "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
-        "remark": ""
+        "remark": "",
+        "projectSource": "盱眙县公安局（机关）",
+        "isCollected": false
     },
     {
         "id": "4",
@@ -62,7 +70,9 @@
         "estimatedPurchaseMonth": "2023-10",
         "isForSmallOrMediumEnterprise": true,
         "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
-        "remark": ""
+        "remark": "",
+        "projectSource": "盱眙县桂五镇人民政府",
+        "isCollected": true
     },
     {
         "id": "5",
@@ -75,6 +85,8 @@
         "estimatedPurchaseMonth": "2023-10",
         "isForSmallOrMediumEnterprise": true,
         "toPurchaseEnergysavingOrEnvironmentalLabelingProducts": true,
-        "remark": ""
+        "remark": "",
+        "projectSource": "盱眙县住房和城乡建设局（机关）",
+        "isCollected": true
     }
 ]

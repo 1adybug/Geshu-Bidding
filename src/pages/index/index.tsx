@@ -15,7 +15,7 @@ export default function Index() {
       <View className='main'>
         {ProjectList.map((project: CardProps) => {
           return (
-            <Card key={project.id} projectName={project.projectName} projectSummarize={project.projectSummarize} releaseTime={project.releaseTime} id={project.id} />
+            <Card key={project.id} projectName={project.projectName} projectSummarize={project.projectSummarize} releaseTime={project.releaseTime} id={project.id} isCollected={project.isCollected} />
           )
         })}
       </View>

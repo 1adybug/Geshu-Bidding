@@ -8,16 +8,22 @@ export interface CardProps {
     projectName: string
     projectSummarize: string
     releaseTime: string
+    isCollected: boolean
 }
 
 export default function Card(props: CardProps) {
-    const { id, projectName, projectSummarize, releaseTime } = props
+    const { id, projectName, projectSummarize, releaseTime, isCollected } = props
     const handleClick = () => {
         Taro.navigateTo({ url: `/pages/detail/index?id=${id}`, })
     }
 
     return (
         <View className='card' onClick={handleClick}>
+            {isCollected && <View className='collected'>
+                <View className='text'>
+                    已收藏
+                </View>
+            </View>}
             <View className='project-name'>{projectName}</View>
             <View className='project-summarize'>{projectSummarize}</View>
             <View className='bottom-info'>
