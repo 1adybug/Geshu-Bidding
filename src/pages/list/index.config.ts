@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: "列表",
+  navigationBarTitleText: "项目",
 });

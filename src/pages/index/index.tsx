@@ -1,7 +1,7 @@
 import { View } from '@tarojs/components'
 import Search from '@/components/search';
 // import { useLoad } from '@tarojs/taro';
-import './index.less'
+import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 import ProjectList from "../../data/projects.json"
 

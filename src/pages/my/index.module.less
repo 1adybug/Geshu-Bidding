@@ -4,4 +4,34 @@
     height: 250px;
     background-color: #ff7700;
   }
+  .features {
+    display: flex;
+    flex-direction: column;
+    margin-top: 200px;
+    .feature {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30px 20px;
+      border-top: 1px solid #f2f2f2;
+      border-bottom: 1px solid #f2f2f2;
+      .left {
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+        img {
+          width: 40px;
+          height: 40px;
+        }
+        .text {
+          font-size: 30px;
+          font-weight: 200;
+        }
+      }
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
 }

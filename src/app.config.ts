@@ -24,9 +24,9 @@ export default defineAppConfig({
       },
       {
         pagePath: "pages/list/index",
-        text: "列表",
-        iconPath: "assets/list.png",
-        selectedIconPath: "assets/listActived.png",
+        text: "项目",
+        iconPath: "assets/own.png",
+        selectedIconPath: "assets/ownActived.png",
       },
       {
         pagePath: "pages/my/index",
