@@ -1,0 +1,27 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -400px; 
+  width: 400px;
+  height: 100vh;
+  background-color: #f5f5f5;
+  transition: left 0.3s ease-in-out; 
+  z-index: 1;
+  img {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    column-gap: 20px;
+    padding: 20px;
+  }
+}
+
+.sidebar.show {
+  left: 0; /* 显示侧边栏 */
+}
