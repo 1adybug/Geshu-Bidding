@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Taro from '@tarojs/taro';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
+import Shadow from '@/components/shadow';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 import ProjectList from "../../data/projects.json"
@@ -36,6 +37,7 @@ export default function Index() {
         })}
       </View>
       <SideBar visible={drawShow} onClose={onCloseDrawShow} />
+      {drawShow && <Shadow />}
     </View>
   )
 }
