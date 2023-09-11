@@ -1,4 +1,4 @@
-// 云函数模板
+const axios = require("axios");
 const cloud = require("wx-server-sdk");
 
 cloud.init({
@@ -6,4 +6,14 @@ cloud.init({
 });
 
 exports.main = async () => {
+  try {
+    const response = await axios.get(
+      "http://czj.huaian.gov.cn/zbcg/index1.html"
+    );
+    const result = response.data;
+    return result;
+  } catch (error) {
+    console.error(error);
+    return { error: error.message };
+  }
 };

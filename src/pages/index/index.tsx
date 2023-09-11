@@ -13,8 +13,8 @@ export default function Index() {
   const [drawShow, setDrawShow] = useState(false)
 
   useEffect(() => {
-    fetchTest().then(() => {
-      console.log(1);
+    fetchTest().then((res) => {
+      console.log(1,res);
     }).catch(err => {
       console.log(2, err);
     })
