@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/apple/.nvm/versions/node/v16.18.0/bin/node /usr/local/bin/yarn add @tarojs/plugin-cloud-function
+  /Users/apple/.nvm/versions/node/v16.18.0/bin/node /usr/local/bin/yarn add @tarojs/mini-runner @tarojs/plugin-cloud --save-dev
 
 PATH: 
   /Users/apple/.nvm/versions/node/v16.18.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/apple/.nvm/versions/node/v16.18.0/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@tarojs%2fplugin-cloud-function: Not found
+  Error: https://registry.yarnpkg.com/@tarojs%2fplugin-cloud: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66145:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -56,7 +56,8 @@ npm manifest:
       "dev:qq": "npm run build:qq -- --watch",
       "dev:jd": "npm run build:jd -- --watch",
       "dev:quickapp": "npm run build:quickapp -- --watch",
-      "test": "jest"
+      "test": "jest",
+      "cloud:deploy": "taro-cloud deploy"
     },
     "browserslist": [
       "last 3 versions",

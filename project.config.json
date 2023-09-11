@@ -28,5 +28,6 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "appid": "wxab39a7415b8f831b"
+  "appid": "wxab39a7415b8f831b",
+  "cloudfunctionRoot": ""
 }
