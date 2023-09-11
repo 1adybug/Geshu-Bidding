@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-commonjs
 const defineJestConfig = require('@tarojs/test-utils-react/dist/jest.js').default
 
 module.exports = defineJestConfig({
