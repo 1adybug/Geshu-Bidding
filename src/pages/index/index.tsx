@@ -4,10 +4,15 @@ import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
 import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
-// import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
+import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
+import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilitationAnnouncement';
+import { getCorrectAnnouncement } from '@/services/correctAnnouncement';
+import { getresultsOrShortlistedAnnouncement } from '@/services/resultsOrShortlistedAnnouncement';
+import { getcontractAnnouncements } from '@/services/contractAnnouncement';
+import { getOtherAnnouncement } from '@/services/otherAnnouncement';
+import handleGetResult from '@/utils/handleGetResult';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
-// import ProjectList from "../../data/projects.json"
 
 export default function Index() {
 
@@ -15,22 +20,7 @@ export default function Index() {
   const [projectList, setProjectList] = useState<CardProps[]>([])
 
   useEffect(() => {
-    getbidRejectionOrTerminationAnnouncements().then((res) => {
-      if (res.result) {
-        const result: CardProps[] = res.result.map((e: PurchaseIntentionDisclosure) => {
-          return {
-            id: e._id,
-            projectName: e.title,
-            projectSummarize: "",
-            releaseTime: e.time,
-            isCollected: true
-          }
-        })
-        setProjectList(result)
-      }
-    }).catch(err => {
-      console.log(2, err);
-    })
+    onListItemClicked("0")
   }, [])
 
   const onOpenDrawShow = () => {
@@ -39,6 +29,44 @@ export default function Index() {
 
   const onCloseDrawShow = () => {
     setDrawShow(false)
+  }
+
+  const onListItemClicked = async (listItemId: string) => {
+    if (listItemId === "0") {
+      const res = await getPurchaseIntentionDisclosures()
+      res.result && setProjectList(handleGetResult(res.result))
+      return
+    }
+    if (listItemId === "1") {
+      const res = await getPurchaseSocilitationAnnouncements()
+      res.result && setProjectList(handleGetResult(res.result))
+      return
+    }
+    if (listItemId === "2") {
+      const res = await getCorrectAnnouncement()
+      res.result && setProjectList(handleGetResult(res.result))
+      return
+    }
+    if (listItemId === "3") {
+      const res = await getbidRejectionOrTerminationAnnouncements()
+      res.result && setProjectList(handleGetResult(res.result))
+      return
+    }
+    if (listItemId === "4") {
+      const res = await getresultsOrShortlistedAnnouncement()
+      res.result && setProjectList(handleGetResult(res.result))
+      return
+    }
+    if (listItemId === "5") {
+      const res = await getcontractAnnouncements()
+      res.result && setProjectList(handleGetResult(res.result))
+      return
+    }
+    if (listItemId === "6") {
+      const res = await getOtherAnnouncement()
+      res.result && setProjectList(handleGetResult(res.result))
+      return
+    }
   }
 
   return (
@@ -51,7 +79,7 @@ export default function Index() {
           )
         })}
       </View>
-      <SideBar visible={drawShow} onClose={onCloseDrawShow} />
+      <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} />
       {drawShow && <Shadow />}
     </View>
   )
