@@ -3,23 +3,34 @@ import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
-import { fetchTest } from '@/services/puchaseIntention';
+import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
-import ProjectList from "../../data/projects.json"
+// import ProjectList from "../../data/projects.json"
 
 export default function Index() {
 
   const [drawShow, setDrawShow] = useState(false)
+  const [projectList, setProjectList] = useState<CardProps[]>([])
 
   useEffect(() => {
-    fetchTest().then((res) => {
-      console.log(1, res.result);
+    getPurchaseIntentionDisclosures().then((res) => {
+      if (res.result) {
+        const result: CardProps[] = res.result.map((e: PurchaseIntentionDisclosure) => {
+          return {
+            id: e._id,
+            projectName: e.title,
+            projectSummarize: "",
+            releaseTime: e.time,
+            isCollected: true
+          }
+        })
+        setProjectList(result)
+      }
     }).catch(err => {
       console.log(2, err);
     })
   }, [])
-
 
   const onOpenDrawShow = () => {
     setDrawShow(true)
@@ -33,7 +44,7 @@ export default function Index() {
     <View className='index'>
       <Search changeDrawShow={onOpenDrawShow} />
       <View className='main'>
-        {ProjectList.map((project: CardProps) => {
+        {projectList.map((project: CardProps) => {
           return (
             <Card key={project.id} projectName={project.projectName} projectSummarize={project.projectSummarize} releaseTime={project.releaseTime} id={project.id} isCollected={project.isCollected} />
           )
