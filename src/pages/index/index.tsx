@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
-import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
+import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
+// import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 // import ProjectList from "../../data/projects.json"
@@ -14,7 +15,7 @@ export default function Index() {
   const [projectList, setProjectList] = useState<CardProps[]>([])
 
   useEffect(() => {
-    getPurchaseIntentionDisclosures().then((res) => {
+    getbidRejectionOrTerminationAnnouncements().then((res) => {
       if (res.result) {
         const result: CardProps[] = res.result.map((e: PurchaseIntentionDisclosure) => {
           return {
