@@ -1,9 +1,9 @@
-import { Function_MyFunction } from "@/constant/functions";
+import { Function_PurchaseIntention } from "@/constant/functions";
 import Taro from "@tarojs/taro";
 
 export const fetchTest = () => {
   return Taro.cloud.callFunction({
-    name: Function_MyFunction,
+    name: Function_PurchaseIntention,
     data: {},
   });
 };

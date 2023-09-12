@@ -21,7 +21,6 @@ export default function extractUlContents(html) {
 function extractDataFromHTML(html) {
   const regex =
     /<span class="lb-time">(.*?)<\/span>\s*<a href="(.*?)" target="_blank" title="(.*?)">/g;
-
   const results = [];
   let match;
   while ((match = regex.exec(html)) !== null) {
