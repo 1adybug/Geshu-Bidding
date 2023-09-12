@@ -1,4 +1,4 @@
-export default function extractUlContents(html) {
+export default function extractDataFromHTML(html) {
   var pattern = /<ul\b[^>]*>([\s\S]*?)<\/ul>/g;
   var match;
   var ul_contents = [];
@@ -10,7 +10,7 @@ export default function extractUlContents(html) {
 
   if (ul_contents.length > 0) {
     ul_contents.forEach(function (content) {
-      console.log(extractDataFromHTML(content));
+      console.log(secondaryHandle(content));
       // console.log("---"); // Print a separator line for different <ul> contents
     });
   } else {
@@ -18,7 +18,7 @@ export default function extractUlContents(html) {
   }
 }
 
-function extractDataFromHTML(html) {
+function secondaryHandle(html) {
   const regex =
     /<span class="lb-time">(.*?)<\/span>\s*<a href="(.*?)" target="_blank" title="(.*?)">/g;
   const results = [];
