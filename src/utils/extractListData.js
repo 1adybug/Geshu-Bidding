@@ -1,4 +1,4 @@
-export default function extractDataFromHTML(html) {
+export default function extractListData(html) {
   var pattern = /<ul\b[^>]*>([\s\S]*?)<\/ul>/g;
   var match;
   var ul_contents = [];
@@ -37,5 +37,5 @@ function secondaryHandle(html) {
     results.push(obj);
   }
 
-  return results;
+  return JSON.stringify(results);
 }

@@ -36,3 +36,5 @@ export const Function_Contract_Announcement = "contractAnnouncement";
  * 其他公告云函数名
  */
 export const Function_Other_Announcement = "otherAnnouncement";
+
+export const Function_Crawl_Data = "crawlData"

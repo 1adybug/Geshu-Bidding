@@ -4861,6 +4861,11 @@ data-urls@^4.0.0:
     whatwg-mimetype "^3.0.0"
     whatwg-url "^12.0.0"
 
+dayjs@^1.11.9:
+  version "1.11.9"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.9.tgz#9ca491933fadd0a60a2c19f6c237c03517d71d1a"
+  integrity sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==
+
 dayjs@^1.7.7:
   version "1.11.9"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.9.tgz"
@@ -12485,6 +12490,11 @@ walker@^1.0.8:
   integrity sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==
   dependencies:
     makeerror "1.0.12"
+
+wangyong-utils@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/wangyong-utils/-/wangyong-utils-1.2.5.tgz#d7ff962a72651f354033611eb830f1d295a1f943"
+  integrity sha512-Dlk1EBZ2PecXrtFVIP/HFfR4iEaJk5a9JfaGeLEnHgAFAT5f3EqT2ka86dQVjp/1RBOX1kKWKC5k2jsMqWMkDA==
 
 watchpack@^2.4.0:
   version "2.4.0"

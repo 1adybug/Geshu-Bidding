@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
+import dayjs from "dayjs"
+import { wyDeepClone } from "wangyong-utils"
 import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
 import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilitationAnnouncement';
@@ -10,7 +12,9 @@ import { getCorrectAnnouncement } from '@/services/correctAnnouncement';
 import { getresultsOrShortlistedAnnouncement } from '@/services/resultsOrShortlistedAnnouncement';
 import { getcontractAnnouncements } from '@/services/contractAnnouncement';
 import { getOtherAnnouncement } from '@/services/otherAnnouncement';
+import { getCrawlData } from '@/services/crawlData';
 import handleGetResult from '@/utils/handleGetResult';
+import extractListData from '../../utils/extractListData';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 
@@ -21,6 +25,11 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0")
+    getCrawlData("1").then(res => {
+      if (res.result) {
+        extractListData(res.result)
+      }
+    })
   }, [])
 
   const onOpenDrawShow = () => {
@@ -39,7 +48,10 @@ export default function Index() {
     }
     if (listItemId === "1") {
       const res = await getPurchaseSocilitationAnnouncements()
-      res.result && setProjectList(handleGetResult(res.result))
+      if (res.result) {
+        const resultCopy = wyDeepClone(res.result)
+        setProjectList(handleGetResult(resultCopy).sort((a,b) => dayjs(b.releaseTime).unix() - dayjs(a.releaseTime).unix()))
+      }
       return
     }
     if (listItemId === "2") {
@@ -84,3 +96,4 @@ export default function Index() {
     </View>
   )
 }
+
