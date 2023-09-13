@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
+import { fetchDataDetails } from '@/services/fetchDataDetail';
 import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
 import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilitationAnnouncement';
@@ -10,6 +11,7 @@ import { getCorrectAnnouncement } from '@/services/correctAnnouncement';
 import { getresultsOrShortlistedAnnouncement } from '@/services/resultsOrShortlistedAnnouncement';
 import { getcontractAnnouncements } from '@/services/contractAnnouncement';
 import { getOtherAnnouncement } from '@/services/otherAnnouncement';
+import { extractTableData } from '@/utils/extractPurchaseIntentionDisclosureData';
 // import { getCrawlData } from '@/services/crawlData';
 import sortListItemData from '@/utils/sortListItemData';
 // import extractListData from '../../utils/extractListData';
@@ -28,6 +30,7 @@ export default function Index() {
     //     extractListData(res.result)
     //   }
     // })
+    queryDataDetails()
   }, [])
 
   const onOpenDrawShow = () => {
@@ -41,7 +44,7 @@ export default function Index() {
   const onListItemClicked = async (listItemId: string) => {
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
-      res.result && setProjectList(res.result && sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result))
       return
     }
     if (listItemId === "1") {
@@ -75,6 +78,19 @@ export default function Index() {
       return
     }
   }
+
+  async function queryDataDetails() {
+    const res = await getPurchaseIntentionDisclosures()
+    if (res.result) {
+      const res2 = await fetchDataDetails(res.result.map(e => e.href))
+      console.log(extractTableData(res2.result));
+    }
+  }
+
+  // async function getHTML(href: string) {
+  //   const res = await axios.get("http://czj.huaian.gov.cn/col/13070_243745/content/16934976/ff8080818a8ac5b1018a8c2f56a702fd.html")
+  //   return res
+  // }
 
   return (
     <View className='index'>

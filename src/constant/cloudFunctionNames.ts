@@ -37,4 +37,12 @@ export const Function_Contract_Announcement = "contractAnnouncement";
  */
 export const Function_Other_Announcement = "otherAnnouncement";
 
-export const Function_Crawl_Data = "crawlData"
+/**
+ * 爬取数据
+ */
+export const Function_Crawl_Data = "crawlData";
+
+/**
+ * 获取数据详情
+ */
+export const Function_Fetch_Data_Details = "fetchDetails";
