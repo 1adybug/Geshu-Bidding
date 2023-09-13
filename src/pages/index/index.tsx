@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
-import dayjs from "dayjs"
-import { wyDeepClone } from "wangyong-utils"
 import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
 import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilitationAnnouncement';
@@ -12,9 +10,9 @@ import { getCorrectAnnouncement } from '@/services/correctAnnouncement';
 import { getresultsOrShortlistedAnnouncement } from '@/services/resultsOrShortlistedAnnouncement';
 import { getcontractAnnouncements } from '@/services/contractAnnouncement';
 import { getOtherAnnouncement } from '@/services/otherAnnouncement';
-import { getCrawlData } from '@/services/crawlData';
-import handleGetResult from '@/utils/handleGetResult';
-import extractListData from '../../utils/extractListData';
+// import { getCrawlData } from '@/services/crawlData';
+import sortListItemData from '@/utils/sortListItemData';
+// import extractListData from '../../utils/extractListData';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 
@@ -25,11 +23,11 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0")
-    getCrawlData("1").then(res => {
-      if (res.result) {
-        extractListData(res.result)
-      }
-    })
+    // getCrawlData("5").then(res => {
+    //   if (res.result) {
+    //     extractListData(res.result)
+    //   }
+    // })
   }, [])
 
   const onOpenDrawShow = () => {
@@ -43,40 +41,37 @@ export default function Index() {
   const onListItemClicked = async (listItemId: string) => {
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
-      res.result && setProjectList(handleGetResult(res.result))
+      res.result && setProjectList(res.result && sortListItemData(res.result))
       return
     }
     if (listItemId === "1") {
       const res = await getPurchaseSocilitationAnnouncements()
-      if (res.result) {
-        const resultCopy = wyDeepClone(res.result)
-        setProjectList(handleGetResult(resultCopy).sort((a,b) => dayjs(b.releaseTime).unix() - dayjs(a.releaseTime).unix()))
-      }
+      res.result && setProjectList(sortListItemData(res.result))
       return
     }
     if (listItemId === "2") {
       const res = await getCorrectAnnouncement()
-      res.result && setProjectList(handleGetResult(res.result))
+      res.result && setProjectList(sortListItemData(res.result))
       return
     }
     if (listItemId === "3") {
       const res = await getbidRejectionOrTerminationAnnouncements()
-      res.result && setProjectList(handleGetResult(res.result))
+      res.result && setProjectList(sortListItemData(res.result))
       return
     }
     if (listItemId === "4") {
       const res = await getresultsOrShortlistedAnnouncement()
-      res.result && setProjectList(handleGetResult(res.result))
+      res.result && setProjectList(sortListItemData(res.result))
       return
     }
     if (listItemId === "5") {
       const res = await getcontractAnnouncements()
-      res.result && setProjectList(handleGetResult(res.result))
+      res.result && setProjectList(sortListItemData(res.result))
       return
     }
     if (listItemId === "6") {
       const res = await getOtherAnnouncement()
-      res.result && setProjectList(handleGetResult(res.result))
+      res.result && setProjectList(sortListItemData(res.result))
       return
     }
   }
