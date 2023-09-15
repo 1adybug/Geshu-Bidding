@@ -26,6 +26,7 @@ interface Obj {
 }
 
 export default function extractAnnouncementKeyInfo(data) {
+
   const obj: Obj = {
     projectBasicInfo: [],
     purchasePersonInfo: [],

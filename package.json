@@ -69,6 +69,7 @@
     "taro-canvas": "^0.0.3",
     "taro-ui": "^3.1.1",
     "tarojs-router": "^1.2.9",
+    "wangyong-regex": "^1.1.4",
     "wangyong-utils": "^1.2.5",
     "wx-server-sdk": "^2.6.3"
   },

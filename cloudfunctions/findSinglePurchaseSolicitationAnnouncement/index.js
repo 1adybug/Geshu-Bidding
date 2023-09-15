@@ -15,7 +15,7 @@ exports.main = async (event) => {
 
     // 执行数据库查询
     const result = await db
-      .collection("purchase_intention_disclosure")
+      .collection("purchase_solicitation_announcement")
       .where({
         // 查询条件
         _id: id,

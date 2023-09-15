@@ -26,6 +26,7 @@ export default function Index() {
 
   const [drawShow, setDrawShow] = useState(false)
   const [projectList, setProjectList] = useState<CardProps[]>([])
+  const [currentListItemId, setCurrentListItemId] = useState<string>("0")
 
   useEffect(() => {
     onListItemClicked("0")
@@ -46,6 +47,7 @@ export default function Index() {
   }
 
   const onListItemClicked = async (listItemId: string) => {
+    setCurrentListItemId(listItemId)
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
       res.result && setProjectList(sortListItemData(res.result))
@@ -105,7 +107,7 @@ export default function Index() {
       <View className='main'>
         {projectList.map((project: CardProps) => {
           return (
-            <Card key={project.id} projectName={project.projectName} projectSummarize={project.projectSummarize} releaseTime={project.releaseTime} id={project.id} isCollected={project.isCollected} />
+            <Card key={project.id} projectName={project.projectName} projectSummarize={project.projectSummarize} releaseTime={project.releaseTime} id={project.id} isCollected={project.isCollected} currentListItemId={currentListItemId} />
           )
         })}
       </View>

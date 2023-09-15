@@ -4,6 +4,7 @@ import "./index.module.less"
 import Clock from "../../assets/clock.png"
 
 export interface CardProps {
+    currentListItemId?: string
     id: string
     projectName: string
     projectSummarize: string
@@ -12,9 +13,9 @@ export interface CardProps {
 }
 
 export default function Card(props: CardProps) {
-    const { id, projectName, projectSummarize, releaseTime, isCollected } = props
+    const { currentListItemId, id, projectName, projectSummarize, releaseTime, isCollected } = props
     const handleClick = () => {
-        Taro.navigateTo({ url: `/pages/detail/index?id=${id}`, })
+        Taro.navigateTo({ url: `/pages/detail/index?id=${id}&currentListItemId=${currentListItemId}`, })
     }
 
     return (

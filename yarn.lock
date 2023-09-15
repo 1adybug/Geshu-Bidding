@@ -12627,6 +12627,11 @@ walker@^1.0.8:
   dependencies:
     makeerror "1.0.12"
 
+wangyong-regex@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/wangyong-regex/-/wangyong-regex-1.1.4.tgz#6936e3fb293feebf722c4f7b1caa870dd842ee62"
+  integrity sha512-zHIhpcW2aAyOArkiY/9mCCV/4lB35f5ioBkzNCh6y5us0nbn8kKEaTu2zAVbGfTmItmZDg93P0i3cpH+beSa1A==
+
 wangyong-utils@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/wangyong-utils/-/wangyong-utils-1.2.5.tgz#d7ff962a72651f354033611eb830f1d295a1f943"

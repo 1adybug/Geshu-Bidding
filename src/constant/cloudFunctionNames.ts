@@ -61,5 +61,11 @@ export const Function_Fetch_Single_Purchase_Intention_Disclosure_Detail =
 /**
  * 查询单个采购意向公开数据通过id云函数名
  */
-export const Function_Fetch_Single_Purchase_Intention_Disclosure_By_Id =
+export const Function_Find_Single_Purchase_Intention_Disclosure_By_Id =
   "findSinglePurchaseIntentionDisclosureDetail";
+
+/**
+ * 查询单个采购（征集）公告云函数名
+ */
+export const Function_Find_Single_Purchase_Solicitation_Announcement_By_Id =
+  "findSinglePurchaseSolicitationAnnouncement";
