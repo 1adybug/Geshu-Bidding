@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
-import { fetchDataDetails } from '@/services/fetchDataDetail';
+import { fetchDataDetails } from '@/services/fetchDataDetails';
 import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
 import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilitationAnnouncement';
@@ -11,10 +11,14 @@ import { getCorrectAnnouncement } from '@/services/correctAnnouncement';
 import { getresultsOrShortlistedAnnouncement } from '@/services/resultsOrShortlistedAnnouncement';
 import { getcontractAnnouncements } from '@/services/contractAnnouncement';
 import { getOtherAnnouncement } from '@/services/otherAnnouncement';
-import { extractTableData } from '@/utils/extractPurchaseIntentionDisclosureData';
-// import { getCrawlData } from '@/services/crawlData';
+import extractTableData from '@/utils/extractPurchaseIntentionDisclosureData';
+import { getCrawlData } from '@/services/crawlData';
 import sortListItemData from '@/utils/sortListItemData';
-// import extractListData from '../../utils/extractListData';
+import { fetchSingleDetail } from '@/services/fetchSingleDetail';
+import extractAnnouncementData from '@/utils/extractAnnouncement';
+import extractAnnouncementKeyInfo from '@/utils/extractAnnouncementKeyInfo';
+import { fetchSinglePurchaseIntentionDisclosureDetail } from '@/services/fetchSinglePurchaseIntentionDisclosureDetail';
+import extractListData from '../../utils/extractListData';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 
@@ -80,17 +84,20 @@ export default function Index() {
   }
 
   async function queryDataDetails() {
-    const res = await getPurchaseIntentionDisclosures()
-    if (res.result) {
-      const res2 = await fetchDataDetails(res.result.map(e => e.href))
-      console.log(extractTableData(res2.result));
-    }
-  }
+    // const res = await getPurchaseIntentionDisclosures()
+    // if (res.result) {
+    //   const res2 = await fetchSinglePurchaseIntentionDisclosureDetail(res.result[0].href)
+    //   console.log(res.result[0].title);
+    //   const res3 = extractTableData(res2.result)
+    //   console.log(JSON.stringify(res3));
+    // }
 
-  // async function getHTML(href: string) {
-  //   const res = await axios.get("http://czj.huaian.gov.cn/col/13070_243745/content/16934976/ff8080818a8ac5b1018a8c2f56a702fd.html")
-  //   return res
-  // }
+    // const res = await getPurchaseSocilitationAnnouncements()
+    // if (res.result) {
+    //   const res2 = await fetchSingleDetail(res.result[2].href)
+    //   console.log(extractAnnouncementKeyInfo(JSON.stringify(res2.result)));
+    // }
+  }
 
   return (
     <View className='index'>

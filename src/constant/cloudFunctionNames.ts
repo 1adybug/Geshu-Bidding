@@ -38,11 +38,28 @@ export const Function_Contract_Announcement = "contractAnnouncement";
 export const Function_Other_Announcement = "otherAnnouncement";
 
 /**
- * 爬取数据
+ * 爬取数据云函数名
  */
 export const Function_Crawl_Data = "crawlData";
 
 /**
- * 获取数据详情
+ * 获取所有采购意向公开云函数名
  */
 export const Function_Fetch_Data_Details = "fetchDetails";
+
+/**
+ * 获取单个采购（征集）公告详情云函数名
+ */
+export const Function_Fetch_Single_Detail = "fetchSingleDetail";
+
+/**
+ * 获取单个采购意向公开云函数名
+ */
+export const Function_Fetch_Single_Purchase_Intention_Disclosure_Detail =
+  "fetchSinglePurchaseIntentionDisclosureDetail";
+
+/**
+ * 查询单个采购意向公开数据通过id云函数名
+ */
+export const Function_Fetch_Single_Purchase_Intention_Disclosure_By_Id =
+  "findSinglePurchaseIntentionDisclosureDetail";

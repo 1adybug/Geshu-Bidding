@@ -7,5 +7,7 @@ export const fetchDataDetails = (hrefList: string[]) => {
     data: {
       hrefList,
     },
-  });
+  }) as unknown as Promise<
+    CloudFunctionResultSuccess<PurchaseIntentionDisclosure[]>
+  >;
 };

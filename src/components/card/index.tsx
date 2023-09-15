@@ -19,7 +19,7 @@ export default function Card(props: CardProps) {
 
     return (
         <View className='card' onClick={handleClick}>
-            {isCollected && <View className='collected'>
+            {false && <View className='collected'>
                 <View className='text'>
                     已收藏
                 </View>

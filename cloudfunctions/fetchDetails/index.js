@@ -10,11 +10,19 @@ cloud.init({
 // eslint-disable-next-line import/no-commonjs
 exports.main = async (event) => {
   const { hrefList } = event;
+  const promises = hrefList.map(async (url) => {
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  });
+
   try {
-    const resHTML = await axios.get(hrefList[0]);
-    return resHTML.data;
+    const results = await Promise.all(promises);
+    return results.filter((result) => result !== null);
   } catch (error) {
-    console.error(error);
-    return { error: error.message };
+    return [];
   }
 };

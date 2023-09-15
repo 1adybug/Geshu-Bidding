@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/apple/.nvm/versions/node/v16.18.0/bin/node /usr/local/bin/yarn add dayjs
+  /Users/apple/.nvm/versions/node/v16.18.0/bin/node /usr/local/bin/yarn add @nervjs/taro-canvas@latest
 
 PATH: 
   /Users/apple/.nvm/versions/node/v16.18.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/apple/.nvm/versions/node/v16.18.0/bin
@@ -14,8 +14,17 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: read ECONNRESET
-      at TLSWrap.onStreamRead (node:internal/stream_base_commons:217:20)
+  Error: https://registry.yarnpkg.com/@nervjs%2ftaro-canvas: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1358:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -59,7 +68,7 @@ npm manifest:
     "dependencies": {
       "@babel/runtime": "^7.21.5",
       "@nutui/nutui-react-taro": "^2.0.15",
-      "@tarojs/components": "3.6.15",
+      "@tarojs/components": "^3.6.16",
       "@tarojs/helper": "3.6.15",
       "@tarojs/plugin-framework-react": "3.6.15",
       "@tarojs/plugin-html": "^3.6.15",
@@ -74,15 +83,19 @@ npm manifest:
       "@tarojs/router": "^3.6.15",
       "@tarojs/runtime": "3.6.15",
       "@tarojs/shared": "3.6.15",
-      "@tarojs/taro": "3.6.15",
+      "@tarojs/taro": "^3.6.16",
+      "@tarojs/taro-h5": "^3.6.16",
       "@types/sass": "^1.43.1",
       "autoprefixer": "^10.4.15",
       "axios": "^1.5.0",
+      "dayjs": "^1.11.9",
       "react": "^18.0.0",
       "react-dom": "^18.0.0",
       "tailwindcss": "^3.3.3",
+      "taro-canvas": "^0.0.3",
       "taro-ui": "^3.1.1",
       "tarojs-router": "^1.2.9",
+      "wangyong-utils": "^1.2.5",
       "wx-server-sdk": "^2.6.3"
     },
     "devDependencies": {
@@ -2084,6 +2097,15 @@ Lockfile:
       "@tarojs/runtime" "3.6.15"
       "@tarojs/shared" "3.6.15"
   
+  "@tarojs/api@3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/api/-/api-3.6.16.tgz#4be1851e762c0c1e0baa6fdfd8fd07e02fe0c460"
+    integrity sha512-2vH0iQTnwGOb4UDGs2lKw6zbLXd4BmjvtjEuxLEsXBq/Bk/HY29zPuC0GcCgPPz1U15zoRA1F+mo2giCAr2dmg==
+    dependencies:
+      "@babel/runtime" "^7.14.5"
+      "@tarojs/runtime" "3.6.16"
+      "@tarojs/shared" "3.6.16"
+  
   "@tarojs/cli@3.6.15":
     version "3.6.15"
     resolved "https://registry.npmjs.org/@tarojs/cli/-/cli-3.6.15.tgz"
@@ -2127,6 +2149,20 @@ Lockfile:
       memoize-one "^6.0.0"
       postcss "^8.4.18"
   
+  "@tarojs/components-advanced@3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/components-advanced/-/components-advanced-3.6.16.tgz#bebba2e0e1b6b1e4e595812e39a782af3daabd27"
+    integrity sha512-zoejuu39P4LZBae9Q7LiwpRAAU7CPhqCF0hQoY1QvD/ZUEHLLNlw+ITV/OyjamHaui8jDwC7UMfVPzObaxbh1w==
+    dependencies:
+      "@tarojs/components" "3.6.16"
+      "@tarojs/runtime" "3.6.16"
+      "@tarojs/shared" "3.6.16"
+      "@tarojs/taro" "3.6.16"
+      classnames "^2.2.5"
+      csstype "^3.1.1"
+      memoize-one "^6.0.0"
+      postcss "^8.4.18"
+  
   "@tarojs/components-react@3.6.15":
     version "3.6.15"
     resolved "https://registry.npmjs.org/@tarojs/components-react/-/components-react-3.6.15.tgz"
@@ -2150,6 +2186,22 @@ Lockfile:
       "@tarojs/components-advanced" "3.6.15"
       "@tarojs/router" "3.6.15"
       "@tarojs/taro" "3.6.15"
+      classnames "^2.2.5"
+      hls.js "^1.1.5"
+      intersection-observer "^0.7.0"
+      resolve-pathname "^3.0.0"
+      swiper "6.8.0"
+      weui "^1.1.2"
+  
+  "@tarojs/components@3.6.16", "@tarojs/components@^3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/components/-/components-3.6.16.tgz#4d75b82a5e1e7864d8f2181d92b7e13e595b7d2e"
+    integrity sha512-ATCTZkB7OftIQOymwo8XpNfibCXJ4KQ/V+76yy91TvFZCcgT7Tj/PyV64NDj47Axk37h0GovQO9hCblO084/0g==
+    dependencies:
+      "@stencil/core" "^2.22.2"
+      "@tarojs/components-advanced" "3.6.16"
+      "@tarojs/router" "3.6.16"
+      "@tarojs/taro" "3.6.16"
       classnames "^2.2.5"
       hls.js "^1.1.5"
       intersection-observer "^0.7.0"
@@ -2382,6 +2434,19 @@ Lockfile:
       query-string "^7.1.1"
       universal-router "^8.3.0"
   
+  "@tarojs/router@3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/router/-/router-3.6.16.tgz#41cb14f263ab86f5ed9d69f525c774a64f80bd6b"
+    integrity sha512-8yhAPqjbmmphyN3QkYmbNrjWG5OYq0iKsUvUZm0NV+hZIxhha/odS2uxQoOm8zn8xxaj9mlL8ID3Tc90ukMP1w==
+    dependencies:
+      "@tarojs/runtime" "3.6.16"
+      "@tarojs/taro" "3.6.16"
+      dingtalk-jsapi "~2.15.2"
+      history "^5.1.0"
+      mobile-detect "^1.4.2"
+      query-string "^7.1.1"
+      universal-router "^8.3.0"
+  
   "@tarojs/runner-utils@3.6.15":
     version "3.6.15"
     resolved "https://registry.npmjs.org/@tarojs/runner-utils/-/runner-utils-3.6.15.tgz"
@@ -2396,6 +2461,14 @@ Lockfile:
     integrity sha512-7Xw+7ApdAtZ6N1IIp1i9SsCNGBiFYpQ90lkQZwiJE8eybgagmymXiyeaWqwNdoF4awMNNTcLFZzWlkgqJwGH2Q==
     dependencies:
       "@tarojs/shared" "3.6.15"
+      lodash-es "4.17.21"
+  
+  "@tarojs/runtime@3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/runtime/-/runtime-3.6.16.tgz#e2975516d9eefa543684d3ae2b59ba01841c3b76"
+    integrity sha512-iLH6LTDdf/sGrNf2JeOqJmGgvGCc16EzlTAPkk76MXIiQc+/dSrYtjNwO/6DXGbyUEH8vxz+Azh9IBS3pEvkWQ==
+    dependencies:
+      "@tarojs/shared" "3.6.16"
       lodash-es "4.17.21"
   
   "@tarojs/service@3.6.15":
@@ -2418,6 +2491,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/@tarojs/shared/-/shared-3.6.15.tgz"
     integrity sha512-FGhl2Kkjs9ie9NAX2yTgd+MORQ4bypJfVduWmW7nhqFDVVgsjWm0HAeCUGCSXHBHSiJjIipCo5IcxERhdIlBeg==
   
+  "@tarojs/shared@3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/shared/-/shared-3.6.16.tgz#86a8b7ef69ffb62345a5ab214b12fe2cd5cd59f0"
+    integrity sha512-Jlp8qIvbSxR/4CJ8UD0EyZp7eXvkwllOeHNuhkiZNs30mPLFhu77XNGIEkLemITYuRaNAVPFCw9h5rI9EUlYjQ==
+  
   "@tarojs/taro-h5@3.6.15":
     version "3.6.15"
     resolved "https://registry.npmjs.org/@tarojs/taro-h5/-/taro-h5-3.6.15.tgz"
@@ -2428,6 +2506,25 @@ Lockfile:
       "@tarojs/router" "3.6.15"
       "@tarojs/runtime" "3.6.15"
       "@tarojs/shared" "3.6.15"
+      abortcontroller-polyfill "^1.7.5"
+      base64-js "^1.3.0"
+      ics "^3.1.0"
+      intersection-observer "^0.7.0"
+      jsonp-retry "^1.0.3"
+      lodash-es "4.17.21"
+      query-string "^7.1.1"
+      whatwg-fetch "^3.4.0"
+  
+  "@tarojs/taro-h5@^3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/taro-h5/-/taro-h5-3.6.16.tgz#8cba1d7113861c316adb32006038bbcad16c0230"
+    integrity sha512-HyN2MyH6ywZlcvEcG7FBzEhVWiCic4I6V03eleLmllaVi6LVgt9bFKmpX9oPB3nVYVVbZtJ+Itfv8cu09O0upQ==
+    dependencies:
+      "@tarojs/api" "3.6.16"
+      "@tarojs/components" "3.6.16"
+      "@tarojs/router" "3.6.16"
+      "@tarojs/runtime" "3.6.16"
+      "@tarojs/shared" "3.6.16"
       abortcontroller-polyfill "^1.7.5"
       base64-js "^1.3.0"
       ics "^3.1.0"
@@ -2453,6 +2550,14 @@ Lockfile:
     dependencies:
       "@tarojs/api" "3.6.15"
       "@tarojs/runtime" "3.6.15"
+  
+  "@tarojs/taro@3.6.16", "@tarojs/taro@^3.6.16":
+    version "3.6.16"
+    resolved "https://registry.yarnpkg.com/@tarojs/taro/-/taro-3.6.16.tgz#2c48a6df61a80f0393dbfc30e97d67e48f3652cd"
+    integrity sha512-tHRUgi19aPhN0STxTAHk8poEXg/2gvheMDvPnOHCHSAW6/30kp+ejDTIzT/RD+Rht3WfREMLEauavPx6Q42m8A==
+    dependencies:
+      "@tarojs/api" "3.6.16"
+      "@tarojs/runtime" "3.6.16"
   
   "@tarojs/test-utils-dom@0.1.1":
     version "0.1.1"
@@ -4983,9 +5088,9 @@ Lockfile:
       whatwg-mimetype "^3.0.0"
       whatwg-url "^12.0.0"
   
-  dayjs@^1.7.7:
+  dayjs@^1.11.9, dayjs@^1.7.7:
     version "1.11.9"
-    resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.9.tgz"
+    resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.9.tgz#9ca491933fadd0a60a2c19f6c237c03517d71d1a"
     integrity sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==
   
   debug@2.6.9:
@@ -11889,6 +11994,11 @@ Lockfile:
       to-buffer "^1.1.1"
       xtend "^4.0.0"
   
+  taro-canvas@^0.0.3:
+    version "0.0.3"
+    resolved "https://registry.yarnpkg.com/taro-canvas/-/taro-canvas-0.0.3.tgz#5974c36c646b3733f02643f046da9f62b778d5e3"
+    integrity sha512-K+5ruGtGFJoVJlkOEeeNAvZyEIiPleA4QO31tN6LLbdsUKkcp+O1UJCJYkUjk3u6Zn2FLa+TLg2ETiEIuEtjmA==
+  
   taro-ui@^3.1.1:
     version "3.1.1"
     resolved "https://registry.npmjs.org/taro-ui/-/taro-ui-3.1.1.tgz"
@@ -12607,6 +12717,11 @@ Lockfile:
     integrity sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==
     dependencies:
       makeerror "1.0.12"
+  
+  wangyong-utils@^1.2.5:
+    version "1.2.5"
+    resolved "https://registry.yarnpkg.com/wangyong-utils/-/wangyong-utils-1.2.5.tgz#d7ff962a72651f354033611eb830f1d295a1f943"
+    integrity sha512-Dlk1EBZ2PecXrtFVIP/HFfR4iEaJk5a9JfaGeLEnHgAFAT5f3EqT2ka86dQVjp/1RBOX1kKWKC5k2jsMqWMkDA==
   
   watchpack@^2.4.0:
     version "2.4.0"

@@ -1,4 +1,4 @@
-export function extractTableData(html) {
+export default function extractTableData(html) {
   const regex = /<table[^>]*>([\s\S]*?)<\/table>/gi;
   const matches = regex.exec(html);
 
@@ -14,14 +14,14 @@ export function extractTableData(html) {
       const trMatches = tbodyContent.match(trRegex);
 
       if (trMatches && trMatches.length > 0) {
-        const tableData = [];
+        const tableData: string[][] = [];
 
         for (let i = 0; i < trMatches.length; i++) {
           const trContent = trMatches[i];
           const tdMatches = trContent.match(tdRegex);
 
           if (tdMatches && tdMatches.length > 0) {
-            const row = [];
+            const row: string[] = [];
 
             for (let j = 0; j < tdMatches.length; j++) {
               const tdContent = tdMatches[j].replace(/<[^>]+>/g, ""); // 移除html标签
@@ -49,3 +49,4 @@ export function extractTableData(html) {
 
   return null; // 没有匹配到<table>标签或<tbody>标签
 }
+
