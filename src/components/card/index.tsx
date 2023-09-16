@@ -32,9 +32,9 @@ export default function Card(props: CardProps) {
                     <img src={Clock} alt='' />
                     <View className='data'>{releaseTime}</View>
                 </View>
-                <View className='city'>
+                {/* <View className='city'>
                     淮安
-                </View>
+                </View> */}
             </View>
         </View>
     )

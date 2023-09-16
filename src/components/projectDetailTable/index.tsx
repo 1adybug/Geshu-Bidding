@@ -17,21 +17,37 @@ export interface ProjectDetailTableProps {
 export default function ProjectDetailTable(props: ProjectDetailTableProps) {
 
     const { purchaseBudget, estimatedPurchaseMonth, isForSmallOrMediumEnterprise, toPurchaseEnergysavingOrEnvironmentalLabelingProducts, remark } = props
+
     return (
-        <View className='project-detail-table'>
-            <View className='table-header'>
-                <View className='child'>采购预算（万元）</View>
-                <View className='child'>预计采购月份</View>
-                <View className='child'>是否面向中小企业采购</View>
-                <View className='child'>是否采购节能产品、环境标志产品</View>
-                <View className='child'>备注</View>
+        <View className='project-detail-list'>
+            <View className='list-item'>
+                <View className='text'>
+                    <View className='label'>采购预算（万元）</View>
+                    <View className='content'>{purchaseBudget}</View>
+                </View>
             </View>
-            <View className='table-body'>
-                <View className='child'>{purchaseBudget}</View>
-                <View className='child'>{estimatedPurchaseMonth}</View>
-                <View className='child'>{isForSmallOrMediumEnterprise ? "是" : "否"}</View>
-                <View className='child'>{toPurchaseEnergysavingOrEnvironmentalLabelingProducts ? "是" : "否"}</View>
-                <View className='child'>{remark}</View>
+            <View className='list-item'>
+                <View className='text'>
+                    <View className='label'>预计采购月份</View>
+                    <View className='content'>{estimatedPurchaseMonth}</View>
+                </View>
+            </View>
+            <View className='list-item'>
+                <View className='text'>
+                    <View className='label'>是否专门面向中小企业采购</View>
+                    <View className='content'>{isForSmallOrMediumEnterprise}</View></View>
+            </View>
+            <View className='list-item'>
+                <View className='text'>
+                    <View className='label'>是否采购节能产品、环境标志产品</View>
+                    <View className='content'>{toPurchaseEnergysavingOrEnvironmentalLabelingProducts}</View>
+                </View>
+            </View>
+            <View className='list-item'>
+                <View className='text'>
+                    <View className='label'>备注</View>
+                    <View className='content'>{remark ? remark : "无"}</View>
+                </View>
             </View>
         </View>
     )

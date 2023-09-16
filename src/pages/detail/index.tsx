@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "@tarojs/taro";
 import { findSinglePurchaseIntentionDisclosureById } from "@/services/findSinglePurchaseIntentionDisclosureById";
 import { fetchSinglePurchaseIntentionDisclosureDetail } from "@/services/fetchSinglePurchaseIntentionDisclosureDetail";
@@ -9,7 +9,7 @@ import extractAnnouncementKeyInfo from "@/utils/extractAnnouncementKeyInfo";
 import { fetchSingleDetail } from "@/services/fetchSingleDetail";
 import DetailFirstSection from "@/components/detailFirstSection";
 import DetailSecondSection from "@/components/detailSecondSection";
-import { isValidPhone } from "wangyong-regex"
+import PurchaseSolicitationAnnouncementDetailCard from "@/components/puchaseSolicitationAnnouncement";
 import "./index.module.less"
 
 interface PurchaseIntentionDisclosureDetail {
@@ -56,7 +56,7 @@ interface PurchaseIntentionDisclosureDetail {
     isCollected: boolean
 }
 
-interface PurchaseSolicitationAnnouncementDetail {
+export interface PurchaseSolicitationAnnouncementDetail {
     headline: string
     releaseTime: string
     projectBasicInfo: string[]
@@ -104,7 +104,6 @@ export default function Detail() {
             if (!res2.result) return
             const res3 = extractAnnouncementKeyInfo(JSON.stringify(res2.result))
             if (!res3) return
-            console.log(res3);
             setPurchaseSolicitationAnnouncementDetail({
                 headline: res.result.data[0].title,
                 releaseTime: res.result.data[0].time,
@@ -115,19 +114,14 @@ export default function Detail() {
     }
 
     return (
-        <View className='detail'>
-            {currentListItemId === "0" ? <View>
+        <Fragment>
+            {currentListItemId === "0" ? <View className='detail'>
                 <DetailFirstSection projectName={purchaseIntentionDisclosureDetail?.projectName} address='淮安' releaseTime={purchaseIntentionDisclosureDetail?.releaseTime} isCollected={purchaseIntentionDisclosureDetail?.isCollected} />
                 <DetailSecondSection projectSummarize={purchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={purchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={purchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={purchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={purchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={purchaseIntentionDisclosureDetail?.remark} />
-            </View> : <View>
-                <View>{purchaseSolicitationAnnouncementDetail?.headline}</View>
-                <View>{purchaseSolicitationAnnouncementDetail?.releaseTime}</View>
-                {purchaseSolicitationAnnouncementDetail?.projectBasicInfo.map(e =>{
-                    return <View key={e}>{e}</View>
-                })}
-                {purchaseSolicitationAnnouncementDetail?.purchasePersonInfo.map(e =>{
-                    return <View key={e}>{e}</View>
-                })}
-            </View>}</View>
+            </View> : <View className='detail'>
+                <DetailFirstSection projectName={purchaseSolicitationAnnouncementDetail?.headline} address='淮安' releaseTime={purchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={purchaseIntentionDisclosureDetail?.isCollected} />
+                <PurchaseSolicitationAnnouncementDetailCard projectBasicInfo={purchaseSolicitationAnnouncementDetail?.projectBasicInfo} purchasePersonInfo={purchaseSolicitationAnnouncementDetail?.purchasePersonInfo} />
+            </View>}
+        </Fragment>
     )
 }
