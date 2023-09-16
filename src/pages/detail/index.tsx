@@ -7,6 +7,8 @@ import extractTableData from "@/utils/extractPurchaseIntentionDisclosureData";
 import { findSinglePurchaseSolicitationAnnouncement } from "@/services/findSinglePurchaseSolicitationAnnouncement";
 import extractAnnouncementKeyInfo from "@/utils/extractAnnouncementKeyInfo";
 import { fetchSingleDetail } from "@/services/fetchSingleDetail";
+import DetailFirstSection from "@/components/detailFirstSection";
+import DetailSecondSection from "@/components/detailSecondSection";
 import { isValidPhone } from "wangyong-regex"
 import "./index.module.less"
 
@@ -51,15 +53,14 @@ interface PurchaseIntentionDisclosureDetail {
      * 备注
     */
     remark: string
+    isCollected: boolean
 }
 
 interface PurchaseSolicitationAnnouncementDetail {
     headline: string
     releaseTime: string
-    projectNo: string
-    projectName: string
-    purchasePerson: string
-    purchaseAgentPhoneNo?: string
+    projectBasicInfo: string[]
+    purchasePersonInfo: string[]
 }
 
 export default function Detail() {
@@ -91,7 +92,8 @@ export default function Detail() {
                 expectedPurchaseMonth: res3.expectedPurchaseMonth,
                 whetherForSmallAndMediumEnterprise: res3.whetherForSmallAndMediumEnterprise,
                 whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts: res3.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts,
-                remark: res3.remark
+                remark: res3.remark,
+                isCollected: true
             })
             return
         }
@@ -106,10 +108,8 @@ export default function Detail() {
             setPurchaseSolicitationAnnouncementDetail({
                 headline: res.result.data[0].title,
                 releaseTime: res.result.data[0].time,
-                projectNo: res3.projectBasicInfo[1],
-                projectName: res3.projectBasicInfo[4],
-                purchasePerson: res3.purchasePersonInfo[1],
-                purchaseAgentPhoneNo: res3.purchasePersonInfo.find(e => isValidPhone(e))
+                projectBasicInfo: res3.projectBasicInfo,
+                purchasePersonInfo: res3.purchasePersonInfo.filter(e => !e.includes("&nbsp;"))
             })
         }
     }
@@ -117,26 +117,17 @@ export default function Detail() {
     return (
         <View className='detail'>
             {currentListItemId === "0" ? <View>
-                <View>{purchaseIntentionDisclosureDetail?.headline}</View>
-                <View>{purchaseIntentionDisclosureDetail?.releaseTime}</View>
-                <View>{purchaseIntentionDisclosureDetail?.projectNo}</View>
-                <View>{purchaseIntentionDisclosureDetail?.projectName}</View>
-                <View>{purchaseIntentionDisclosureDetail?.purchaseRequirementsSummary}</View>
-                <View>{purchaseIntentionDisclosureDetail?.purchaseBudget}</View>
-                <View>{purchaseIntentionDisclosureDetail?.expectedPurchaseMonth}</View>
-                <View>{purchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise}</View>
-                <View>{purchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts}</View>
-                <View>{purchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts}</View>
+                <DetailFirstSection projectName={purchaseIntentionDisclosureDetail?.projectName} address='淮安' releaseTime={purchaseIntentionDisclosureDetail?.releaseTime} isCollected={purchaseIntentionDisclosureDetail?.isCollected} />
+                <DetailSecondSection projectSummarize={purchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={purchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={purchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={purchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={purchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={purchaseIntentionDisclosureDetail?.remark} />
             </View> : <View>
                 <View>{purchaseSolicitationAnnouncementDetail?.headline}</View>
                 <View>{purchaseSolicitationAnnouncementDetail?.releaseTime}</View>
-                <View>{purchaseSolicitationAnnouncementDetail?.projectNo}</View>
-                <View>{purchaseSolicitationAnnouncementDetail?.projectName}</View>
-                <View>{purchaseSolicitationAnnouncementDetail?.purchasePerson}</View>
-                <View>{purchaseSolicitationAnnouncementDetail?.purchaseAgentPhoneNo}</View>
-            </View>}
-            {/* <DetailFirstSection projectName={obj?.projectName} address={obj?.address} releaseTime={obj?.releaseTime} isCollected={obj?.isCollected} />
-            <DetailSecondSection projectSummarize={obj?.projectSummarize} purchaseBudget={obj?.purchaseBudget} estimatedPurchaseMonth={obj?.estimatedPurchaseMonth} isForSmallOrMediumEnterprise={obj?.isForSmallOrMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={obj?.toPurchaseEnergysavingOrEnvironmentalLabelingProducts} remark={obj?.remark} /> */}
-        </View>
+                {purchaseSolicitationAnnouncementDetail?.projectBasicInfo.map(e =>{
+                    return <View key={e}>{e}</View>
+                })}
+                {purchaseSolicitationAnnouncementDetail?.purchasePersonInfo.map(e =>{
+                    return <View key={e}>{e}</View>
+                })}
+            </View>}</View>
     )
 }

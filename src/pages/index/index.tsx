@@ -30,12 +30,12 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0")
-    // getCrawlData("5").then(res => {
+    // getCrawlData("6").then(res => {
     //   if (res.result) {
     //     extractListData(res.result)
     //   }
     // })
-    queryDataDetails()
+    // queryDataDetails()
   }, [])
 
   const onOpenDrawShow = () => {

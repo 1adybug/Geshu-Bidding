@@ -3,13 +3,13 @@ import "./index.module.less"
 
 export interface ProjectDetailTableProps {
     /** 采购预算*/
-    purchaseBudget?: number
+    purchaseBudget?: string
     /** 预计采购月份*/
     estimatedPurchaseMonth?: string
     /** 是否面向中小企业采购*/
-    isForSmallOrMediumEnterprise?: boolean
+    isForSmallOrMediumEnterprise?: string
     /** 是否采购节能产品、环境标志产品*/
-    toPurchaseEnergysavingOrEnvironmentalLabelingProducts?: boolean
+    toPurchaseEnergysavingOrEnvironmentalLabelingProducts?: string
     /** 备注*/
     remark?: string
 }

@@ -18,6 +18,9 @@ export default function SideBar(props: SideBarProps) {
     }
 
     const handleListItemClick = (listItemId: string) => {
+        setTimeout(() => {
+            onClose()
+        }, 1000)
         itemClicked(listItemId)
     }
 
