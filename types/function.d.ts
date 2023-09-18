@@ -4,3 +4,8 @@ type CloudFunctionResultSuccess<T> = {
     data: T[];
   };
 };
+
+type SeconTypeCloudFunctionResultSuccess<T> = {
+  success: true;
+  result: T[];
+};

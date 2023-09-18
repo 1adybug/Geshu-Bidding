@@ -19,6 +19,7 @@ import extractAnnouncementData from '@/utils/extractAnnouncement';
 import extractAnnouncementKeyInfo from '@/utils/extractAnnouncementKeyInfo';
 import { fetchSinglePurchaseIntentionDisclosureDetail } from '@/services/fetchSinglePurchaseIntentionDisclosureDetail';
 // import Test from '@/components/exportData';
+import { fuzzySearch } from '@/services/fuzzySearch';
 // import extractListData from '../../utils/extractListData';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
@@ -86,29 +87,34 @@ export default function Index() {
     }
   }
 
-  async function queryDataDetails() {
-    // const res = await getPurchaseIntentionDisclosures()
-    // if (res.result) {
-    //   const res2 = await fetchSinglePurchaseIntentionDisclosureDetail(res.result[0].href)
-    //   console.log(res.result[0].title);
-    //   const res3 = extractTableData(res2.result)
-    //   console.log(JSON.stringify(res3));
-    // }
+  // async function queryDataDetails() {
+  //   // const res = await getPurchaseIntentionDisclosures()
+  //   // if (res.result) {
+  //   //   const res2 = await fetchSinglePurchaseIntentionDisclosureDetail(res.result[0].href)
+  //   //   console.log(res.result[0].title);
+  //   //   const res3 = extractTableData(res2.result)
+  //   //   console.log(JSON.stringify(res3));
+  //   // }
 
-    // const res = await getPurchaseSocilitationAnnouncements()
-    // if (res.result) {
-    //   const res2 = await fetchSingleDetail(res.result[2].href)
-    //   console.log(extractAnnouncementKeyInfo(JSON.stringify(res2.result)));
-    // }
+  //   // const res = await getPurchaseSocilitationAnnouncements()
+  //   // if (res.result) {
+  //   //   const res2 = await fetchSingleDetail(res.result[2].href)
+  //   //   console.log(extractAnnouncementKeyInfo(JSON.stringify(res2.result)));
+  //   // }
+  // }
+
+  const onValueInputed = async (keyword: string) => {
+    const res = await fuzzySearch(currentListItemId, keyword)
+    setProjectList(res.result)
   }
 
   return (
     <View className='index'>
-      <Search changeDrawShow={onOpenDrawShow} currentListItemId={currentListItemId} />
+      <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} />
       <View className='main'>
         {projectList.map((project: CardProps) => {
           return (
-            <Card key={project.id} projectName={project.projectName} projectSummarize={project.projectSummarize} releaseTime={project.releaseTime} id={project.id} isCollected={project.isCollected} currentListItemId={currentListItemId} />
+            <Card key={project._id} title={project.title} time={project.time} _id={project._id} isCollected={project.isCollected} currentListItemId={currentListItemId} />
           )
         })}
       </View>

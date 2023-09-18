@@ -5,17 +5,16 @@ import Clock from "../../assets/clock.png"
 
 export interface CardProps {
     currentListItemId?: string
-    id: string
-    projectName: string
-    projectSummarize: string
-    releaseTime: string
-    isCollected: boolean
+    _id: string
+    title: string
+    time: string
+    isCollected?: boolean
 }
 
 export default function Card(props: CardProps) {
-    const { currentListItemId, id, projectName, projectSummarize, releaseTime, isCollected } = props
+    const { currentListItemId, _id, title,  time, isCollected } = props
     const handleClick = () => {
-        Taro.navigateTo({ url: `/pages/detail/index?id=${id}&currentListItemId=${currentListItemId}`, })
+        Taro.navigateTo({ url: `/pages/detail/index?id=${_id}&currentListItemId=${currentListItemId}`, })
     }
 
     return (
@@ -25,12 +24,12 @@ export default function Card(props: CardProps) {
                     已收藏
                 </View>
             </View>}
-            <View className='project-name'>{projectName}</View>
-            <View className='project-summarize'>{projectSummarize}</View>
+            <View className='project-name'>{title}</View>
+            {/* <View className='project-summarize'>{projectSummarize}</View> */}
             <View className='bottom-info'>
                 <View className='release-time'>
                     <img src={Clock} alt='' />
-                    <View className='data'>{releaseTime}</View>
+                    <View className='data'>{time}</View>
                 </View>
                 {/* <View className='city'>
                     淮安

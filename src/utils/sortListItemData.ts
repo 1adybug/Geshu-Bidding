@@ -5,6 +5,6 @@ import dayjs from "dayjs";
 export default function sortListItemData(data) {
   const dataCopy = wyDeepClone(data);
   return handleGetResult(dataCopy).sort(
-    (a, b) => dayjs(b.releaseTime).unix() - dayjs(a.releaseTime).unix()
+    (a, b) => dayjs(b.time).unix() - dayjs(a.time).unix()
   );
 }

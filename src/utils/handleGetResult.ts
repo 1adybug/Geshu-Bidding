@@ -5,10 +5,9 @@ export default function handleGetResult(
 ): CardProps[] {
   const result = data.map((e: PurchaseIntentionDisclosure) => {
     return {
-      id: e._id,
-      projectName: e.title,
-      projectSummarize: "",
-      releaseTime: e.time,
+      _id: e._id,
+      title: e.title,
+      time: e.time,
       isCollected: true,
     };
   });

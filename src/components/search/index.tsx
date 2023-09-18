@@ -7,23 +7,21 @@ import FilterIcon from "../../assets/filterIcon.png"
 import "./index.module.less"
 
 interface SearchProps {
-    currentListItemId: string
     changeDrawShow: () => void
+    valueInputed: (valueInputed: string) => void
 }
 
 export default function Search(props: SearchProps) {
 
-    const { currentListItemId, changeDrawShow } = props
-    const [keyword, setKeyword] = useState("")
+    const { changeDrawShow, valueInputed } = props
+    const [keyword, setKeyword] = useState("盱眙县")
 
     const handleClick = () => {
         changeDrawShow()
     }
 
     const handleSearch = async () => {
-        console.log(currentListItemId);
-        const res = await fuzzySearch(currentListItemId, keyword)
-        console.log(5, res);
+        valueInputed(keyword)
     }
 
     const filterIconClick = () => {
@@ -37,7 +35,7 @@ export default function Search(props: SearchProps) {
                 <View className='icon-box'>
                     <img src={SearchIcon} alt='' onClick={handleSearch} />
                 </View>
-                <input type='search' placeholder='请输入项目名称' />
+                <input type='search' placeholder='请输入项目名称' onChange={e => setKeyword(e.target.value)} />
             </View>
             <img src={FilterIcon} alt='' onClick={filterIconClick} />
         </View>

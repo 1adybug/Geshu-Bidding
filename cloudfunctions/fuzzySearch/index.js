@@ -11,47 +11,41 @@ const db = cloud.database();
 // 云函数的入口函数
 // eslint-disable-next-line import/no-commonjs
 exports.main = async (event) => {
-  const { listItemId, keyword } = event.keyword; // 获取查询关键字
+  const { currentListItemId, keyword } = event;
 
   let collectionName = "purchase_intention_disclosure";
 
-  if (listItemId === "1") {
+  if (currentListItemId === "1") {
     collectionName = "purchase_solicitation_announcement";
-    return;
   }
 
-  if (listItemId === "2") {
+  if (currentListItemId === "2") {
     collectionName = "correct_announcement";
-    return;
   }
 
-  if (listItemId === "3") {
+  if (currentListItemId === "3") {
     collectionName = "bid_rejection_or_termination_announcement";
-    return;
   }
 
-  if (listItemId === "5") {
+  if (currentListItemId === "4") {
     collectionName = "results_or_shortlisted_announcement";
-    return;
   }
 
-  if (listItemId === "5") {
+  if (currentListItemId === "5") {
     collectionName = "contract_announcement";
-    return;
   }
 
-  if (listItemId === "6") {
+  if (currentListItemId === "6") {
     collectionName = "other_announcement";
-    return;
   }
 
   try {
     const result = await db
       .collection(collectionName)
       .where({
-        name: db.RegExp({
-          regexp: keyword, // 使用关键字构建正则表达式
-          options: "i", // 选项 'i' 表示大小写不敏感
+        title: db.RegExp({
+          regexp: ".*" + keyword,
+          options: "i",
         }),
       })
       .get();
