@@ -1,10 +1,11 @@
 import { View } from "@tarojs/components"
-import Collect from "../../assets/collect.png"
-import Collected from "../../assets/collected.png"
+import { write, utils } from 'xlsx';
+import { saveAs } from 'file-saver';
 import Clock from "../../assets/clock.png"
 import "./index.module.less"
 
 interface DetailFirstSectionProps {
+    currentListItemId?: string
     projectName?: string
     address?: string
     releaseTime?: string
@@ -12,7 +13,27 @@ interface DetailFirstSectionProps {
 }
 
 export default function DetailFirstSection(props: DetailFirstSectionProps) {
-    const { projectName, releaseTime, isCollected } = props
+
+    const { currentListItemId, projectName, releaseTime, isCollected } = props
+
+    // function convertJsonToExcel(jsonData) {
+    //     const worksheet = utils.json_to_sheet(jsonData);
+    //     const workbook = utils.book_new();
+    //     utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
+    //     const excelData = write(workbook, { type: 'array', bookType: 'xlsx' });
+    //     return new Blob([excelData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    // }
+
+    // function handleDownloadExcel() {
+    //     const jsonData = [
+    //         {
+    //             name: 'Alice',
+    //             age: 25,
+    //         }
+    //     ];
+    //     const excelBlob = convertJsonToExcel(jsonData);
+    //     saveAs(excelBlob, 'data.xlsx');
+    // }
 
     return (
         <View className='first-section'>
@@ -23,7 +44,7 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
                     <View className='second'>{releaseTime}</View>
                 </View>
                 <View className='collect'>
-                    <View className='export'>导出</View>
+                    {currentListItemId === "1" && <View className='export'>导出</View>}
                     <View className='text'>{isCollected ? "已收藏" : "收藏"}</View>
                 </View>
             </View>

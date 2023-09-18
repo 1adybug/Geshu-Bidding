@@ -116,10 +116,10 @@ export default function Detail() {
     return (
         <Fragment>
             {currentListItemId === "0" ? <View className='detail'>
-                <DetailFirstSection projectName={purchaseIntentionDisclosureDetail?.projectName} address='淮安' releaseTime={purchaseIntentionDisclosureDetail?.releaseTime} isCollected={purchaseIntentionDisclosureDetail?.isCollected} />
+                <DetailFirstSection projectName={purchaseIntentionDisclosureDetail?.projectName} address='淮安' releaseTime={purchaseIntentionDisclosureDetail?.releaseTime} isCollected={purchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} />
                 <DetailSecondSection projectSummarize={purchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={purchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={purchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={purchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={purchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={purchaseIntentionDisclosureDetail?.remark} />
             </View> : <View className='detail'>
-                <DetailFirstSection projectName={purchaseSolicitationAnnouncementDetail?.headline} address='淮安' releaseTime={purchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={purchaseIntentionDisclosureDetail?.isCollected} />
+                <DetailFirstSection projectName={purchaseSolicitationAnnouncementDetail?.headline} address='淮安' releaseTime={purchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={purchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} />
                 <PurchaseSolicitationAnnouncementDetailCard projectBasicInfo={purchaseSolicitationAnnouncementDetail?.projectBasicInfo} purchasePersonInfo={purchaseSolicitationAnnouncementDetail?.purchasePersonInfo} />
             </View>}
         </Fragment>

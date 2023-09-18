@@ -69,3 +69,13 @@ export const Function_Find_Single_Purchase_Intention_Disclosure_By_Id =
  */
 export const Function_Find_Single_Purchase_Solicitation_Announcement_By_Id =
   "findSinglePurchaseSolicitationAnnouncement";
+
+/**
+ * 模糊查询云函数名
+ */
+export const Function_Fuzzy_Search = "fuzzySearch";
+
+/**
+ * 分页查询云函数名
+ */
+export const Function_Pagination_Query = "purchaseIntentionDisclosure";

@@ -18,7 +18,8 @@ import { fetchSingleDetail } from '@/services/fetchSingleDetail';
 import extractAnnouncementData from '@/utils/extractAnnouncement';
 import extractAnnouncementKeyInfo from '@/utils/extractAnnouncementKeyInfo';
 import { fetchSinglePurchaseIntentionDisclosureDetail } from '@/services/fetchSinglePurchaseIntentionDisclosureDetail';
-import extractListData from '../../utils/extractListData';
+// import Test from '@/components/exportData';
+// import extractListData from '../../utils/extractListData';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 
@@ -103,7 +104,7 @@ export default function Index() {
 
   return (
     <View className='index'>
-      <Search changeDrawShow={onOpenDrawShow} />
+      <Search changeDrawShow={onOpenDrawShow} currentListItemId={currentListItemId} />
       <View className='main'>
         {projectList.map((project: CardProps) => {
           return (
@@ -112,7 +113,7 @@ export default function Index() {
         })}
       </View>
       <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} />
-      {drawShow && <Shadow />}
+      {drawShow && <Shadow onClose={onCloseDrawShow} />}
     </View>
   )
 }

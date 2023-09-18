@@ -1,8 +1,19 @@
 import { View } from "@tarojs/components";
-import  "./index.module.less"
+import "./index.module.less"
 
-export default function Shadow(){
+interface ShadowProps {
+    onClose: () => void
+}
+
+export default function Shadow(props: ShadowProps) {
+
+    const { onClose } = props
+
+    const handleClick = () => {
+        onClose()
+    }
+
     return (
-        <View className='sidebar-mask'  />
+        <View className='sidebar-mask' onClick={handleClick} />
     )
 }
