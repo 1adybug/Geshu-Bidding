@@ -1,12 +1,13 @@
 import { View } from "@tarojs/components";
 import { dataList } from "@/constant/sidebarContentListItems";
+import { SortType } from "@/utils/sortListItemData";
 import "./index.module.less"
 import Close from "../../assets/close.png"
 
 interface SideBarProps {
     visible: boolean
     onClose: () => void
-    itemClicked: (listItemId: string) => void
+    itemClicked: (listItemId: string, sortType: SortType) => void
 }
 
 export default function SideBar(props: SideBarProps) {
@@ -21,7 +22,7 @@ export default function SideBar(props: SideBarProps) {
         setTimeout(() => {
             onClose()
         }, 1000)
-        itemClicked(listItemId)
+        itemClicked(listItemId, "desc")
     }
 
     return (

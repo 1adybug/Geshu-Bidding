@@ -13,13 +13,14 @@ import { getcontractAnnouncements } from '@/services/contractAnnouncement';
 import { getOtherAnnouncement } from '@/services/otherAnnouncement';
 import extractTableData from '@/utils/extractPurchaseIntentionDisclosureData';
 import { getCrawlData } from '@/services/crawlData';
-import sortListItemData from '@/utils/sortListItemData';
+import sortListItemData, { SortType } from '@/utils/sortListItemData';
 import { fetchSingleDetail } from '@/services/fetchSingleDetail';
 import extractAnnouncementData from '@/utils/extractAnnouncement';
 import extractAnnouncementKeyInfo from '@/utils/extractAnnouncementKeyInfo';
 import { fetchSinglePurchaseIntentionDisclosureDetail } from '@/services/fetchSinglePurchaseIntentionDisclosureDetail';
 // import Test from '@/components/exportData';
 import { fuzzySearch } from '@/services/fuzzySearch';
+import FilterCard from '@/components/filterCard';
 // import extractListData from '../../utils/extractListData';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
@@ -27,11 +28,12 @@ import Card, { CardProps } from '../../components/card';
 export default function Index() {
 
   const [drawShow, setDrawShow] = useState(false)
+  const [filterShow, setFilterShow] = useState(false)
   const [projectList, setProjectList] = useState<CardProps[]>([])
   const [currentListItemId, setCurrentListItemId] = useState<string>("0")
 
   useEffect(() => {
-    onListItemClicked("0")
+    onListItemClicked("0", "desc")
     // getCrawlData("6").then(res => {
     //   if (res.result) {
     //     extractListData(res.result)
@@ -44,45 +46,50 @@ export default function Index() {
     setDrawShow(true)
   }
 
-  const onCloseDrawShow = () => {
-    setDrawShow(false)
+  const onOpenFilterShow = () => {
+    setFilterShow(!filterShow)
   }
 
-  const onListItemClicked = async (listItemId: string) => {
+  const onCloseDrawShow = () => {
+    setDrawShow(false)
+    setFilterShow(false)
+  }
+
+  const onListItemClicked = async (listItemId: string, sortType: SortType) => {
     setCurrentListItemId(listItemId)
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
-      res.result && setProjectList(sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
     if (listItemId === "1") {
       const res = await getPurchaseSocilitationAnnouncements()
-      res.result && setProjectList(sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
     if (listItemId === "2") {
       const res = await getCorrectAnnouncement()
-      res.result && setProjectList(sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
     if (listItemId === "3") {
       const res = await getbidRejectionOrTerminationAnnouncements()
-      res.result && setProjectList(sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
     if (listItemId === "4") {
       const res = await getresultsOrShortlistedAnnouncement()
-      res.result && setProjectList(sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
     if (listItemId === "5") {
       const res = await getcontractAnnouncements()
-      res.result && setProjectList(sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
     if (listItemId === "6") {
       const res = await getOtherAnnouncement()
-      res.result && setProjectList(sortListItemData(res.result))
+      res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
   }
@@ -110,7 +117,8 @@ export default function Index() {
 
   return (
     <View className='index'>
-      <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} />
+      <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
+      <FilterCard changeFilterShow={onOpenFilterShow} visible={filterShow} currentListItemId={currentListItemId} changeFilterCondition={onListItemClicked} />
       <View className='main'>
         {projectList.map((project: CardProps) => {
           return (
@@ -119,7 +127,7 @@ export default function Index() {
         })}
       </View>
       <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} />
-      {drawShow && <Shadow onClose={onCloseDrawShow} />}
+      {(drawShow || filterShow) && <Shadow onClose={onCloseDrawShow} />}
     </View>
   )
 }

@@ -8,12 +8,13 @@ import "./index.module.less"
 
 interface SearchProps {
     changeDrawShow: () => void
+    changeFilterShow: () => void
     valueInputed: (valueInputed: string) => void
 }
 
 export default function Search(props: SearchProps) {
 
-    const { changeDrawShow, valueInputed } = props
+    const { changeDrawShow, changeFilterShow, valueInputed } = props
     const [keyword, setKeyword] = useState("盱眙县")
 
     const handleClick = () => {
@@ -25,7 +26,7 @@ export default function Search(props: SearchProps) {
     }
 
     const filterIconClick = () => {
-
+        changeFilterShow()
     }
 
     return (
