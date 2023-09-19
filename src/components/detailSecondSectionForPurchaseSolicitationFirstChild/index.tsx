@@ -2,21 +2,23 @@ import { View } from "@tarojs/components";
 import "./index.module.less"
 
 interface DetailSecondSectionForPurchaseSolicitationFirstChildProps {
-
+    project_name?: string
+    project_no?: string
 }
 
 export default function DetailSecondSectionForPurchaseSolicitationFirstChild(props: DetailSecondSectionForPurchaseSolicitationFirstChildProps) {
+    const { project_name, project_no } = props
     return (
         <View className='detail-second-section-for-purchase-solicitation-first-child'>
             <View className='title'>项目基本情况</View>
             <View className='content'>
                 <View className='project-name'>
                     <View className='label'>项目名称：</View>
-                    <View className='data'></View>
+                    <View className='data'>{project_name ? project_name : "无"}</View>
                 </View>
                 <View className='project-code'>
                     <View className='label'>项目编号：</View>
-                    <View className='data'></View>
+                    <View className='data'>{project_no ? project_no : "无"}</View>
                 </View>
             </View>
         </View>

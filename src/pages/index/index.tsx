@@ -61,31 +61,31 @@ export default function Index() {
       res.result && setProjectList(sortListItemData(res.result, sortType))
       return
     }
-    if (listItemId === "2") {
-      const res = await getCorrectAnnouncement()
-      res.result && setProjectList(sortListItemData(res.result, sortType))
-      return
-    }
-    if (listItemId === "3") {
-      const res = await getbidRejectionOrTerminationAnnouncements()
-      res.result && setProjectList(sortListItemData(res.result, sortType))
-      return
-    }
-    if (listItemId === "4") {
-      const res = await getresultsOrShortlistedAnnouncement()
-      res.result && setProjectList(sortListItemData(res.result, sortType))
-      return
-    }
-    if (listItemId === "5") {
-      const res = await getcontractAnnouncements()
-      res.result && setProjectList(sortListItemData(res.result, sortType))
-      return
-    }
-    if (listItemId === "6") {
-      const res = await getOtherAnnouncement()
-      res.result && setProjectList(sortListItemData(res.result, sortType))
-      return
-    }
+    // if (listItemId === "2") {
+    //   const res = await getCorrectAnnouncement()
+    //   res.result && setProjectList(sortListItemData(res.result, sortType))
+    //   return
+    // }
+    // if (listItemId === "3") {
+    //   const res = await getbidRejectionOrTerminationAnnouncements()
+    //   res.result && setProjectList(sortListItemData(res.result, sortType))
+    //   return
+    // }
+    // if (listItemId === "4") {
+    //   const res = await getresultsOrShortlistedAnnouncement()
+    //   res.result && setProjectList(sortListItemData(res.result, sortType))
+    //   return
+    // }
+    // if (listItemId === "5") {
+    //   const res = await getcontractAnnouncements()
+    //   res.result && setProjectList(sortListItemData(res.result, sortType))
+    //   return
+    // }
+    // if (listItemId === "6") {
+    //   const res = await getOtherAnnouncement()
+    //   res.result && setProjectList(sortListItemData(res.result, sortType))
+    //   return
+    // }
   }
 
   // async function queryDataDetails() {
