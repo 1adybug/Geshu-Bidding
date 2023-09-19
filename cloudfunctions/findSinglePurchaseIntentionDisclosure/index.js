@@ -8,15 +8,15 @@ cloud.init({
 // 云函数的入口函数
 // eslint-disable-next-line import/no-commonjs
 exports.main = async (event) => {
-  const { link_id } = event;
+  const { id } = event;
   try {
     // 获取数据库实例
     const db = cloud.database();
 
     const result = await db
-      .collection("purchase_intention_disclosure_detail")
+      .collection("purchase_intention_disclosure")
       .where({
-        link_id: link_id,
+        _id: id,
       })
       .get();
 

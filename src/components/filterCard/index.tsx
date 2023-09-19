@@ -32,7 +32,7 @@ export default function FilterCard(props: FilterCardProps) {
         }
     ]
 
-    const [activedCondition, setActivedCondition] = useState("-1")
+    const [activedCondition, setActivedCondition] = useState("0")
 
     const { visible, currentListItemId, changeFilterShow, changeFilterCondition } = props
 

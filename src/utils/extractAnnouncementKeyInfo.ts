@@ -44,6 +44,10 @@ export default function extractAnnouncementKeyInfo(data) {
         extractAnnouncementData(data)[index + 7],
         extractAnnouncementData(data)[index + 8],
       ];
+      console.log(extractAnnouncementData(data));
+      
+      console.log(arr);
+      
       obj.projectBasicInfo = arr.filter((item) => item !== "");
     }
     if (e === "1.采购人信息") {

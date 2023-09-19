@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
-import { fetchDataDetails } from '@/services/fetchDataDetails';
 import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
 import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilitationAnnouncement';
@@ -11,17 +10,12 @@ import { getCorrectAnnouncement } from '@/services/correctAnnouncement';
 import { getresultsOrShortlistedAnnouncement } from '@/services/resultsOrShortlistedAnnouncement';
 import { getcontractAnnouncements } from '@/services/contractAnnouncement';
 import { getOtherAnnouncement } from '@/services/otherAnnouncement';
-import extractTableData from '@/utils/extractPurchaseIntentionDisclosureData';
 import { getCrawlData } from '@/services/crawlData';
 import sortListItemData, { SortType } from '@/utils/sortListItemData';
-import { fetchSingleDetail } from '@/services/fetchSingleDetail';
-import extractAnnouncementData from '@/utils/extractAnnouncement';
-import extractAnnouncementKeyInfo from '@/utils/extractAnnouncementKeyInfo';
-import { fetchSinglePurchaseIntentionDisclosureDetail } from '@/services/fetchSinglePurchaseIntentionDisclosureDetail';
 // import Test from '@/components/exportData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
-// import extractListData from '../../utils/extractListData';
+import extractListData from '../../utils/extractListData';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 
@@ -34,7 +28,7 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0", "desc")
-    // getCrawlData("6").then(res => {
+    // getCrawlData("1").then(res => {
     //   if (res.result) {
     //     extractListData(res.result)
     //   }

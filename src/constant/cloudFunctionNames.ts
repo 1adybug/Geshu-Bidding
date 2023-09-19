@@ -48,21 +48,10 @@ export const Function_Crawl_Data = "crawlData";
 export const Function_Fetch_Data_Details = "fetchDetails";
 
 /**
- * 获取单个采购（征集）公告详情云函数名
- */
-export const Function_Fetch_Single_Detail = "fetchSingleDetail";
-
-/**
  * 获取单个采购意向公开云函数名
  */
-export const Function_Fetch_Single_Purchase_Intention_Disclosure_Detail =
-  "fetchSinglePurchaseIntentionDisclosureDetail";
-
-/**
- * 查询单个采购意向公开数据通过id云函数名
- */
-export const Function_Find_Single_Purchase_Intention_Disclosure_By_Id =
-  "findSinglePurchaseIntentionDisclosureDetail";
+export const Function_Find_Single_Purchase_Intention_Disclosure =
+  "findSinglePurchaseIntentionDisclosure";
 
 /**
  * 查询单个采购（征集）公告云函数名
@@ -79,3 +68,15 @@ export const Function_Fuzzy_Search = "fuzzySearch";
  * 分页查询云函数名
  */
 export const Function_Pagination_Query = "purchaseIntentionDisclosure";
+
+/**
+ * 查询单个采购意向公开详情云函数名
+ */
+export const Function_Find_Single_Purchase_Intention_Disclosure_Detail_By_LinkId =
+  "findSinglePurchaseIntentionDisclosureDetail";
+
+/**
+ * 查询单个采购（采购）征集公告云函数名
+ */
+export const Function_Find_Single_Purchase_Solicitation_Announcement_Detail_By_LinkId =
+  "findSinglePurchaseSolicitationAnnouncementDetail";
