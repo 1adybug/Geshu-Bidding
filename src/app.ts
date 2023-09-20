@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import Taro, { useLaunch } from "@tarojs/taro";
+import 'taro-ui/dist/style/index.scss'
 import { CLOUD_SERVICE } from "../config/env";
 import "./app.less";
 

@@ -18,7 +18,7 @@ exports.main = async (event) => {
       })
       .update({
         data: {
-          is_deleted: true,
+          is_deleted: false,
         },
       });
     return {

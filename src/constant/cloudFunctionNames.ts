@@ -92,3 +92,27 @@ export const Function_Delete_Single_Purchase_Intention_Disclosure =
  */
 export const Function_Delete_Single_Purchase_Solicitation_Announcement =
   "deleteSinglePurchaseSolicitationAnnouncement";
+
+/**
+ * 还原单个采购（意向）公开
+ */
+export const Function_Restitute_Single_Purchase_Intention_Disclosure =
+  "restituteSinglePurchaseIntentionDisclosure";
+
+/**
+ * 还原单个采购（征集）公告
+ */
+export const Function_Restitute_Single_Purchase_Solicitation_Announcement =
+  "restituteSinglePurchaseSolicitationAnnouncement";
+
+/**
+ * 彻底删除单个采购（意向）公开
+ */
+export const Function_Completely_Delete_Single_Purchase_Intention_Disclosure =
+  "completelyDeleteSinglePurchaseIntention";
+
+/**
+ * 彻底删除单个采购（征集）公告
+ */
+export const Function_Completely_Delete_Single_Purchase_Solicitation_Announcement =
+  "completetlyDeleteSinglePurchaseSolicitation";

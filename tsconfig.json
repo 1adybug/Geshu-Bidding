@@ -25,6 +25,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["./src", "./types", "./config", "src/utils/extractListData.js"],
+  "include": ["./src", "./types", "./config", "src/utils/extractListData.ts"],
   "compileOnSave": false
 }

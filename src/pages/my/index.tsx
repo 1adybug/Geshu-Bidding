@@ -48,7 +48,6 @@ export default function My() {
     ]
 
     function handleClick(itemText: string) {
-        console.log(itemText);
         if (itemText === "回收站") {
             Taro.navigateTo({ url: "/pages/recyclebin/index" })
             return

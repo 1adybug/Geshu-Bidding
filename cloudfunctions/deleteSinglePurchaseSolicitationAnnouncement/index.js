@@ -1,5 +1,3 @@
-// cloudfunctions/updateField/index.js
-
 // eslint-disable-next-line import/no-commonjs
 const cloud = require("wx-server-sdk");
 
@@ -11,12 +9,12 @@ const db = cloud.database();
 
 // eslint-disable-next-line import/no-commonjs
 exports.main = async (event) => {
-  const { id } = event;
+  const { _id } = event;
   try {
     const res = await db
       .collection("purchase_solicitation_announcement")
       .where({
-        _id: id,
+        _id,
       })
       .update({
         data: {

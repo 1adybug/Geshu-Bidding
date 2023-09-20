@@ -12,13 +12,13 @@ exports.main = async (event) => {
   const { _id } = event;
   try {
     const res = await db
-      .collection("purchase_intention_disclosure")
+      .collection("purchase_solicitation_announcement")
       .where({
         _id,
       })
       .update({
         data: {
-          is_deleted: true,
+          is_deleted: false,
         },
       });
     return {

@@ -58,14 +58,13 @@ export default defineConfig(async (merge, {}) => {
         autoprefixer: {
           enable: true,
         },
-        // 添加 tailwindcss 插件配置
-        tailwindcss: {},
       },
       webpackChain(chain) {
         chain.resolve.plugin("tsconfig-paths").use(TsconfigPathsPlugin);
       },
     },
     h5: {
+      esnextModules: ['taro-ui'],
       publicPath: "/",
       staticDirectory: "static",
       output: {

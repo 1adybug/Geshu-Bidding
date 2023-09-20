@@ -10,11 +10,12 @@ interface DetailFirstSectionProps {
     address?: string
     releaseTime?: string
     isCollected?: boolean
+    source?: string
 }
 
 export default function DetailFirstSection(props: DetailFirstSectionProps) {
 
-    const { currentListItemId, projectName, releaseTime, isCollected } = props
+    const { currentListItemId, projectName, releaseTime, isCollected, source } = props
 
     // function convertJsonToExcel(jsonData) {
     //     const worksheet = utils.json_to_sheet(jsonData);
@@ -43,10 +44,10 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
                     <img src={Clock} alt='' />
                     <View className='second'>{releaseTime}</View>
                 </View>
-                <View className='collect'>
+                {source === "homePage" && <View className='collect'>
                     {currentListItemId === "1" && <View className='export'>导出</View>}
                     <View className='text'>{isCollected ? "已收藏" : "收藏"}</View>
-                </View>
+                </View>}
             </View>
         </View>
     )

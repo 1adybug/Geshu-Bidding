@@ -1,12 +1,19 @@
 /**
- * 采购（意向）公开
+ * 卡片数据类型
+*/
+type CardType = "purchase_intention" | "purchase_solicitation"
+
+/**
+ * 采购（意向）公开 || 采购（征集）公告
  */
 declare interface PurchaseIntentionDisclosure {
   _id: string;
   title: string;
   href: string;
   time: string;
-  is_deleted: boolean
+  is_deleted: boolean;
+  type: CardType;
+  is_completely_deleted: boolean;
 }
 
 /**
