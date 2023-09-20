@@ -66,7 +66,6 @@
     "js-base64": "^3.7.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "tailwindcss": "^3.3.3",
     "taro-canvas": "^0.0.3",
     "taro-ui": "^3.1.1",
     "tarojs-router": "^1.2.9",

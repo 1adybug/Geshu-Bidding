@@ -6,6 +6,6 @@ export const getPurchaseSocilitationAnnouncements = () => {
     name: Function_PurchaseSolicitation_Announcement,
     data: {},
   }) as unknown as Promise<
-    CloudFunctionResultSuccess<PurchaseIntentionDisclosure[]>
+    CloudFunctionResultSuccessForGetData<PurchaseIntentionDisclosure>
   >;
 };

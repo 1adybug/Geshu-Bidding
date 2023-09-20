@@ -1,26 +1,17 @@
-import { Swiper, SwiperItem, View } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
 import Shadow from '@/components/shadow';
-import { getbidRejectionOrTerminationAnnouncements } from '@/services/bidRejectionOrTerminationAnnouncement';
 import { getPurchaseIntentionDisclosures } from '@/services/puchaseIntentionDisclosure';
 import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilitationAnnouncement';
-import { getCorrectAnnouncement } from '@/services/correctAnnouncement';
-import { getresultsOrShortlistedAnnouncement } from '@/services/resultsOrShortlistedAnnouncement';
-import { getcontractAnnouncements } from '@/services/contractAnnouncement';
-import { getOtherAnnouncement } from '@/services/otherAnnouncement';
-import { getCrawlData } from '@/services/crawlData';
 import sortListItemData, { SortType } from '@/utils/sortListItemData';
-// import Test from '@/components/exportData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
 import { deleteSinglePurchaseIntentionDisclosure } from '@/services/deleteSinglePurchaseIntentionDisclosur';
 import { deleteSinglePurchaseSolicitationAnnouncement } from '@/services/deleteSinglePurchaseSolicitationAnnouncement';
-import ListItem from '@/components/demo';
-import extractListData from '../../utils/extractListData';
 import './index.module.less'
-import { CardProps } from '../../components/card';
+import Card, { CardProps } from '../../components/card';
 
 export default function Index() {
 
@@ -31,11 +22,11 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0", "desc")
-    getCrawlData("1").then(res => {
-      if (res.result) {
-        extractListData(res.result)
-      }
-    })
+    // getCrawlData("1").then(res => {
+    //   if (res.result) {
+    //     extractListData(res.result)
+    //   }
+    // })
     // queryDataDetails()
   }, [])
 
@@ -64,48 +55,7 @@ export default function Index() {
       res.result && setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), sortType))
       return
     }
-    // if (listItemId === "2") {
-    //   const res = await getCorrectAnnouncement()
-    //   res.result && setProjectList(sortListItemData(res.result, sortType))
-    //   return
-    // }
-    // if (listItemId === "3") {
-    //   const res = await getbidRejectionOrTerminationAnnouncements()
-    //   res.result && setProjectList(sortListItemData(res.result, sortType))
-    //   return
-    // }
-    // if (listItemId === "4") {
-    //   const res = await getresultsOrShortlistedAnnouncement()
-    //   res.result && setProjectList(sortListItemData(res.result, sortType))
-    //   return
-    // }
-    // if (listItemId === "5") {
-    //   const res = await getcontractAnnouncements()
-    //   res.result && setProjectList(sortListItemData(res.result, sortType))
-    //   return
-    // }
-    // if (listItemId === "6") {
-    //   const res = await getOtherAnnouncement()
-    //   res.result && setProjectList(sortListItemData(res.result, sortType))
-    //   return
-    // }
   }
-
-  // async function queryDataDetails() {
-  //   // const res = await getPurchaseIntentionDisclosures()
-  //   // if (res.result) {
-  //   //   const res2 = await fetchSinglePurchaseIntentionDisclosureDetail(res.result[0].href)
-  //   //   console.log(res.result[0].title);
-  //   //   const res3 = extractTableData(res2.result)
-  //   //   console.log(JSON.stringify(res3));
-  //   // }
-
-  //   // const res = await getPurchaseSocilitationAnnouncements()
-  //   // if (res.result) {
-  //   //   const res2 = await fetchSingleDetail(res.result[2].href)
-  //   //   console.log(extractAnnouncementKeyInfo(JSON.stringify(res2.result)));
-  //   // }
-  // }
 
   const onValueInputed = async (keyword: string) => {
     const res = await fuzzySearch(currentListItemId, keyword)
@@ -131,7 +81,7 @@ export default function Index() {
 
   return (
     <View className='index'>
-      {/* <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
+      <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
       <FilterCard changeFilterShow={onOpenFilterShow} visible={filterShow} currentListItemId={currentListItemId} changeFilterCondition={onListItemClicked} />
       <View className='main'>
         {projectList.map((project: CardProps) => {
@@ -141,8 +91,7 @@ export default function Index() {
         })}
       </View>
       <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} />
-      {(drawShow || filterShow) && <Shadow onClose={onCloseDrawShow} />} */}
-      <ListItem />
+      {(drawShow || filterShow) && <Shadow onClose={onCloseDrawShow} />}
     </View>
   )
 }

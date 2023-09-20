@@ -5,6 +5,11 @@ type CloudFunctionResultSuccess<T> = {
   };
 };
 
+type CloudFunctionResultSuccessForGetData<T> = {
+  success: true;
+  result: T[];
+};
+
 type SeconTypeCloudFunctionResultSuccess<T> = {
   success: true;
   result: T[];

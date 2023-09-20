@@ -4,6 +4,7 @@ export default defineAppConfig({
     "pages/detail/index",
     "pages/list/index",
     "pages/my/index",
+    "pages/recyclebin/index",
   ],
   window: {
     backgroundTextStyle: "light",

@@ -35,15 +35,11 @@ export default function Card(props: CardProps) {
                 </View>
             </View>}
             <View className='project-name'>{title}</View>
-            {/* <View className='project-summarize'>{projectSummarize}</View> */}
             <View className='bottom-info'>
                 <View className='release-time'>
                     <img src={Clock} alt='' />
                     <View className='data'>{time}</View>
                 </View>
-                {/* <View className='city'>
-                    淮安
-                </View> */}
             </View>
         </View>
     )
