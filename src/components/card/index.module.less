@@ -1,16 +1,23 @@
 .card {
   width: 672px;
   max-height: 1000px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 0 10px rgba(229, 229, 229, .5),
-    0 0 15px rgba(229, 229, 229, .5), 0 0 20px rgba(229, 229, 229, .5),
-    0 0 25px rgba(229, 229, 229, .5);
+  box-shadow: 0 0 10px rgba(229, 229, 229, 0.5),
+    0 0 15px rgba(229, 229, 229, 0.5), 0 0 20px rgba(229, 229, 229, 0.5),
+    0 0 25px rgba(229, 229, 229, 0.5);
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   position: relative;
+  .delete-img {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -14px;
+    right: -14px;
+  }
   .collected {
     position: absolute;
     width: 70px;

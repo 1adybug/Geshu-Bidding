@@ -1,0 +1,36 @@
+// cloudfunctions/updateField/index.js
+
+// eslint-disable-next-line import/no-commonjs
+const cloud = require("wx-server-sdk");
+
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV,
+});
+
+const db = cloud.database();
+
+// eslint-disable-next-line import/no-commonjs
+exports.main = async (event) => {
+  const { id } = event;
+  try {
+    const res = await db
+      .collection("purchase_solicitation_announcement")
+      .where({
+        _id: id,
+      })
+      .update({
+        data: {
+          is_deleted: true,
+        },
+      });
+    return {
+      success: true,
+      data: res,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+};

@@ -80,3 +80,15 @@ export const Function_Find_Single_Purchase_Intention_Disclosure_Detail_By_LinkId
  */
 export const Function_Find_Single_Purchase_Solicitation_Announcement_Detail_By_LinkId =
   "findSinglePurchaseSolicitationAnnouncementDetail";
+
+/**
+ * 删除单个采购（意向）公开
+ */
+export const Function_Delete_Single_Purchase_Intention_Disclosure =
+  "deleteSinglePurchaseIntentionDisclosure";
+
+/**
+ * 删除单个采购（征集）公告
+ */
+export const Function_Delete_Single_Purchase_Solicitation_Announcement =
+  "deleteSinglePurchaseSolicitationAnnouncement";

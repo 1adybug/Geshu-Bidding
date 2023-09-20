@@ -9,3 +9,7 @@ type SeconTypeCloudFunctionResultSuccess<T> = {
   success: true;
   result: T[];
 };
+
+interface DeleteRespond {
+  success: boolean;
+}

@@ -1,4 +1,4 @@
-import { View } from '@tarojs/components'
+import { Swiper, SwiperItem, View } from '@tarojs/components'
 import { useEffect, useState } from 'react';
 import Search from '@/components/search';
 import SideBar from '@/components/sideBar';
@@ -15,9 +15,12 @@ import sortListItemData, { SortType } from '@/utils/sortListItemData';
 // import Test from '@/components/exportData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
+import { deleteSinglePurchaseIntentionDisclosure } from '@/services/deleteSinglePurchaseIntentionDisclosur';
+import { deleteSinglePurchaseSolicitationAnnouncement } from '@/services/deleteSinglePurchaseSolicitationAnnouncement';
+import ListItem from '@/components/demo';
 import extractListData from '../../utils/extractListData';
 import './index.module.less'
-import Card, { CardProps } from '../../components/card';
+import { CardProps } from '../../components/card';
 
 export default function Index() {
 
@@ -28,11 +31,11 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0", "desc")
-    // getCrawlData("1").then(res => {
-    //   if (res.result) {
-    //     extractListData(res.result)
-    //   }
-    // })
+    getCrawlData("1").then(res => {
+      if (res.result) {
+        extractListData(res.result)
+      }
+    })
     // queryDataDetails()
   }, [])
 
@@ -53,12 +56,12 @@ export default function Index() {
     setCurrentListItemId(listItemId)
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
-      res.result && setProjectList(sortListItemData(res.result, sortType))
+      res.result && setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), sortType))
       return
     }
     if (listItemId === "1") {
       const res = await getPurchaseSocilitationAnnouncements()
-      res.result && setProjectList(sortListItemData(res.result, sortType))
+      res.result && setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), sortType))
       return
     }
     // if (listItemId === "2") {
@@ -109,19 +112,37 @@ export default function Index() {
     setProjectList(res.result)
   }
 
+  const cardDelete = async (id: string) => {
+    if (currentListItemId === "0") {
+      const res = await deleteSinglePurchaseIntentionDisclosure(id)
+      if (!res) return
+      const res1 = await getPurchaseIntentionDisclosures()
+      res1.result && setProjectList(sortListItemData(res1.result.filter(e => !e.is_deleted), "desc"))
+      return
+    }
+    if (currentListItemId === "1") {
+      const res = await deleteSinglePurchaseSolicitationAnnouncement(id)
+      if (!res) return
+      const res1 = await getPurchaseSocilitationAnnouncements()
+      res1.result && setProjectList(sortListItemData(res1.result.filter(e => !e.is_deleted), "desc"))
+      return
+    }
+  }
+
   return (
     <View className='index'>
-      <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
+      {/* <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
       <FilterCard changeFilterShow={onOpenFilterShow} visible={filterShow} currentListItemId={currentListItemId} changeFilterCondition={onListItemClicked} />
       <View className='main'>
         {projectList.map((project: CardProps) => {
           return (
-            <Card key={project._id} title={project.title} time={project.time} _id={project._id} isCollected={project.isCollected} currentListItemId={currentListItemId} />
+            <Card key={project._id} title={project.title} time={project.time} _id={project._id} isCollected={project.isCollected} currentListItemId={currentListItemId} onDelete={cardDelete} />
           )
         })}
       </View>
       <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} />
-      {(drawShow || filterShow) && <Shadow onClose={onCloseDrawShow} />}
+      {(drawShow || filterShow) && <Shadow onClose={onCloseDrawShow} />} */}
+      <ListItem />
     </View>
   )
 }
