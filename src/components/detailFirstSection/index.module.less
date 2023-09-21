@@ -27,19 +27,26 @@
       display: flex;
       column-gap: 10px;
       align-items: center;
-      .export{
+      .export {
         padding: 2px 20px;
         color: #919191;
         border: 2px solid #919191;
         border-radius: 6px;
         font-size: 24px;
       }
-      .text {
+      .collected-text,
+      .uncollected-text {
         padding: 2px 20px;
-        color: #f2ae1f;
-        border: 2px solid hsl(41, 89%, 54%);
         border-radius: 6px;
         font-size: 24px;
+      }
+      .uncollected-text {
+        color: rgb(255, 149, 0);
+        border: 2px solid hsl(41, 91%, 65%);
+      }
+      .collected-text {
+        color: #fff;
+        background-color: rgba(255, 149, 0, 0.763);
       }
     }
   }

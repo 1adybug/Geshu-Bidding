@@ -11,13 +11,20 @@
   flex-direction: column;
   row-gap: 10px;
   position: relative;
-  // .delete-img {
-  //   width: 50px;
-  //   height: 50px;
-  //   position: absolute;
-  //   top: -14px;
-  //   right: -14px;
-  // }
+  overflow: hidden;
+  .collected {
+    background-color: rgba(255, 149, 0, 0.763);
+    color: #ffffff;
+    padding: 4px 80px;
+    transform: rotate(-45deg);
+    position: absolute;
+    bottom: 20px;
+    right: -70px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .project-name {
     font-size: 36px;
   }
@@ -29,28 +36,15 @@
     background-color: rgb(235, 235, 235);
     margin-top: 20px;
   }
-  .bottom {
+  .release-time {
+    color: rgb(120, 119, 119);
+    width: 240px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    align-items: center;
-    .release-time {
-      color: rgb(120, 119, 119);
-      width: 240px;
-      display: flex;
-      align-items: center;
-      column-gap: 10px;
-      img {
-        width: 36px;
-        height: 36px;
-      }
-    }
-    .delete-button {
-      padding: 4px 20px;
-      border: 1px solid rgb(252, 196, 196);
-      color: rgb(242, 127, 127);
-      border-radius: 8px;
-      font-size: 26px;
+    column-gap: 10px;
+    img {
+      width: 36px;
+      height: 36px;
     }
   }
 }

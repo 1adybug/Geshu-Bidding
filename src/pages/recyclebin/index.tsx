@@ -1,22 +1,21 @@
-import { Button, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { Fragment, useEffect, useState } from "react";
 import { getPurchaseIntentionDisclosures } from "@/services/puchaseIntentionDisclosure";
 import { getPurchaseSocilitationAnnouncements } from "@/services/purchaseSocilitationAnnouncement";
 import { wyDeepClone } from "wangyong-utils";
 import RecycleBinCard from "@/components/recycleBinCard";
-import { restituteSinglePurchaseIntentionDisclosure } from "@/services/restituteSinglePurchaseIntentionDisclosure";
-import { restituteSinglePurchaseSolicitationAnnouncement } from "@/services/restituteSinglePurchaseSolicitationAnnouncement";
-import { completelyDeleteSinglePurchaseIntention } from "@/services/completelyDeleteSinglePurchaseIntention";
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtActivityIndicator } from "taro-ui"
+import { AtActivityIndicator } from "taro-ui"
+import { useDidShow } from "@tarojs/taro";
 import "./index.module.less"
 
 export default function RecycleBin() {
 
     const [deletedItems, setDeletedItems] = useState<PurchaseIntentionDisclosure[]>([])
-    const [modalOpen, setModalOpen] = useState(false)
-    const [willDeleteItemId, setWillDeleteItemId] = useState("")
-    const [willDeleteItemType, setWillDeleteItemType] = useState<CardType | "">("")
     const [gotData, setGotData] = useState(false)
+
+    useDidShow(() => {
+        getAllDeleteds()
+    })
 
     useEffect(() => {
         getAllDeleteds()
@@ -29,44 +28,6 @@ export default function RecycleBin() {
         setGotData(true)
     }
 
-    function handleCompletelyDelete(_id: string, type: CardType) {
-        setModalOpen(true)
-        setWillDeleteItemId(_id)
-        setWillDeleteItemType(type)
-    }
-
-    async function handleRestitution(_id: string, type: CardType) {
-        if (type === "purchase_intention") {
-            const res = await restituteSinglePurchaseIntentionDisclosure(_id)
-            if (!res) return
-            getAllDeleteds()
-            return
-        }
-        if (type === "purchase_solicitation") {
-            const res = await restituteSinglePurchaseSolicitationAnnouncement(_id)
-            if (!res) return
-            getAllDeleteds()
-            return
-        }
-    }
-
-    async function confirmCompletelyDelete() {
-        if (willDeleteItemType === "purchase_intention") {
-            const res = await completelyDeleteSinglePurchaseIntention(willDeleteItemId)
-            if (!res) return
-            getAllDeleteds()
-            setModalOpen(false)
-            return
-        }
-        if (willDeleteItemType === "purchase_solicitation") {
-            const res = await completelyDeleteSinglePurchaseIntention(willDeleteItemId)
-            if (!res) return
-            getAllDeleteds()
-            setModalOpen(false)
-            return
-        }
-    }
-
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
@@ -74,22 +35,11 @@ export default function RecycleBin() {
             </View> : <View className='recyclebin'>
                 {deletedItems.map((item: PurchaseIntentionDisclosure) => {
                     return (
-                        <RecycleBinCard key={item._id} _id={item._id} title={item.title} time={item.time} completelyDelete={handleCompletelyDelete} restitution={handleRestitution} type={item.type} />
+                        <RecycleBinCard key={item._id} _id={item._id} title={item.title} time={item.time} type={item.type} />
                     )
                 })}
-                <AtModal isOpened={modalOpen}>
-                    <AtModalHeader>提示</AtModalHeader>
-                    <AtModalContent>
-                        确定要彻底删除吗？
-                    </AtModalContent>
-                    <AtModalAction>
-                        <Button onClick={() => setModalOpen(false)}>取消</Button>
-                        <Button onClick={confirmCompletelyDelete}>确定</Button>
-                    </AtModalAction>
-                </AtModal>
                 {/* <AtToast isOpened text={} icon={}></AtToast> */}
             </View>}
         </Fragment>
-
     )
 }

@@ -1,40 +1,25 @@
 import { View } from "@tarojs/components"
-import { write, utils } from 'xlsx';
-import { saveAs } from 'file-saver';
 import Clock from "../../assets/clock.png"
 import "./index.module.less"
 
 interface DetailFirstSectionProps {
+    _id?: string
     currentListItemId?: string
     projectName?: string
     address?: string
     releaseTime?: string
     isCollected?: boolean
     source?: string
+    collect: (_id?: string, sourceId?: string, collectedStatus?: boolean) => void
 }
 
 export default function DetailFirstSection(props: DetailFirstSectionProps) {
 
-    const { currentListItemId, projectName, releaseTime, isCollected, source } = props
+    const { _id, currentListItemId, projectName, releaseTime, isCollected, source, collect } = props
 
-    // function convertJsonToExcel(jsonData) {
-    //     const worksheet = utils.json_to_sheet(jsonData);
-    //     const workbook = utils.book_new();
-    //     utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
-    //     const excelData = write(workbook, { type: 'array', bookType: 'xlsx' });
-    //     return new Blob([excelData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    // }
-
-    // function handleDownloadExcel() {
-    //     const jsonData = [
-    //         {
-    //             name: 'Alice',
-    //             age: 25,
-    //         }
-    //     ];
-    //     const excelBlob = convertJsonToExcel(jsonData);
-    //     saveAs(excelBlob, 'data.xlsx');
-    // }
+    function handleCollect() {
+        collect(_id, currentListItemId, isCollected)
+    }
 
     return (
         <View className='first-section'>
@@ -46,7 +31,7 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
                 </View>
                 {source === "homePage" && <View className='collect'>
                     {currentListItemId === "1" && <View className='export'>导出</View>}
-                    <View className='text'>{isCollected ? "已收藏" : "收藏"}</View>
+                    <View className={isCollected ? "collected-text" : "uncollected-text"} onClick={handleCollect}>{isCollected ? "已收藏" : "收藏"}</View>
                 </View>}
             </View>
         </View>

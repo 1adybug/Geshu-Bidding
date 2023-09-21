@@ -11,12 +11,10 @@
   flex-direction: column;
   row-gap: 10px;
   position: relative;
-  .top {
-    .project-title {
-      font-size: 36px;
-    }
+  .project-title {
+    font-size: 36px;
   }
-  .top::after {
+  .project-title::after {
     content: "";
     display: block;
     width: 100%;
@@ -30,10 +28,10 @@
     justify-content: space-between;
     color: rgb(120, 119, 119);
     align-items: center;
-    margin-top: 20px;
     .source {
       display: flex;
       align-items: center;
+      font-size: 30px;
     }
     .release-time {
       display: flex;
@@ -43,25 +41,6 @@
         width: 36px;
         height: 36px;
       }
-    }
-  }
-  .bottom {
-    display: flex;
-    column-gap: 20px;
-    margin-left: auto;
-    .completely-delete-button,
-    .restitution-button {
-      border-radius: 8px;
-      font-size: 26px;
-      padding: 4px 20px;
-    }
-    .completely-delete-button {
-      border: 1px solid rgb(224, 224, 224);
-      color: rgb(172, 172, 172);
-    }
-    .restitution-button {
-      border: 1px solid #60e383;
-      color: #169e3b;
     }
   }
 }

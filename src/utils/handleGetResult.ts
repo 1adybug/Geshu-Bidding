@@ -8,7 +8,7 @@ export default function handleGetResult(
       _id: e._id,
       title: e.title,
       time: e.time,
-      isCollected: true,
+      is_collected: e.is_collected,
     };
   });
   return result;

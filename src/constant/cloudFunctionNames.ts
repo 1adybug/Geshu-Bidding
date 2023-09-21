@@ -116,3 +116,15 @@ export const Function_Completely_Delete_Single_Purchase_Intention_Disclosure =
  */
 export const Function_Completely_Delete_Single_Purchase_Solicitation_Announcement =
   "completetlyDeleteSinglePurchaseSolicitation";
+
+/**
+ * 收藏或取消收藏单个采购（意向）公开
+ */
+export const Function_Collect_Single_Purchase_Intention_Disclosure =
+  "collectSinglePurchaseIntentionDisclosure";
+
+/**
+ * 收藏或取消收藏单个采购（征集）公告
+ */
+export const Function_Collect_Single_Purchase_Solicitation_Announcement =
+  "collectSinglePurchaseSolicitationAnnouncement";

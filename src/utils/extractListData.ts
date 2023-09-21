@@ -32,6 +32,9 @@ function secondaryHandle(html) {
       time: spanContent,
       href: href,
       title: title,
+      is_deleted: false,
+      is_completely_deleted: false,
+      is_collected: false
     };
 
     results.push(obj);

@@ -14,6 +14,7 @@ declare interface PurchaseIntentionDisclosure {
   is_deleted: boolean;
   type: CardType;
   is_completely_deleted: boolean;
+  is_collected: boolean
 }
 
 /**

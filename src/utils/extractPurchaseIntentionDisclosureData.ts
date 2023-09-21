@@ -42,6 +42,9 @@ export default function extractTableData(html) {
           whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts:
             tableData[0][6],
           remark: tableData[0][7],
+          is_deleted: false,
+          is_completely_deleted: false,
+          is_collected: false
         };
       }
     }
