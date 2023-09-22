@@ -6,6 +6,7 @@ import { restituteSinglePurchaseIntentionDisclosure } from "@/services/restitute
 import { restituteSinglePurchaseSolicitationAnnouncement } from "@/services/restituteSinglePurchaseSolicitationAnnouncement";
 import { collectSinglePurchaseIntentionDisclosure } from "@/services/collectSinglePurchaseIntentionDisclosure";
 import { collectSinglePurchaseSolicitationAnnouncement } from "@/services/collectSinglePurchaseSolicitationAnnouncement";
+import { useState } from "react";
 import "./index.module.less"
 
 interface DeleteAndRestituteProps {
@@ -13,24 +14,30 @@ interface DeleteAndRestituteProps {
     currentListItemId?: string
     source?: string
     completelyDelete: (_id?: string) => void
-    fetchNext: (currentDeleteItemId?: string) => void
+    fetchNext: (currentDeleteItemId?: string) => Promise<string>
 }
 
 export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
 
     const { _id, currentListItemId, source, completelyDelete, fetchNext } = props
 
+    const [currentId, setCurrentId] = useState(_id)
+
     async function handleDelete() {
         if (currentListItemId === "0") {
-            const res = await deleteSinglePurchaseIntentionDisclosure(_id)
+            const res = await deleteSinglePurchaseIntentionDisclosure(currentId)
             if (!res) return
-            fetchNext(_id)
+            const res1 = await fetchNext(currentId)
+            if (!res1) return
+            setCurrentId(res1)
             return
         }
         if (currentListItemId === "1") {
-            const res = await deleteSinglePurchaseSolicitationAnnouncement(_id)
+            const res = await deleteSinglePurchaseSolicitationAnnouncement(currentId)
             if (!res) return
-            Taro.navigateBack()
+            const res1 = await fetchNext(currentId)
+            if (!res1) return
+            setCurrentId(res1)
             return
         }
     }

@@ -18,3 +18,10 @@ type SeconTypeCloudFunctionResultSuccess<T> = {
 interface DeleteRespond {
   success: boolean;
 }
+
+interface ContinuousDeletionRespond {
+  success: boolean;
+  result: {
+    fetchId: string;
+  };
+}

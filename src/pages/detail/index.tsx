@@ -15,6 +15,7 @@ import { completetlyDeleteSinglePurchaseSolicitation } from "@/services/complete
 import { collectSinglePurchaseIntentionDisclosure } from "@/services/collectSinglePurchaseIntentionDisclosure";
 import { collectSinglePurchaseSolicitationAnnouncement } from "@/services/collectSinglePurchaseSolicitationAnnouncement";
 import "./index.module.less"
+import { newCardProps } from "../index";
 
 interface ThisPurchaseIntentionDisclosureDetail extends PurchaseIntentionDisclosureDetail {
     releaseTime: string
@@ -37,21 +38,21 @@ export default function Detail() {
     const [willDeleteItemId, setWillDeleteItemId] = useState("")
 
     useEffect(() => {
-        getThisDetail()
+        if (!_id) return
+        getThisDetail(_id)
     }, [])
 
-    async function getThisDetail() {
-        if (!_id) return
+    async function getThisDetail(id: string) {
         if (currentListItemId === "0") {
-            const res = await findSinglePurchaseIntentionDisclosure(_id)
-            const res1 = await findSinglePurchaseIntentionDisclosureDetailByLinkId(_id)
+            const res = await findSinglePurchaseIntentionDisclosure(id)
+            const res1 = await findSinglePurchaseIntentionDisclosureDetailByLinkId(id)
             setThisPurchaseIntentionDisclosureDetail({ releaseTime: res.result.data[0].time, isCollected: res.result.data[0].is_collected, ...res1.result.data[0] })
             setGotData(true)
             return
         }
         if (currentListItemId === "1") {
-            const res = await findSinglePurchaseSolicitationAnnouncement(_id)
-            const res1 = await findSinglePurchaseSolicitationAnnouncementDetail(_id)
+            const res = await findSinglePurchaseSolicitationAnnouncement(id)
+            const res1 = await findSinglePurchaseSolicitationAnnouncementDetail(id)
             const obj = {
                 title: res.result.data[0].title,
                 releaseTime: res.result.data[0].time,
@@ -89,19 +90,30 @@ export default function Detail() {
         if (sourceId === "0") {
             const res = await collectSinglePurchaseIntentionDisclosure(id, !collectedStaus)
             if (!res) return
-            getThisDetail()
+            getThisDetail(id)
             return
         }
         if (sourceId === "1") {
             const res = await collectSinglePurchaseSolicitationAnnouncement(id, !collectedStaus)
             if (!res) return
-            getThisDetail()
+            getThisDetail(id)
             return
         }
     }
 
     async function handleFetchNext(currentDeleteItemId: string) {
-
+        const res = await Taro.getStorage({ key: "homePageData" })
+        if (!res.data) return
+        if (currentListItemId === "0") {
+            const nextItemIndex: number = res.data.purchaseIntentionDisclosure.find((item: newCardProps) => item._id === currentDeleteItemId).index
+            await getThisDetail(res.data.purchaseIntentionDisclosure.find((item: newCardProps) => item.index === nextItemIndex + 1)._id)
+            return res.data.purchaseIntentionDisclosure.find((item: newCardProps) => item.index === nextItemIndex + 1)._id
+        }
+        if (currentListItemId === "1") {
+            const nextItemIndex: number = res.data.purchaseSocilitationAnnouncements.find((item: newCardProps) => item._id === currentDeleteItemId).index
+            await getThisDetail(res.data.purchaseSocilitationAnnouncements.find((item: newCardProps) => item.index === nextItemIndex + 1)._id)
+            return res.data.purchaseSocilitationAnnouncements.find((item: newCardProps) => item.index === nextItemIndex + 1)._id
+        }
     }
 
     return (

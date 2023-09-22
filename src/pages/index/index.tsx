@@ -12,10 +12,13 @@ import Taro, { useDidShow } from '@tarojs/taro';
 import { getCrawlData } from '@/services/crawlData';
 import extractListData from '@/utils/extractListData';
 import { AtActivityIndicator } from 'taro-ui';
-import useHomePageList from '@/store';
+import { wyDeepClone } from 'wangyong-utils';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
 
+export interface newCardProps extends CardProps {
+  index: number
+}
 
 export default function Index() {
 
@@ -24,7 +27,6 @@ export default function Index() {
   const [projectList, setProjectList] = useState<CardProps[]>([])
   const [currentListItemId, setCurrentListItemId] = useState<string>("0")
   const [gotData, setGotData] = useState(false)
-  // const [homePageDataList, setHomePageDataList] = useHomePageList()
 
   useDidShow(() => {
     onListItemClicked("0", "desc")
@@ -58,19 +60,31 @@ export default function Index() {
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
       if (!res.result) return
-      const resultData = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
+      const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
       setProjectList(resultData)
       setGotData(true)
-      Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: resultData } })
+      const newResultData: newCardProps[] = wyDeepClone(resultData).map((item, index) => {
+        return {
+          index, ...item
+        }
+      })
+      const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
+      if (!res1) return
       return
     }
     if (listItemId === "1") {
       const res = await getPurchaseSocilitationAnnouncements()
       if (!res.result) return
-      const resultData = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
+      const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
       setProjectList(resultData)
       setGotData(true)
-      Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: resultData } })
+      const newResultData: newCardProps[] = wyDeepClone(resultData).map((item, index) => {
+        return {
+          index, ...item
+        }
+      })
+      const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
+      if (!res1) return
       return
     }
   }
