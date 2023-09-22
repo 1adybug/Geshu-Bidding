@@ -30,7 +30,7 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
                     <View className='second'>{releaseTime}</View>
                 </View>
                 {source === "homePage" && <View className='collect'>
-                    {currentListItemId === "1" && <View className='export'>导出</View>}
+                    {/* {currentListItemId === "1" && <View className='export'>导出</View>} */}
                     <View className={isCollected ? "collected-text" : "uncollected-text"} onClick={handleCollect}>{isCollected ? "已收藏" : "收藏"}</View>
                 </View>}
             </View>

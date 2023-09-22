@@ -52,6 +52,11 @@ export default function My() {
             Taro.navigateTo({ url: "/pages/recyclebin/index" })
             return
         }
+        if (itemText === "我的收藏") {
+            Taro.navigateTo({ url: "/pages/mycollections/index" })
+            return
+        }
+
     }
 
     return (

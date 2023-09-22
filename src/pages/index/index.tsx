@@ -8,12 +8,14 @@ import { getPurchaseSocilitationAnnouncements } from '@/services/purchaseSocilit
 import sortListItemData, { SortType } from '@/utils/sortListItemData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
-import { useDidShow } from '@tarojs/taro';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { getCrawlData } from '@/services/crawlData';
 import extractListData from '@/utils/extractListData';
 import { AtActivityIndicator } from 'taro-ui';
+import useHomePageList from '@/store';
 import './index.module.less'
 import Card, { CardProps } from '../../components/card';
+
 
 export default function Index() {
 
@@ -22,6 +24,7 @@ export default function Index() {
   const [projectList, setProjectList] = useState<CardProps[]>([])
   const [currentListItemId, setCurrentListItemId] = useState<string>("0")
   const [gotData, setGotData] = useState(false)
+  // const [homePageDataList, setHomePageDataList] = useHomePageList()
 
   useDidShow(() => {
     onListItemClicked("0", "desc")
@@ -29,11 +32,11 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0", "desc")
-    getCrawlData("0").then(res => {
-      if (res.result) {
-        extractListData(res.result)
-      }
-    })
+    // getCrawlData("0").then(res => {
+    //   if (res.result) {
+    //     extractListData(res.result)
+    //   }
+    // })
     // queryDataDetails()
   }, [])
 
@@ -54,14 +57,20 @@ export default function Index() {
     setCurrentListItemId(listItemId)
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
-      res.result && setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), sortType))
+      if (!res.result) return
+      const resultData = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
+      setProjectList(resultData)
       setGotData(true)
+      Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: resultData } })
       return
     }
     if (listItemId === "1") {
       const res = await getPurchaseSocilitationAnnouncements()
-      res.result && setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), sortType))
+      if (!res.result) return
+      const resultData = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
+      setProjectList(resultData)
       setGotData(true)
+      Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: resultData } })
       return
     }
   }

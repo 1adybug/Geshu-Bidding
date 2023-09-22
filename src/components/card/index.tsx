@@ -1,6 +1,5 @@
 import { View } from "@tarojs/components"
 import Taro from "@tarojs/taro"
-import { useEffect } from "react"
 import "./index.module.less"
 import Clock from "../../assets/clock.png"
 
@@ -17,8 +16,7 @@ export default function Card(props: CardProps) {
 
     const { currentListItemId, _id, title, time, is_collected } = props
 
-    const handleClick = (event: any) => {
-        event.stopPropagation()
+    const handleClick = () => {
         Taro.navigateTo({ url: `/pages/detail/index?_id=${_id}&currentListItemId=${currentListItemId}&source=homePage`})
     }
 

@@ -52,7 +52,6 @@ export default function Detail() {
         if (currentListItemId === "1") {
             const res = await findSinglePurchaseSolicitationAnnouncement(_id)
             const res1 = await findSinglePurchaseSolicitationAnnouncementDetail(_id)
-            if (!(res && res1)) return
             const obj = {
                 title: res.result.data[0].title,
                 releaseTime: res.result.data[0].time,
@@ -101,6 +100,10 @@ export default function Detail() {
         }
     }
 
+    async function handleFetchNext(currentDeleteItemId: string) {
+
+    }
+
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
@@ -109,11 +112,11 @@ export default function Detail() {
                 {currentListItemId === "0" ? <View className='detail'>
                     <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.projectName} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={_id} collect={onCollected} />
                     <DetailSecondSection projectSummarize={thisPurchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={thisPurchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={thisPurchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={thisPurchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={thisPurchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={thisPurchaseIntentionDisclosureDetail?.remark} />
-                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} />
+                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} />
                 </View> : <View className='detail'>
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={_id} collect={onCollected} />
                     <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} />
-                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} />
+                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} />
                 </View>}
             </Fragment>}
             <AtModal isOpened={modalOpen}>
