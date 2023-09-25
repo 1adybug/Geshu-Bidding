@@ -10,7 +10,7 @@ export default function CopyExportedFileDownloadModal(props: CopyExportedFileDow
     return (
         <View className='copy-exported-file-Download-modal'>
             <View className='title'>导出文件下载链接</View>
-            <View className='url-container'>{url}</View>
+            <a href={url} target='_blank' >点击</a>
             <View className='copy-url-button'>请复制该链接到浏览器中打开</View>
         </View>
     )

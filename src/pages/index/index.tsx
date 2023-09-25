@@ -9,13 +9,16 @@ import sortListItemData, { SortType } from '@/utils/sortListItemData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
 import Taro, { useDidShow } from '@tarojs/taro';
-// import { getCrawlData } from '@/services/crawlData';
-// import extractListData from '@/utils/extractListData';
+import { getCrawlData } from '@/services/crawlData';
+import extractListData from '@/utils/extractListData';
 import { AtActivityIndicator } from 'taro-ui';
 import { wyDeepClone } from 'wangyong-utils';
 import { exportToExcelFn } from '@/services/exportToExcel';
 import CopyExportedFileDownloadModal from '@/components/copyExportedFileDownloadURlModal';
+import { fetchExportedFileDownloadURl } from '@/services/fetchExportedFileDownloadURl';
+import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
+import "./index.module.less"
 
 export default function Index() {
 
@@ -25,6 +28,8 @@ export default function Index() {
   const [currentListItemId, setCurrentListItemId] = useState<string>("0")
   const [gotData, setGotData] = useState(false)
   const [shouldActivedListItemId, setShouldActivedListItemId] = useState("0")
+  const [exportedFileDownloadURl, setExportedFileDownloadURl] = useState("")
+  const [copyExportedFileURlModalVisible, setCopyExportedFileURlModalVisible] = useState(false)
 
   useDidShow(() => {
     init()
@@ -32,7 +37,7 @@ export default function Index() {
 
   useEffect(() => {
     onListItemClicked("0", "desc")
-    // init()
+    init()
     // getCrawlData("1").then(res => {
     //   if (res.result) {
     //     extractListData(res.result)
@@ -115,10 +120,20 @@ export default function Index() {
   }
 
   async function exportData() {
-    const res = await exportToExcelFn()
-    if(!res) return
-    console.log(res);
-    // const resDownloadURl
+    const data = [
+      ["Name", "Age", "Country"],
+      ["AK-103", "25", "USA"],
+      ["Jane Smith", "30", "Canada"],
+      ["Bob Johnson", "33", "Australia"],
+    ]
+    // const data = await 
+    const res = await exportToExcelFn(data)
+    if (!res) return
+    const resDownloadURl = await fetchExportedFileDownloadURl(res.result)
+    if (!resDownloadURl) return
+    console.log(resDownloadURl.result.fileList[0].tempFileURL);
+    setExportedFileDownloadURl(resDownloadURl.result.fileList[0].tempFileURL)
+    copyExportedFileURlModalVisible ? setCopyExportedFileURlModalVisible(false) : setCopyExportedFileURlModalVisible(true)
   }
 
   return (
@@ -137,9 +152,9 @@ export default function Index() {
             })}
           </View>
           <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
-          {/* <CopyExportedFileDownloadModal url={""} /> */}
-          <button className='export-button' onClick={exportData}>导</button>
-          {(drawShow || filterShow) && <Shadow onClose={onCloseDrawShow} />}
+          {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} />}
+          <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />
+          {(drawShow || filterShow || copyExportedFileURlModalVisible) && <Shadow onClose={onCloseDrawShow} />}
         </Fragment>}
     </View>
   )

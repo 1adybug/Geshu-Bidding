@@ -7,5 +7,5 @@ export const fetchExportedFileDownloadURl = (fileID: string) => {
     data: {
       fileID,
     },
-  }) as unknown;
+  }) as unknown as Promise<FetchExportedFileDownloadURl>
 };

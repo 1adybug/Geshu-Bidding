@@ -25,3 +25,17 @@ interface ContinuousDeletionRespond {
     fetchId: string;
   };
 }
+
+interface GetExportedFileDownloadURLRespond {
+  result: string;
+}
+
+interface FetchExportedFileDownloadURl {
+  result: {
+    fileList: {
+      fileID: string;
+      status: 0 | 1;
+      tempFileURL: string;
+    }[];
+  };
+}

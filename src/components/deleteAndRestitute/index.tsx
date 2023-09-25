@@ -6,7 +6,7 @@ import { restituteSinglePurchaseIntentionDisclosure } from "@/services/restitute
 import { restituteSinglePurchaseSolicitationAnnouncement } from "@/services/restituteSinglePurchaseSolicitationAnnouncement";
 import { collectSinglePurchaseIntentionDisclosure } from "@/services/collectSinglePurchaseIntentionDisclosure";
 import { collectSinglePurchaseSolicitationAnnouncement } from "@/services/collectSinglePurchaseSolicitationAnnouncement";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import "./index.module.less"
 
 interface DeleteAndRestituteProps {
@@ -99,7 +99,7 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
                 </View>
                 {source === "recycleBin" && <View className='restitute' onClick={handleRestitute}>还原</View>}
             </View>}
-            {source === "homePage" && <View className='switch-container'>
+            {source === "homee" && <View className='switch-container'>
                 <View className='prev' onClick={handlePrevClick}>
                     <View>&lt;&lt;</View>
                     <View>上一条</View>
