@@ -39,3 +39,23 @@ interface FetchExportedFileDownloadURl {
     }[];
   };
 }
+
+interface FetchPurchaseSolicitationAnnouncementDetailsWillBeExported {
+  result: {
+    data: PurchaseSolicitationAnnouncementDetailWrapper[];
+  };
+}
+
+interface PurchaseSolicitationAnnouncementDetailWrapper {
+  joinedData: PurchaseSolicitationAnnouncementDetail[];
+}
+
+interface PurchaseSolicitationAnnouncementDetail {
+  project_no: string;
+  project_name: string;
+  budget: string;
+  submission_time: string;
+  principal_unit: string;
+  project_principal: string;
+  principal_contact: string;
+}

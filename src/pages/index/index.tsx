@@ -16,6 +16,7 @@ import { wyDeepClone } from 'wangyong-utils';
 import { exportToExcelFn } from '@/services/exportToExcel';
 import CopyExportedFileDownloadModal from '@/components/copyExportedFileDownloadURlModal';
 import { fetchExportedFileDownloadURl } from '@/services/fetchExportedFileDownloadURl';
+import { fetchPurchaseSolicitationAnnouncementDataWillBeExported } from '@/services/fetchPurchaseSolicitationAnnouncementDataWillBeExported';
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -73,7 +74,7 @@ export default function Index() {
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
       if (!res.result) return
-      const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
+      const resultData: CardProps[] = res.result.filter(e => !e.is_deleted)
       setProjectList(resultData)
       setGotData(true)
       const newResultData: CardProps[] = wyDeepClone(resultData)
@@ -120,16 +121,30 @@ export default function Index() {
   }
 
   async function exportData() {
-    const data = [
-      ["Name", "Age", "Country"],
-      ["AK-103", "25", "USA"],
-      ["Jane Smith", "30", "Canada"],
-      ["Bob Johnson", "33", "Australia"],
-    ]
-    // const data = await 
-    const res = await exportToExcelFn(data)
+    // const data = [
+    //   ["Name", "Age", "Country"],
+    //   ["AK-103", "25", "USA"],
+    //   ["Jane Smith", "30", "Canada"],
+    //   ["Bob Johnson", "33", "Australia"],
+    // ]
+    const res = await fetchPurchaseSolicitationAnnouncementDataWillBeExported()
     if (!res) return
-    const resDownloadURl = await fetchExportedFileDownloadURl(res.result)
+    let initArr = res.result.data.map((item: PurchaseSolicitationAnnouncementDetailWrapper) => {
+      return [
+        item.joinedData[0].budget,
+        item.joinedData[0].project_no,
+        item.joinedData[0].project_name,
+        item.joinedData[0].submission_time,
+        item.joinedData[0].principal_unit,
+        item.joinedData[0].project_principal,
+        item.joinedData[0].principal_contact
+      ]
+    })
+
+    initArr.splice(0,0,["预算金额（万元）","项目编号","项目名称","投标时间","采购人单位","采购人姓名","采购人联系方式"])
+    const res1 = await exportToExcelFn(initArr)
+    if (!res1) return
+    const resDownloadURl = await fetchExportedFileDownloadURl(res1.result)
     if (!resDownloadURl) return
     console.log(resDownloadURl.result.fileList[0].tempFileURL);
     setExportedFileDownloadURl(resDownloadURl.result.fileList[0].tempFileURL)

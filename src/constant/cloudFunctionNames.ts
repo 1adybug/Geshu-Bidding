@@ -139,3 +139,8 @@ export const Function_Export_Data = "exportToExcel";
  */
 export const Function_Fetch_Exported_File_Download_URL =
   "fetchExportedFileDownloadURL";
+
+/**
+ * 获取即将被导出的采购（征集）公告数据
+*/
+export const Function_Fetch_Purchase_Solicitation_Announcement_Details_Will_Be_Exported = "fetchPurchaseSolicitationAnnouncementDataWillBeExported"

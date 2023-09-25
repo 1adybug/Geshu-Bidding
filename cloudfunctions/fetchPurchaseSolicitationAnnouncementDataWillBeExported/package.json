@@ -1,5 +1,5 @@
 {
-  "name": "fetchAllPurchaseSolicitationAnnouncementDetails",
+  "name": "fetchPurchaseSolicitationAnnouncementDataWillBeExported",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
