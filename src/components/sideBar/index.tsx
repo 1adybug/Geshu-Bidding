@@ -5,6 +5,7 @@ import "./index.module.less"
 import Close from "../../assets/close.png"
 
 interface SideBarProps {
+    activedItemId: string
     visible: boolean
     onClose: () => void
     itemClicked: (listItemId: string, sortType: SortType) => void
@@ -12,7 +13,7 @@ interface SideBarProps {
 
 export default function SideBar(props: SideBarProps) {
 
-    const { visible, onClose, itemClicked } = props
+    const { visible, onClose, itemClicked, activedItemId } = props
 
     const handleClick = () => {
         onClose()
@@ -31,7 +32,7 @@ export default function SideBar(props: SideBarProps) {
             <View className='content'>
                 {dataList.map(e => {
                     return (
-                        <View key={e.listItemId} className='list-item' onClick={() => handleListItemClick(e.listItemId)}>
+                        <View key={e.listItemId} className={activedItemId === e.listItemId ? "actived-list-item" : "default-list-item"} onClick={() => handleListItemClick(e.listItemId)}>
                             {e.listItemText}
                         </View>
                     )

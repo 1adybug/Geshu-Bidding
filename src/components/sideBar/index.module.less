@@ -20,14 +20,18 @@
     row-gap: 20px;
     padding: 20px;
     margin-top: 50px;
-    .list-item {
+    .default-list-item,
+    .actived-list-item {
       padding-left: 20px;
       padding-top: 20px;
       padding-bottom: 20px;
       font-size: 30px;
     }
+    .actived-list-item {
+      color: #169e3b;
+    }
     .list-item:hover {
-      color: #169E3B;
+      color: #169e3b;
     }
     & :not(:last-child) {
       border-bottom: 1px solid #e7e7e7;

@@ -128,3 +128,14 @@ export const Function_Collect_Single_Purchase_Intention_Disclosure =
  */
 export const Function_Collect_Single_Purchase_Solicitation_Announcement =
   "collectSinglePurchaseSolicitationAnnouncement";
+
+/**
+ * 导出数据
+ */
+export const Function_Export_Data = "exportToExcel";
+
+/**
+ * 获取导出文件的下载链接
+ */
+export const Function_Fetch_Exported_File_Download_URL =
+  "fetchExportedFileDownloadURL";

@@ -9,16 +9,13 @@ import sortListItemData, { SortType } from '@/utils/sortListItemData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
 import Taro, { useDidShow } from '@tarojs/taro';
-import { getCrawlData } from '@/services/crawlData';
-import extractListData from '@/utils/extractListData';
+// import { getCrawlData } from '@/services/crawlData';
+// import extractListData from '@/utils/extractListData';
 import { AtActivityIndicator } from 'taro-ui';
 import { wyDeepClone } from 'wangyong-utils';
-import './index.module.less'
+import { exportToExcelFn } from '@/services/exportToExcel';
+import CopyExportedFileDownloadModal from '@/components/copyExportedFileDownloadURlModal';
 import Card, { CardProps } from '../../components/card';
-
-export interface newCardProps extends CardProps {
-  index: number
-}
 
 export default function Index() {
 
@@ -27,20 +24,31 @@ export default function Index() {
   const [projectList, setProjectList] = useState<CardProps[]>([])
   const [currentListItemId, setCurrentListItemId] = useState<string>("0")
   const [gotData, setGotData] = useState(false)
+  const [shouldActivedListItemId, setShouldActivedListItemId] = useState("0")
 
   useDidShow(() => {
-    onListItemClicked("0", "desc")
+    init()
   });
 
   useEffect(() => {
     onListItemClicked("0", "desc")
-    // getCrawlData("0").then(res => {
+    // init()
+    // getCrawlData("1").then(res => {
     //   if (res.result) {
     //     extractListData(res.result)
     //   }
     // })
     // queryDataDetails()
   }, [])
+
+  function init() {
+    getCurrentListItemId().then(res => {
+      if (!res) return
+      onListItemClicked(res.data.currentListItemId, "desc")
+      setShouldActivedListItemId(res.data.currentListItemId)
+    })
+    return
+  }
 
   const onOpenDrawShow = () => {
     setDrawShow(true)
@@ -63,13 +71,11 @@ export default function Index() {
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
       setProjectList(resultData)
       setGotData(true)
-      const newResultData: newCardProps[] = wyDeepClone(resultData).map((item, index) => {
-        return {
-          index, ...item
-        }
-      })
+      const newResultData: CardProps[] = wyDeepClone(resultData)
       const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
       if (!res1) return
+      rememberCurrentListItemId("0")
+      setShouldActivedListItemId("0")
       return
     }
     if (listItemId === "1") {
@@ -78,20 +84,41 @@ export default function Index() {
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
       setProjectList(resultData)
       setGotData(true)
-      const newResultData: newCardProps[] = wyDeepClone(resultData).map((item, index) => {
+      const newResultData: CardProps[] = wyDeepClone(resultData).map((item, index) => {
         return {
           index, ...item
         }
       })
       const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
       if (!res1) return
+      rememberCurrentListItemId("1")
+      setShouldActivedListItemId("1")
       return
     }
   }
 
+  async function rememberCurrentListItemId(id: string) {
+    const res = await Taro.setStorage({ key: "currentListItemId", data: { currentListItemId: id } })
+    if (!res) return
+    return
+  }
+
+  async function getCurrentListItemId() {
+    const res = await Taro.getStorage({ key: "currentListItemId" })
+    if (!res) return
+    return res
+  }
+
   const onValueInputed = async (keyword: string) => {
     const res = await fuzzySearch(currentListItemId, keyword)
-    setProjectList(res.result)
+    setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), "desc"))
+  }
+
+  async function exportData() {
+    const res = await exportToExcelFn()
+    if(!res) return
+    console.log(res);
+    // const resDownloadURl
   }
 
   return (
@@ -109,7 +136,9 @@ export default function Index() {
               )
             })}
           </View>
-          <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} />
+          <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
+          {/* <CopyExportedFileDownloadModal url={""} /> */}
+          <button className='export-button' onClick={exportData}>导</button>
           {(drawShow || filterShow) && <Shadow onClose={onCloseDrawShow} />}
         </Fragment>}
     </View>

@@ -14,8 +14,8 @@ import { completelyDeleteSinglePurchaseIntention } from "@/services/completelyDe
 import { completetlyDeleteSinglePurchaseSolicitation } from "@/services/completetlyDeleteSinglePurchaseSolicitation";
 import { collectSinglePurchaseIntentionDisclosure } from "@/services/collectSinglePurchaseIntentionDisclosure";
 import { collectSinglePurchaseSolicitationAnnouncement } from "@/services/collectSinglePurchaseSolicitationAnnouncement";
+import { CardProps } from "@/components/card";
 import "./index.module.less"
-import { newCardProps } from "../index";
 
 interface ThisPurchaseIntentionDisclosureDetail extends PurchaseIntentionDisclosureDetail {
     releaseTime: string
@@ -36,6 +36,9 @@ export default function Detail() {
     const [gotData, setGotData] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [willDeleteItemId, setWillDeleteItemId] = useState("")
+    const [startX, setStartX] = useState(0);
+    const [endX, setEndX] = useState(0);
+    const [thisId, setThisId] = useState<string | undefined>(_id)
 
     useEffect(() => {
         if (!_id) return
@@ -105,30 +108,114 @@ export default function Detail() {
         const res = await Taro.getStorage({ key: "homePageData" })
         if (!res.data) return
         if (currentListItemId === "0") {
-            const nextItemIndex: number = res.data.purchaseIntentionDisclosure.find((item: newCardProps) => item._id === currentDeleteItemId).index
-            await getThisDetail(res.data.purchaseIntentionDisclosure.find((item: newCardProps) => item.index === nextItemIndex + 1)._id)
-            return res.data.purchaseIntentionDisclosure.find((item: newCardProps) => item.index === nextItemIndex + 1)._id
+            const thisItem: CardProps = res.data.purchaseIntentionDisclosure.find((item: CardProps) => item._id === currentDeleteItemId)
+            const index = res.data.purchaseIntentionDisclosure.indexOf(thisItem);
+            if (index !== -1 && index < res.data.purchaseIntentionDisclosure.length - 1) {
+                const previousItem = res.data.purchaseIntentionDisclosure[index + 1];
+                await getThisDetail(previousItem._id)
+                return previousItem._id
+            } else {
+                Taro.showToast({
+                    title: '已经最后一条了',
+                    icon: 'error',
+                    duration: 2000
+                });
+            }
         }
         if (currentListItemId === "1") {
-            const nextItemIndex: number = res.data.purchaseSocilitationAnnouncements.find((item: newCardProps) => item._id === currentDeleteItemId).index
-            await getThisDetail(res.data.purchaseSocilitationAnnouncements.find((item: newCardProps) => item.index === nextItemIndex + 1)._id)
-            return res.data.purchaseSocilitationAnnouncements.find((item: newCardProps) => item.index === nextItemIndex + 1)._id
+            const thisItem: CardProps = res.data.purchaseSocilitationAnnouncements.find((item: CardProps) => item._id === currentDeleteItemId)
+            const index = res.data.purchaseSocilitationAnnouncements.indexOf(thisItem);
+            if (index !== -1 && index < res.data.purchaseSocilitationAnnouncements.length - 1) {
+                const previousItem = res.data.purchaseSocilitationAnnouncements[index + 1];
+                await getThisDetail(previousItem._id)
+                return previousItem._id
+            } else {
+                Taro.showToast({
+                    title: '已经最后一条了',
+                    icon: 'error',
+                    duration: 2000
+                });
+            }
         }
     }
+
+    async function handleFetchPrev(currentId: string) {
+        const res = await Taro.getStorage({ key: "homePageData" })
+        if (!res.data) return
+        if (currentListItemId === "0") {
+            const thisItem: any = res.data.purchaseIntentionDisclosure.find((item: CardProps) => item._id === currentId)
+            const index = res.data.purchaseIntentionDisclosure.indexOf(thisItem);
+            if (index !== -1 && index > 0) {
+                const previousItem = res.data.purchaseIntentionDisclosure[index - 1];
+                await getThisDetail(previousItem._id)
+                return previousItem._id
+            } else {
+                Taro.showToast({
+                    title: '已经是第一条了',
+                    icon: 'error',
+                    duration: 2000
+                });
+            }
+        }
+        if (currentListItemId === "1") {
+            const thisItem: any = res.data.purchaseSocilitationAnnouncements.find((item: CardProps) => item._id === currentId)
+            const index = res.data.purchaseSocilitationAnnouncements.indexOf(thisItem);
+            if (index !== -1 && index > 0) {
+                const previousItem = res.data.purchaseSocilitationAnnouncements[index - 1];
+                await getThisDetail(previousItem._id)
+                return previousItem._id
+            } else {
+                Taro.showToast({
+                    title: '已经是第一条了',
+                    icon: 'error',
+                    duration: 2000
+                });
+            }
+        }
+    }
+
+    const handleTouchStart = (e) => {
+        const { clientX } = e.touches[0];
+        setStartX(clientX);
+    };
+
+    const handleTouchEnd = (e) => {
+        const { clientX } = e.changedTouches[0];
+        setEndX(clientX);
+        handleSwipe();
+    };
+
+    const handleSwipe = async () => {
+        if (endX - startX > 50) {
+            // 右滑逻辑
+            console.log('右滑');
+            return
+        }
+        if (startX - endX > 50) {
+            // 左滑逻辑
+            console.log('左滑');
+            if (!thisId) return
+            if (source === "homePage") {
+                const res = await handleFetchNext(thisId)
+                setThisId(res)
+                return
+            }
+        }
+    };
 
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
                 <AtActivityIndicator color='#169E3B' content='数据加载中...'></AtActivityIndicator>
             </View> : <Fragment>
-                {currentListItemId === "0" ? <View className='detail'>
+                {currentListItemId === "0" ? <View className='detail' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
                     <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.projectName} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={_id} collect={onCollected} />
                     <DetailSecondSection projectSummarize={thisPurchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={thisPurchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={thisPurchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={thisPurchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={thisPurchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={thisPurchaseIntentionDisclosureDetail?.remark} />
-                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} />
-                </View> : <View className='detail'>
+                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} />
+                </View> : <View className='detail' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={_id} collect={onCollected} />
                     <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} />
-                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} />
+                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} />
                 </View>}
             </Fragment>}
             <AtModal isOpened={modalOpen}>

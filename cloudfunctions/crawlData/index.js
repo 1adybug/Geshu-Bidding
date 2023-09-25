@@ -13,7 +13,7 @@ exports.main = async (event) => {
   try {
     const publicURL = "http://czj.huaian.gov.cn/zbcg/";
     if (listItemId === "0") {
-      const response = await axios.get(publicURL + "/index1_2.html");
+      const response = await axios.get(publicURL + "/index1.html");
       return response.data;
     }
     if (listItemId === "1") {

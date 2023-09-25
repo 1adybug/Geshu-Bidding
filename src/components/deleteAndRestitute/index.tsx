@@ -14,12 +14,13 @@ interface DeleteAndRestituteProps {
     currentListItemId?: string
     source?: string
     completelyDelete: (_id?: string) => void
+    fetchPrev: (currentId?: string) => Promise<string>
     fetchNext: (currentDeleteItemId?: string) => Promise<string>
 }
 
 export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
 
-    const { _id, currentListItemId, source, completelyDelete, fetchNext } = props
+    const { _id, currentListItemId, source, completelyDelete, fetchPrev,fetchNext } = props
 
     const [currentId, setCurrentId] = useState(_id)
 
@@ -78,6 +79,18 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
         }
     }
 
+    async function handlePrevClick() {
+        const res1 = await fetchPrev(currentId)
+        if (!res1) return
+        setCurrentId(res1)
+    }
+
+    async function handleNextClick() {
+        const res1 = await fetchNext(currentId)
+        if (!res1) return
+        setCurrentId(res1)
+    }
+
     return (
         <View className='wrapper'>
             {source === "myCollections" ? <View className='cancel-collect-button' onClick={handleCancelCollect}>取消收藏</View> : <View className={source === "homePage" ? "vertical-sub-wrapper" : "horizontal-sub-wrapper"}>
@@ -85,6 +98,16 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
                     {source === "homePage" ? "删除" : "彻底删除"}
                 </View>
                 {source === "recycleBin" && <View className='restitute' onClick={handleRestitute}>还原</View>}
+            </View>}
+            {source === "homePage" && <View className='switch-container'>
+                <View className='prev' onClick={handlePrevClick}>
+                    <View>&lt;&lt;</View>
+                    <View>上一条</View>
+                </View>
+                <View className='next' onClick={handleNextClick}>
+                    <View>下一条</View>
+                    {/* <View>&gt;&gt;</View> */}
+                </View>
             </View>}
         </View>
     )

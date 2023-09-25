@@ -1,5 +1,4 @@
-import { View } from "@tarojs/components";
-import { fuzzySearch } from "@/services/fuzzySearch";
+import { BaseEventOrig, Input, View } from "@tarojs/components";
 import { useState } from "react";
 import SearchIcon from "../../assets/search.png"
 import ExpandSidebarIcon from "../../assets/expandSidebarIcon.png"
@@ -29,6 +28,10 @@ export default function Search(props: SearchProps) {
         changeFilterShow()
     }
 
+    function test(e:BaseEventOrig){
+        setKeyword(e.detail.value)
+    }
+
     return (
         <View className='search'>
             <img src={ExpandSidebarIcon} alt='' onClick={handleClick} />
@@ -36,7 +39,7 @@ export default function Search(props: SearchProps) {
                 <View className='icon-box'>
                     <img src={SearchIcon} alt='' onClick={handleSearch} />
                 </View>
-                <input type='search' placeholder='请输入项目名称' onChange={e => setKeyword(e.target.value)} />
+                <Input placeholderClass='placeholder' placeholder='请输入项目名称' onInput={test} onConfirm={handleSearch} />
             </View>
             <img src={FilterIcon} alt='' onClick={filterIconClick} />
         </View>
