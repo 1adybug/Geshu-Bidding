@@ -47,7 +47,7 @@ interface FetchPurchaseSolicitationAnnouncementDetailsWillBeExported {
 }
 
 interface PurchaseSolicitationAnnouncementDetailWrapper {
-  joinedData: PurchaseSolicitationAnnouncementDetail[];
+  detail: PurchaseSolicitationAnnouncementDetail[];
 }
 
 interface PurchaseSolicitationAnnouncementDetail {

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 export type SortType = "asc" | "desc";
 
-export default function sortListItemData(data, SortType: SortType) {
+export default function sortListItemData(data:any, SortType: SortType) {
   const dataCopy = wyDeepClone(data);
   if (SortType === "asc") {
     return handleGetResult(dataCopy).sort(

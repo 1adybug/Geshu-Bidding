@@ -31,6 +31,7 @@ export default function Index() {
   const [shouldActivedListItemId, setShouldActivedListItemId] = useState("0")
   const [exportedFileDownloadURl, setExportedFileDownloadURl] = useState("")
   const [copyExportedFileURlModalVisible, setCopyExportedFileURlModalVisible] = useState(false)
+  const [atActivityIndicatorContent, setAtActivityIndicatorContent] = useState("数据正在加载中...")
 
   useDidShow(() => {
     init()
@@ -67,6 +68,7 @@ export default function Index() {
   const onCloseDrawShow = () => {
     setDrawShow(false)
     setFilterShow(false)
+    setCopyExportedFileURlModalVisible(false)
   }
 
   const onListItemClicked = async (listItemId: string, sortType: SortType) => {
@@ -121,41 +123,40 @@ export default function Index() {
   }
 
   async function exportData() {
-    // const data = [
-    //   ["Name", "Age", "Country"],
-    //   ["AK-103", "25", "USA"],
-    //   ["Jane Smith", "30", "Canada"],
-    //   ["Bob Johnson", "33", "Australia"],
-    // ]
+    setAtActivityIndicatorContent("数据正在处理中...")
+    setGotData(false)
     const res = await fetchPurchaseSolicitationAnnouncementDataWillBeExported()
     if (!res) return
     let initArr = res.result.data.map((item: PurchaseSolicitationAnnouncementDetailWrapper) => {
       return [
-        item.joinedData[0].budget,
-        item.joinedData[0].project_no,
-        item.joinedData[0].project_name,
-        item.joinedData[0].submission_time,
-        item.joinedData[0].principal_unit,
-        item.joinedData[0].project_principal,
-        item.joinedData[0].principal_contact
+        item.detail[0].project_no,
+        item.detail[0].project_name,
+        item.detail[0].budget,
+        item.detail[0].submission_time,
+        item.detail[0].principal_unit,
+        item.detail[0].project_principal,
+        item.detail[0].principal_contact
       ]
     })
-
-    initArr.splice(0,0,["预算金额（万元）","项目编号","项目名称","投标时间","采购人单位","采购人姓名","采购人联系方式"])
+    initArr.splice(0, 0, ["项目编号", "项目名称", "预算金额（万元）", "投标时间", "采购人单位", "采购人姓名", "采购人联系方式"])
     const res1 = await exportToExcelFn(initArr)
     if (!res1) return
     const resDownloadURl = await fetchExportedFileDownloadURl(res1.result)
     if (!resDownloadURl) return
-    console.log(resDownloadURl.result.fileList[0].tempFileURL);
+    setGotData(true)
     setExportedFileDownloadURl(resDownloadURl.result.fileList[0].tempFileURL)
     copyExportedFileURlModalVisible ? setCopyExportedFileURlModalVisible(false) : setCopyExportedFileURlModalVisible(true)
+  }
+
+  function onCloseDownloadURLModal() {
+    setCopyExportedFileURlModalVisible(false)
   }
 
   return (
     <View className='index'>
       {!gotData ?
         <View className='data-loading-container'>
-          <AtActivityIndicator color='#169E3B' content='数据加载中...'></AtActivityIndicator>
+          <AtActivityIndicator color='#169E3B' content={atActivityIndicatorContent}></AtActivityIndicator>
         </View> : <Fragment>
           <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
           <FilterCard changeFilterShow={onOpenFilterShow} visible={filterShow} currentListItemId={currentListItemId} changeFilterCondition={onListItemClicked} />
@@ -167,7 +168,7 @@ export default function Index() {
             })}
           </View>
           <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
-          {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} />}
+          {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}
           <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />
           {(drawShow || filterShow || copyExportedFileURlModalVisible) && <Shadow onClose={onCloseDrawShow} />}
         </Fragment>}

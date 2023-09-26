@@ -1,9 +1,30 @@
+.switch-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 18px;
+  .prev,
+  .next {
+    display: flex;
+    align-items: center;
+    color: rgb(145, 145, 145);
+    border: 1px solid rgb(204, 204, 204);
+    font-size: 28px;
+    padding: 12px 60px;
+    border-radius: 8px;
+  }
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   justify-content: center;
   margin-top: 10px;
+  width: 90%;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 50px;
   .horizontal-sub-wrapper {
     display: flex;
     column-gap: 20px;
@@ -25,6 +46,8 @@
     text-align: center;
     background-color: rgba(255, 149, 0);
     color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   .delete-button,
   .restitute {
@@ -33,6 +56,8 @@
     padding-bottom: 10px;
     border-radius: 10px;
     text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   .delete-button {
     background-color: rgb(247, 54, 54);
@@ -41,32 +66,5 @@
   .restitute {
     background-color: #169e3b;
     color: #fff;
-  }
-  .switch-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
-    .prev,
-    .next {
-      display: flex;
-      align-items: center;
-      color: rgb(145, 145, 145);
-      font-size: 28px;
-    }
-    .prev {
-      display: none;
-    }
-    .next{
-      margin-left: auto;
-      background-color: #f2f2f2;
-      position: fixed;
-      right: 0;
-      bottom: 150px;
-      padding: 10px 30px 10px 60px;
-      border-top-left-radius: 80%;
-      border-bottom-left-radius: 80%;
-      color: #169e3b;
-      z-index: 100;
-    }
   }
 }

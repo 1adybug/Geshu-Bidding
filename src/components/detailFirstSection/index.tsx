@@ -1,4 +1,6 @@
 import { View } from "@tarojs/components"
+import CollectedIcon from "../../assets/collectedIcon.jpg"
+import UnCollectedIcon from "../../assets/unCollectedIcon.jpg"
 import Clock from "../../assets/clock.png"
 import "./index.module.less"
 
@@ -30,8 +32,7 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
                     <View className='second'>{releaseTime}</View>
                 </View>
                 {source === "homePage" && <View className='collect'>
-                    {/* {currentListItemId === "1" && <View className='export'>导出</View>} */}
-                    <View className={isCollected ? "collected-text" : "uncollected-text"} onClick={handleCollect}>{isCollected ? "已收藏" : "收藏"}</View>
+                    {isCollected ? <img src={CollectedIcon} onClick={handleCollect} /> : <img src={UnCollectedIcon} onClick={handleCollect} />}
                 </View>}
             </View>
         </View>

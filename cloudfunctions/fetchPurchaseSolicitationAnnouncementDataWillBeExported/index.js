@@ -19,10 +19,10 @@ exports.main = async () => {
         from: "purchase_solicitation_announcement_detail",
         localField: "_id",
         foreignField: "link_id",
-        as: "joinedData",
+        as: "detail",
       })
       .match({
-        joinedData: {
+        detail: {
           $ne: [],
         },
         is_deleted: false,

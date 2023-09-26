@@ -1,7 +1,7 @@
 /**
  * 卡片数据类型
-*/
-type CardType = "purchase_intention" | "purchase_solicitation"
+ */
+type CardType = "purchase_intention" | "purchase_solicitation";
 
 /**
  * 采购（意向）公开 || 采购（征集）公告
@@ -14,7 +14,7 @@ declare interface PurchaseIntentionDisclosure {
   is_deleted: boolean;
   type: CardType;
   is_completely_deleted: boolean;
-  is_collected: boolean
+  is_collected: boolean;
 }
 
 /**
@@ -42,6 +42,8 @@ declare interface PurchaseSolicitationAnnouncementDetail {
   title: string;
   project_name: string;
   project_no: string;
+  budget: string;
+  principal_unit: string;
   project_principal: string;
   principal_contact: string;
 }

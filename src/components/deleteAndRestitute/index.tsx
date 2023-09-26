@@ -20,7 +20,7 @@ interface DeleteAndRestituteProps {
 
 export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
 
-    const { _id, currentListItemId, source, completelyDelete, fetchPrev,fetchNext } = props
+    const { _id, currentListItemId, source, completelyDelete, fetchPrev, fetchNext } = props
 
     const [currentId, setCurrentId] = useState(_id)
 
@@ -92,16 +92,10 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
     }
 
     return (
-        <View className='wrapper'>
-            {source === "myCollections" ? <View className='cancel-collect-button' onClick={handleCancelCollect}>取消收藏</View> : <View className={source === "homePage" ? "vertical-sub-wrapper" : "horizontal-sub-wrapper"}>
-                <View className='delete-button' onClick={source === "homePage" ? handleDelete : handleCompletelyDelete}>
-                    {source === "homePage" ? "删除" : "彻底删除"}
-                </View>
-                {source === "recycleBin" && <View className='restitute' onClick={handleRestitute}>还原</View>}
-            </View>}
-            {source === "homee" && <View className='switch-container'>
-                <View className='prev' onClick={handlePrevClick}>
-                    <View>&lt;&lt;</View>
+        <Fragment>
+            {source === "homePage" && <View className='switch-container'>
+                <View className='prev'>
+                    {/* <View>&lt;&lt;</View> */}
                     <View>上一条</View>
                 </View>
                 <View className='next' onClick={handleNextClick}>
@@ -109,6 +103,14 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
                     {/* <View>&gt;&gt;</View> */}
                 </View>
             </View>}
-        </View>
+            <View className='wrapper'>
+                {source === "myCollections" ? <View className='cancel-collect-button' onClick={handleCancelCollect}>取消收藏</View> : <View className={source === "homePage" ? "vertical-sub-wrapper" : "horizontal-sub-wrapper"}>
+                    <View className='delete-button' onClick={source === "homePage" ? handleDelete : handleCompletelyDelete}>
+                        {source === "homePage" ? "删除" : "彻底删除"}
+                    </View>
+                    {source === "recycleBin" && <View className='restitute' onClick={handleRestitute}>还原</View>}
+                </View>}
+            </View>
+        </Fragment>
     )
 }
