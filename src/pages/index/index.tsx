@@ -76,7 +76,7 @@ export default function Index() {
     if (listItemId === "0") {
       const res = await getPurchaseIntentionDisclosures()
       if (!res.result) return
-      const resultData: CardProps[] = res.result.filter(e => !e.is_deleted)
+      const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
       setProjectList(resultData)
       setGotData(true)
       const newResultData: CardProps[] = wyDeepClone(resultData)
@@ -92,11 +92,7 @@ export default function Index() {
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
       setProjectList(resultData)
       setGotData(true)
-      const newResultData: CardProps[] = wyDeepClone(resultData).map((item, index) => {
-        return {
-          index, ...item
-        }
-      })
+      const newResultData: CardProps[] = wyDeepClone(resultData)
       const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
       if (!res1) return
       rememberCurrentListItemId("1")
