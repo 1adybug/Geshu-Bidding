@@ -36,9 +36,7 @@ export default function Detail() {
     const [gotData, setGotData] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [willDeleteItemId, setWillDeleteItemId] = useState("")
-    // const [startX, setStartX] = useState(0);
-    // const [endX, setEndX] = useState(0);
-    // const [thisId, setThisId] = useState<string | undefined>(_id)
+    const [freshId, setfreshId] = useState(_id)
 
     useEffect(() => {
         if (!_id) return
@@ -93,13 +91,23 @@ export default function Detail() {
         if (sourceId === "0") {
             const res = await collectSinglePurchaseIntentionDisclosure(id, !collectedStaus)
             if (!res) return
-            getThisDetail(id)
+            await getThisDetail(id)
+            Taro.showToast({
+                title: collectedStaus ? "取消收藏" : "收藏成功",
+                icon: "success",
+                duration: 1000
+            })
             return
         }
         if (sourceId === "1") {
             const res = await collectSinglePurchaseSolicitationAnnouncement(id, !collectedStaus)
             if (!res) return
-            getThisDetail(id)
+            await getThisDetail(id)
+            Taro.showToast({
+                title: collectedStaus ? "取消收藏" : "收藏成功",
+                icon: "success",
+                duration: 1000
+            })
             return
         }
     }
@@ -174,36 +182,9 @@ export default function Detail() {
         }
     }
 
-    // const handleTouchStart = (e) => {
-    //     const { clientX } = e.touches[0];
-    //     setStartX(clientX);
-    // };
-
-    // const handleTouchEnd = (e) => {
-    //     const { clientX } = e.changedTouches[0];
-    //     setEndX(clientX);
-    //     handleSwipe();
-    // };
-
-    // const handleSwipe = async () => {
-    //     console.log(startX - endX);
-
-    //     if (endX - startX > 50) {
-    //         // 右滑逻辑
-    //         console.log('右滑');
-    //         return
-    //     }
-    //     if (startX - endX > 300) {
-    //         // 左滑逻辑
-    //         console.log('左滑');
-    //         if (!thisId) return
-    //         if (source === "homePage") {
-    //             const res = await handleFetchNext(thisId)
-    //             setThisId(res)
-    //             return
-    //         }
-    //     }
-    // };
+    function handleUpdateId(id: string) {
+        setfreshId(id)
+    }
 
     return (
         <Fragment>
@@ -211,13 +192,13 @@ export default function Detail() {
                 <AtActivityIndicator color='#169E3B' content='数据加载中...'></AtActivityIndicator>
             </View> : <Fragment>
                 {currentListItemId === "0" ? <View className='detail' >
-                    <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.projectName} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={_id} collect={onCollected} />
+                    <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.projectName} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
                     <DetailSecondSection projectSummarize={thisPurchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={thisPurchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={thisPurchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={thisPurchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={thisPurchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={thisPurchaseIntentionDisclosureDetail?.remark} />
-                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} />
+                    <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View> : <View className='detail' >
-                    <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={_id} collect={onCollected} />
-                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} />
-                    <DeleteAndRestitute _id={_id} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} />
+                    <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
+                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} />
+                    <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View>}
             </Fragment>}
             <AtModal isOpened={modalOpen}>

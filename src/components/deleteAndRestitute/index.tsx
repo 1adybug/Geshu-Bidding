@@ -21,11 +21,12 @@ interface DeleteAndRestituteProps {
     completelyDelete: (_id?: string) => void
     fetchPrev: (currentId?: string) => Promise<string>
     fetchNext: (currentDeleteItemId?: string) => Promise<string>
+    updateId: (id: string) => void
 }
 
 export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
 
-    const { _id, currentListItemId, source, completelyDelete, fetchPrev, fetchNext } = props
+    const { _id, currentListItemId, source, completelyDelete, fetchPrev, fetchNext, updateId } = props
 
     const [currentId, setCurrentId] = useState(_id)
 
@@ -33,6 +34,11 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
         if (currentListItemId === "0") {
             const res = await deleteSinglePurchaseIntentionDisclosure(currentId)
             if (!res) return
+            Taro.showToast({
+                title: "删除成功",
+                icon: "success",
+                duration: 1000
+            })
             const res1 = await fetchNext(currentId)
             if (!res1) return
             setCurrentId(res1)
@@ -47,6 +53,11 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
         if (currentListItemId === "1") {
             const res = await deleteSinglePurchaseSolicitationAnnouncement(currentId)
             if (!res) return
+            Taro.showToast({
+                title: "删除成功",
+                icon: "success",
+                duration: 1000
+            })
             const res1 = await fetchNext(currentId)
             if (!res1) return
             setCurrentId(res1)
@@ -100,12 +111,14 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
         const res1 = await fetchPrev(currentId)
         if (!res1) return
         setCurrentId(res1)
+        updateId(res1)
     }
 
     async function handleNextClick() {
         const res1 = await fetchNext(currentId)
         if (!res1) return
         setCurrentId(res1)
+        updateId(res1)
     }
 
     return (

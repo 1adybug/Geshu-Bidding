@@ -43,6 +43,7 @@ declare interface PurchaseSolicitationAnnouncementDetail {
   project_name: string;
   project_no: string;
   budget: string;
+  submission_time: string
   principal_unit: string;
   project_principal: string;
   principal_contact: string;
