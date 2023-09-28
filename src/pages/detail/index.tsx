@@ -92,58 +92,13 @@ export default function Detail() {
             const res = await collectSinglePurchaseIntentionDisclosure(id, !collectedStaus)
             if (!res) return
             await getThisDetail(id)
-            Taro.showToast({
-                title: collectedStaus ? "取消收藏" : "收藏成功",
-                icon: "success",
-                duration: 1000
-            })
             return
         }
         if (sourceId === "1") {
             const res = await collectSinglePurchaseSolicitationAnnouncement(id, !collectedStaus)
             if (!res) return
             await getThisDetail(id)
-            Taro.showToast({
-                title: collectedStaus ? "取消收藏" : "收藏成功",
-                icon: "success",
-                duration: 1000
-            })
             return
-        }
-    }
-
-    async function handleFetchNext(currentDeleteItemId: string) {
-        const res = await Taro.getStorage({ key: "homePageData" })
-        if (!res.data) return
-        if (currentListItemId === "0") {
-            const thisItem: CardProps = res.data.purchaseIntentionDisclosure.find((item: CardProps) => item._id === currentDeleteItemId)
-            const index = res.data.purchaseIntentionDisclosure.indexOf(thisItem);
-            if (index !== -1 && index < res.data.purchaseIntentionDisclosure.length - 1) {
-                const previousItem = res.data.purchaseIntentionDisclosure[index + 1];
-                await getThisDetail(previousItem._id)
-                return previousItem._id
-            } else {
-                Taro.showToast({
-                    title: '已经最后一条了',
-                    icon: 'error',
-                    duration: 2000
-                });
-            }
-        }
-        if (currentListItemId === "1") {
-            const thisItem: CardProps = res.data.purchaseSocilitationAnnouncements.find((item: CardProps) => item._id === currentDeleteItemId)
-            const index = res.data.purchaseSocilitationAnnouncements.indexOf(thisItem);
-            if (index !== -1 && index < res.data.purchaseSocilitationAnnouncements.length - 1) {
-                const previousItem = res.data.purchaseSocilitationAnnouncements[index + 1];
-                await getThisDetail(previousItem._id)
-                return previousItem._id
-            } else {
-                Taro.showToast({
-                    title: '已经最后一条了',
-                    icon: 'error',
-                    duration: 2000
-                });
-            }
         }
     }
 
@@ -159,7 +114,7 @@ export default function Detail() {
                 return previousItem._id
             } else {
                 Taro.showToast({
-                    title: '已经是第一条了',
+                    title: '已是第一条',
                     icon: 'error',
                     duration: 2000
                 });
@@ -174,10 +129,51 @@ export default function Detail() {
                 return previousItem._id
             } else {
                 Taro.showToast({
-                    title: '已经是第一条了',
+                    title: '已是第一条',
                     icon: 'error',
                     duration: 2000
                 });
+            }
+        }
+    }
+
+    async function handleFetchNext(currentDeleteItemId: string) {
+        const res = await Taro.getStorage({ key: "homePageData" })
+        if (!res.data) return
+        if (currentListItemId === "0") {
+            const thisItem: CardProps = res.data.purchaseIntentionDisclosure.find((item: CardProps) => item._id === currentDeleteItemId)
+            const index = res.data.purchaseIntentionDisclosure.indexOf(thisItem);
+            if (index !== -1 && index < res.data.purchaseIntentionDisclosure.length - 1) {
+                const previousItem = res.data.purchaseIntentionDisclosure[index + 1];
+                await getThisDetail(previousItem._id)
+                return previousItem._id
+            } else {
+                Taro.showToast({
+                    title: '已是最后一条',
+                    icon: 'error',
+                    duration: 1000
+                });
+                setTimeout(() => {
+                    Taro.navigateBack()
+                }, 1500)
+            }
+        }
+        if (currentListItemId === "1") {
+            const thisItem: CardProps = res.data.purchaseSocilitationAnnouncements.find((item: CardProps) => item._id === currentDeleteItemId)
+            const index = res.data.purchaseSocilitationAnnouncements.indexOf(thisItem);
+            if (index !== -1 && index < res.data.purchaseSocilitationAnnouncements.length - 1) {
+                const previousItem = res.data.purchaseSocilitationAnnouncements[index + 1];
+                await getThisDetail(previousItem._id)
+                return previousItem._id
+            } else {
+                Taro.showToast({
+                    title: '已是最后一条',
+                    icon: 'error',
+                    duration: 1000
+                });
+                setTimeout(() => {
+                    Taro.navigateBack()
+                }, 1500)
             }
         }
     }

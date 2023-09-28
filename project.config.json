@@ -7,7 +7,7 @@
     "es6": true,
     "enhance": true,
     "compileHotReLoad": false,
-    "postcss": false,
+    "postcss": true,
     "minified": true,
     "ignoreUploadUnusedFiles": true,
     "babelSetting": {

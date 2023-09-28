@@ -1,4 +1,5 @@
 import { View } from "@tarojs/components"
+import { useEffect, useState } from "react"
 import CollectedIcon from "../../assets/collectedIcon.jpg"
 import UnCollectedIcon from "../../assets/unCollectedIcon.jpg"
 import Clock from "../../assets/clock.png"
@@ -18,8 +19,16 @@ interface DetailFirstSectionProps {
 export default function DetailFirstSection(props: DetailFirstSectionProps) {
 
     const { _id, currentListItemId, projectName, releaseTime, isCollected, source, collect } = props
+    const [fakeCollectedStatus, setFakeCollectedStatus] = useState(isCollected)
+
+    useEffect(() => {
+        setFakeCollectedStatus(isCollected)
+        console.log(1);
+        
+    }, [isCollected])
 
     function handleCollect() {
+        setFakeCollectedStatus(!fakeCollectedStatus)
         collect(_id, currentListItemId, isCollected)
     }
 
@@ -31,8 +40,8 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
                     <img src={Clock} alt='' />
                     <View className='second'>{releaseTime}</View>
                 </View>
-                {source === "homePage" && <View className='collect'>
-                    {isCollected ? <img src={CollectedIcon} onClick={handleCollect} /> : <img src={UnCollectedIcon} onClick={handleCollect} />}
+                {source === "homePage" && <View className='collect' onClick={handleCollect}>
+                    {fakeCollectedStatus ? <img src={CollectedIcon} /> : <img src={UnCollectedIcon} />}
                 </View>}
             </View>
         </View>

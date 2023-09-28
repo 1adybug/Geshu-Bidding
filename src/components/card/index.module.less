@@ -12,19 +12,6 @@
   row-gap: 10px;
   position: relative;
   overflow: hidden;
-  .collected {
-    background-color: #febc4b;
-    color: #ffffff;
-    padding: 3px 80px;
-    transform: rotate(45deg);
-    position: absolute;
-    top: 20px;
-    right: -70px;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .project-name {
     font-size: 36px;
   }
@@ -36,15 +23,20 @@
     background-color: rgb(235, 235, 235);
     margin-top: 20px;
   }
-  .release-time {
-    color: rgb(120, 119, 119);
-    width: 240px;
+  .bottom {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    column-gap: 10px;
     img {
       width: 36px;
       height: 36px;
+    }
+    .release-time {
+      color: rgb(120, 119, 119);
+      width: 240px;
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
     }
   }
 }

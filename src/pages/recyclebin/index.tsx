@@ -6,6 +6,7 @@ import { wyDeepClone } from "wangyong-utils";
 import RecycleBinCard from "@/components/recycleBinCard";
 import { AtActivityIndicator } from "taro-ui"
 import { useDidShow } from "@tarojs/taro";
+import dayjs from "dayjs";
 import "./index.module.less"
 
 export default function RecycleBin() {
@@ -24,7 +25,8 @@ export default function RecycleBin() {
     async function getAllDeleteds() {
         const intentionDeletedsRes = await getPurchaseIntentionDisclosures()
         const solicitationDeletedRes = await getPurchaseSocilitationAnnouncements()
-        setDeletedItems(wyDeepClone([...intentionDeletedsRes.result, ...solicitationDeletedRes.result].filter(e => e.is_deleted).filter(e => !e.is_completely_deleted)))
+        const list = wyDeepClone([...intentionDeletedsRes.result, ...solicitationDeletedRes.result].filter(e => e.is_deleted).filter(e => !e.is_completely_deleted))
+        setDeletedItems(list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix()))
         setGotData(true)
     }
 
@@ -38,7 +40,6 @@ export default function RecycleBin() {
                         <RecycleBinCard key={item._id} _id={item._id} title={item.title} time={item.time} type={item.type} />
                     )
                 })}
-                {/* <AtToast isOpened text={} icon={}></AtToast> */}
             </View>}
         </Fragment>
     )

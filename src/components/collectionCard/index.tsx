@@ -3,6 +3,7 @@ import Taro from "@tarojs/taro";
 import Clock from "../../assets/clock.png"
 import "./index.module.less"
 import { RecycleBinCardProps } from "../recycleBinCard";
+import CollectedIcon from "../../assets/collectedIcon.jpg"
 
 export function CollectionCard(props: RecycleBinCardProps) {
 
@@ -10,16 +11,11 @@ export function CollectionCard(props: RecycleBinCardProps) {
 
     function handleCardClick() {
         const currentListItemId = type === "purchase_intention" ? "0" : "1"
-        Taro.navigateTo({ url: `/pages/detail/index?_id=${_id}&currentListItemId=${currentListItemId}&source=myCollections`})
+        Taro.navigateTo({ url: `/pages/detail/index?_id=${_id}&currentListItemId=${currentListItemId}&source=myCollections` })
     }
 
     return (
         <View className='collection-card' onClick={handleCardClick}>
-            <View className='collected'>
-                <View className='text'>
-                    已收藏
-                </View>
-            </View>
             <View className='top'>
                 <View className='project-title'>{title}</View>
                 <View className='release-time'>
@@ -32,6 +28,7 @@ export function CollectionCard(props: RecycleBinCardProps) {
                     <View className='label'>来源：</View>
                     <View className='data'>{type === "purchase_intention" ? "采购（意向）公开" : "采购（征集）公告"}</View>
                 </View>
+                <img src={CollectedIcon} alt='' />
             </View>
         </View>
     )

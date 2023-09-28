@@ -42,6 +42,7 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
             const res1 = await fetchNext(currentId)
             if (!res1) return
             setCurrentId(res1)
+            updateId(res1)
             const res2 = await getPurchaseIntentionDisclosures()
             if (!res2.result) return
             const resultData: CardProps[] = sortListItemData(res2.result.filter(e => !e.is_deleted), "desc")
@@ -61,6 +62,7 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
             const res1 = await fetchNext(currentId)
             if (!res1) return
             setCurrentId(res1)
+            updateId(res1)
             const res2 = await getPurchaseSocilitationAnnouncements()
             if (!res2.result) return
             const resultData: CardProps[] = sortListItemData(res2.result.filter(e => !e.is_deleted), "desc")
