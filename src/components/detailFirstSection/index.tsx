@@ -23,8 +23,6 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
 
     useEffect(() => {
         setFakeCollectedStatus(isCollected)
-        console.log(1);
-        
     }, [isCollected])
 
     function handleCollect() {

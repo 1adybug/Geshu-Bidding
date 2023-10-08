@@ -144,3 +144,13 @@ export const Function_Fetch_Exported_File_Download_URL =
  * 获取即将被导出的采购（征集）公告数据
 */
 export const Function_Fetch_Purchase_Solicitation_Announcement_Details_Will_Be_Exported = "fetchPurchaseSolicitationAnnouncementDataWillBeExported"
+
+/**
+ * 获取附件
+*/
+export const Function_Fetch_Attachment_File = "fetchAndUploadFile"
+
+/**
+ * 获取附件2
+*/
+export const Function_Fetch_Attachments = "fetchThisSolicitationAnnouncementAttachments"

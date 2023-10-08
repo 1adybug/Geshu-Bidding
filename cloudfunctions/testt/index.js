@@ -17,10 +17,10 @@ exports.main = async () => {
     const linkArr = extractListData(res.data).filter(
       (item) => item.time === dayjs().format("YYYY-MM-DD")
     );
-    const resultList = []
+    const resultList = [];
     for (const item of linkArr) {
       const resItem = await processArrayItem(item);
-      resultList.push(resItem)
+      resultList.push(resItem);
     }
     console.log(resultList);
   } catch (error) {
@@ -31,6 +31,9 @@ exports.main = async () => {
 
 const db = cloud.database();
 const collection = db.collection("test");
+const attachmentsCollection = db.collection(
+  "purchase_solicitation_announcement-attachments"
+);
 
 async function processArrayItem(item) {
   try {
@@ -42,6 +45,22 @@ async function processArrayItem(item) {
       // 集合中不存在该项，进行插入操作
       await collection.add({
         data: item,
+      });
+      const res = await axios.get(item.href)
+      // const res1 = await cloud.callFunction({
+      //   name: "fetchAndUploadFile",
+      //   data: {
+      //     fileUrl:
+      //       "http://www.ccgp-jiangsu.gov.cn/fileApi/320800/90dde702cca04c60b981b80753f93b36.doc",
+      //     fileExtension: ".doc",
+      //   },
+      // });
+      await attachmentsCollection.add({
+        data: {
+          title: item.title,
+          link_href: item.href,
+          attachments: extractAllFile(res.data),
+        },
       });
       console.log(`Inserted value: ${item}`);
     } else {
@@ -88,6 +107,10 @@ function secondaryHandle(html) {
       time: spanContent,
       href: href,
       title: title,
+      is_collected: false,
+      is_deleted: false,
+      is_completely_deleted: false,
+      type: "purchase_solicitation",
     };
     results.push(obj);
   }

@@ -17,6 +17,7 @@ import { exportToExcelFn } from '@/services/exportToExcel';
 import CopyExportedFileDownloadModal from '@/components/copyExportedFileDownloadURlModal';
 import { fetchExportedFileDownloadURl } from '@/services/fetchExportedFileDownloadURl';
 import { fetchPurchaseSolicitationAnnouncementDataWillBeExported } from '@/services/fetchPurchaseSolicitationAnnouncementDataWillBeExported';
+import { downloadAttachment } from '@/services/downloadAttachment';
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -40,7 +41,7 @@ export default function Index() {
   useEffect(() => {
     onListItemClicked("0", "desc")
     init()
-    // getCrawlData("0").then(res => {
+    // getCrawlData("1").then(res => {
     //   if (res.result) {
     //     extractListData(res.result)
     //   }
@@ -147,6 +148,25 @@ export default function Index() {
   function onCloseDownloadURLModal() {
     setCopyExportedFileURlModalVisible(false)
   }
+  
+  // function downloadFile() {
+  //   Taro.downloadFile({
+  //     url: 'https://6765-geshu-bidding-5gnhpdzpb49a69a4-1309350967.tcb.qcloud.la/purchaseAnnouncementAttachments/1696756150460?sign=73c400344568f9edc7df69dabf46c37c&t=1696757358', //仅为示例，并非真实的资源
+  //     success: function (res) {
+  //       // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+  //       if (res.statusCode === 200) {
+  //         console.log(5,res.tempFilePath);
+
+  //         Taro.openDocument({
+  //           filePath: res.tempFilePath,
+  //           success: function () {
+  //             console.log('打开文档成功')
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  // }
 
   return (
     <View className='index'>
@@ -169,6 +189,9 @@ export default function Index() {
           {(drawShow || filterShow || copyExportedFileURlModalVisible) && <Shadow onClose={onCloseDrawShow} />}
         </Fragment>}
     </View>
+    // <View>
+    //   <button onClick={downloadFile}>点击</button>
+    // </View>
   )
 }
 

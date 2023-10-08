@@ -18,7 +18,7 @@ exports.main = async (event) => {
   try {
     const buffer = xlsx.build([{ name: "Sheet 1", data }]);
     const res = await cloud.uploadFile({
-      cloudPath: "folder/采购（征集）公告数据.xlsx",
+      cloudPath: "purchaseAnnouncementsExportFolder/采购（征集）公告数据.xlsx",
       fileContent: Buffer.from(buffer),
     });
     if (!res) return;

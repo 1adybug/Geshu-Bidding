@@ -15,6 +15,7 @@ import { completetlyDeleteSinglePurchaseSolicitation } from "@/services/complete
 import { collectSinglePurchaseIntentionDisclosure } from "@/services/collectSinglePurchaseIntentionDisclosure";
 import { collectSinglePurchaseSolicitationAnnouncement } from "@/services/collectSinglePurchaseSolicitationAnnouncement";
 import { CardProps } from "@/components/card";
+import { fetchThisSolicitationAnnouncementAttachments } from "@/services/fetchThisSolicitationAnnouncementAttachments";
 import "./index.module.less"
 
 interface ThisPurchaseIntentionDisclosureDetail extends PurchaseIntentionDisclosureDetail {
@@ -28,6 +29,11 @@ interface ThisPurchaseSolicitationAnnouncementDetail extends PurchaseSolicitatio
     is_collected: boolean
 }
 
+export interface Attachment {
+    href: string
+    content: string
+}
+
 export default function Detail() {
     const router = useRouter()
     const { _id, currentListItemId, source } = router.params
@@ -37,6 +43,7 @@ export default function Detail() {
     const [modalOpen, setModalOpen] = useState(false)
     const [willDeleteItemId, setWillDeleteItemId] = useState("")
     const [freshId, setfreshId] = useState(_id)
+    const [attachments, setAttachments] = useState<Attachment[]>([])
 
     useEffect(() => {
         if (!_id) return
@@ -60,6 +67,8 @@ export default function Detail() {
                 is_collected: res.result.data[0].is_collected
             }
             setThisPurchaseSolicitationAnnouncementDetail({ ...obj, ...res1.result.data[0] })
+            const res2 = await fetchThisSolicitationAnnouncementAttachments(res.result.data[0].href)
+            res2.result.data[0] ? setAttachments(res2.result.data[0].attachments) : setAttachments([])
             setGotData(true)
             return
         }
@@ -193,7 +202,7 @@ export default function Detail() {
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View> : <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
-                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} />
+                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} />
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View>}
             </Fragment>}
