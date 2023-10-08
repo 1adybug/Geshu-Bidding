@@ -11,7 +11,8 @@ const db = cloud.database();
 exports.main = async () => {
   const { data } = await db
     .collection("purchase_solicitation_announcement")
-    .where({})
+    .orderBy("time", "desc") // 按 time 字段降序排序
+    .limit(92)
     .get();
   return data;
 };
