@@ -16,6 +16,8 @@ import { collectSinglePurchaseIntentionDisclosure } from "@/services/collectSing
 import { collectSinglePurchaseSolicitationAnnouncement } from "@/services/collectSinglePurchaseSolicitationAnnouncement";
 import { CardProps } from "@/components/card";
 import { fetchThisSolicitationAnnouncementAttachments } from "@/services/fetchThisSolicitationAnnouncementAttachments";
+import PreviewAndDownload from "@/components/previewAndDownload";
+import Shadow from "@/components/shadow";
 import "./index.module.less"
 
 interface ThisPurchaseIntentionDisclosureDetail extends PurchaseIntentionDisclosureDetail {
@@ -44,6 +46,11 @@ export default function Detail() {
     const [willDeleteItemId, setWillDeleteItemId] = useState("")
     const [freshId, setfreshId] = useState(_id)
     const [attachments, setAttachments] = useState<Attachment[]>([])
+    const [activityIndicatorContent, setActivityIndicatorContent] = useState("数据正在加载中...")
+    const [fileIDPrev, setFileIDPrev] = useState("")
+    const [drawShow, setDrawShow] = useState(false)
+    const [attachmentTitle, setAttachmentTitle] = useState("")
+    const [attachmentDownloadURL, setAttachmentDownloadURL] = useState("")
 
     useEffect(() => {
         if (!_id) return
@@ -68,7 +75,13 @@ export default function Detail() {
             }
             setThisPurchaseSolicitationAnnouncementDetail({ ...obj, ...res1.result.data[0] })
             const res2 = await fetchThisSolicitationAnnouncementAttachments(res.result.data[0].href)
-            res2.result.data[0] ? setAttachments(res2.result.data[0].attachments) : setAttachments([])
+            if (res2.result.data[0]) {
+                setAttachments(res2.result.data[0].attachments)
+                setFileIDPrev(res2.result.data[0].title)
+            } else {
+                setAttachments([])
+                setFileIDPrev("")
+            }
             setGotData(true)
             return
         }
@@ -191,10 +204,33 @@ export default function Detail() {
         setfreshId(id)
     }
 
+    function handleGrandChildEvent(e: string) {
+        if (e === "正在跳转，请稍后...") {
+            setGotData(false)
+            setActivityIndicatorContent(e)
+            return
+        }
+        if (e === "已完成跳转") {
+            setGotData(true)
+            setActivityIndicatorContent("数据正在加载中...")
+            return
+        }
+    }
+
+    function onCloseDrawShow() {
+        setDrawShow(false)
+    }
+
+    function handleAttachModal(title: string, downloadURL: string) {
+        setAttachmentTitle(title)
+        setAttachmentDownloadURL(downloadURL)
+        setDrawShow(true)
+    }
+
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
-                <AtActivityIndicator color='#169E3B' content='数据加载中...'></AtActivityIndicator>
+                <AtActivityIndicator color='#169E3B' content={activityIndicatorContent}></AtActivityIndicator>
             </View> : <Fragment>
                 {currentListItemId === "0" ? <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.projectName} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
@@ -202,10 +238,12 @@ export default function Detail() {
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View> : <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
-                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} />
+                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} fileIDPrev={fileIDPrev} modalChange={handleAttachModal} />
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View>}
             </Fragment>}
+            {drawShow && <PreviewAndDownload attachmentTitle={attachmentTitle} url={attachmentDownloadURL} closeModal={onCloseDrawShow} onActivityIndicatorContentChange={handleGrandChildEvent} />}
+            {drawShow && <Shadow onClose={onCloseDrawShow} />}
             <AtModal isOpened={modalOpen}>
                 <AtModalHeader>提示</AtModalHeader>
                 <AtModalContent>

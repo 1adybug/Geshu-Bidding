@@ -1,33 +1,25 @@
 import { View } from "@tarojs/components"
 import { Attachment } from "@/pages/detail"
-import extractFileSuffix from "@/utils/extractFileSuffix"
-import { downloadAttachment } from "@/services/downloadAttachment"
+// import extractFileSuffix from "@/utils/extractFileSuffix"
+// import { downloadAttachment } from "@/services/downloadAttachment"
 import Taro from "@tarojs/taro"
+import { fetchFileDownloadURl } from "@/services/fetchFileDownloadURl"
 import "./index.module.less"
 
 interface AttachmentsProps {
+    fileIDPrev: string
     attachments: Attachment[]
+    modalChange: (title: string, downloadURL: string) => void
 }
 
 export default function Attachments(props: AttachmentsProps) {
-    const { attachments } = props
+    const { fileIDPrev, attachments,modalChange } = props
 
     async function attachmentClick(e: Attachment) {
-        const res = await downloadAttachment(e.href, "." + extractFileSuffix(e.content))
-        Taro.downloadFile({
-            url: res.result.fileList[0].tempFileURL, //仅为示例，并非真实的资源
-            success: function (res1) {
-                // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-                if (res1.statusCode === 200) {
-                    Taro.openDocument({
-                        filePath: res1.tempFilePath,
-                        success: function () {
-                            console.log('打开文档成功')
-                        }
-                    })
-                }
-            }
-        })
+        const res = await fetchFileDownloadURl(fileIDPrev + "_" + e.content)
+        if (!res) return
+        modalChange(e.content, res.result.fileList[0].tempFileURL)
+        
     }
 
     return (

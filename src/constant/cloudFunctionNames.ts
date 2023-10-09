@@ -154,3 +154,8 @@ export const Function_Fetch_Attachment_File = "fetchAndUploadFile"
  * 获取附件2
 */
 export const Function_Fetch_Attachments = "fetchThisSolicitationAnnouncementAttachments"
+
+/**
+ * 根据fileIDTail获取文件TempURL
+*/
+export const Function_Fetch_FIleTempDownloadURL_By_FileIDTail = "fetchFileDownloadURl"

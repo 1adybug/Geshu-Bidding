@@ -3,7 +3,7 @@ const cloud = require("wx-server-sdk");
 // eslint-disable-next-line import/no-commonjs
 const axios = require("axios");
 // eslint-disable-next-line import/no-commonjs
-const dayjs = require("dayjs");
+// const dayjs = require("dayjs");
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
@@ -13,9 +13,9 @@ cloud.init({
 exports.main = async () => {
   const publicURL = "http://czj.huaian.gov.cn/zbcg/";
   try {
-    const res = await axios.get(publicURL + "/index3.html");
+    const res = await axios.get(publicURL + "/index3_2.html");
     const linkArr = extractListData(res.data).filter(
-      (item) => item.time === dayjs().format("YYYY-MM-DD")
+      (item) => item.time === "2023-10-08"
     );
     const resultList = [];
     for (const item of linkArr) {
@@ -31,36 +31,14 @@ exports.main = async () => {
 
 const db = cloud.database();
 const collection = db.collection("test");
-const attachmentsCollection = db.collection(
-  "purchase_solicitation_announcement-attachments"
-);
 
 async function processArrayItem(item) {
   try {
-    // 在集合中查询该项
     const queryResult = await collection.where({ href: item.href }).get();
     const existingItems = queryResult.data;
-
     if (existingItems.length === 0) {
-      // 集合中不存在该项，进行插入操作
       await collection.add({
         data: item,
-      });
-      const res = await axios.get(item.href)
-      // const res1 = await cloud.callFunction({
-      //   name: "fetchAndUploadFile",
-      //   data: {
-      //     fileUrl:
-      //       "http://www.ccgp-jiangsu.gov.cn/fileApi/320800/90dde702cca04c60b981b80753f93b36.doc",
-      //     fileExtension: ".doc",
-      //   },
-      // });
-      await attachmentsCollection.add({
-        data: {
-          title: item.title,
-          link_href: item.href,
-          attachments: extractAllFile(res.data),
-        },
       });
       console.log(`Inserted value: ${item}`);
     } else {

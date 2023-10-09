@@ -14,16 +14,18 @@ interface DetailSecondSectionForPurchaseSolicitationProps {
     project_principal?: string
     principal_contact?: string
     haveAttachments: boolean,
-    attachments: Attachment[]
+    fileIDPrev: string,
+    attachments: Attachment[],
+    modalChange: (title: string, downloadURL: string) => void
 }
 
 export default function DetailSecondSectionForPurchaseSolicitation(props: DetailSecondSectionForPurchaseSolicitationProps) {
-    const { budget, submission_time, principal_unit, project_name, project_no, project_principal, principal_contact, haveAttachments, attachments } = props
+    const { budget, submission_time, principal_unit, project_name, project_no, project_principal, principal_contact, haveAttachments, fileIDPrev, attachments, modalChange } = props
     return (
         <View className='detail-second-section-for-purchase-solicitation'>
             <DetailSecondSectionForPurchaseSolicitationFirstChild project_name={project_name} project_no={project_no} budget={budget} submission_time={submission_time} />
             <DetailSecondSectionForPurchaseSolicitationSecondChild project_principal={project_principal} principal_contact={principal_contact} principal_unit={principal_unit} />
-            {haveAttachments && <Attachments attachments={attachments} />}
+            {haveAttachments && <Attachments attachments={attachments} fileIDPrev={fileIDPrev} modalChange={modalChange} />}
         </View>
     )
 }

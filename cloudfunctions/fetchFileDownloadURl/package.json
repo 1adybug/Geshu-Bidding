@@ -1,5 +1,5 @@
 {
-  "name": "fetchAndUploadFile",
+  "name": "fetchFileDownloadURl",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dayjs": "^1.11.10",
     "wx-server-sdk": "~2.6.3"
   }
 }
