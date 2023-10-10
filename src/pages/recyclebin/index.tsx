@@ -7,12 +7,17 @@ import RecycleBinCard from "@/components/recycleBinCard";
 import { AtActivityIndicator } from "taro-ui"
 import { useDidShow } from "@tarojs/taro";
 import dayjs from "dayjs";
+import RecycleBinTopSection from "@/components/recyclebinTopSection";
+import Shadow from "@/components/shadow";
+import SecondaryConfirmModal from "@/components/secondaryConfirmModal";
 import "./index.module.less"
 
 export default function RecycleBin() {
 
     const [deletedItems, setDeletedItems] = useState<PurchaseIntentionDisclosure[]>([])
     const [gotData, setGotData] = useState(false)
+    const [drawShow, setDrawShow] = useState(false)
+    const tipContent = `确认要永久删除这${deletedItems.length}项吗？`
 
     useDidShow(() => {
         getAllDeleteds()
@@ -30,16 +35,29 @@ export default function RecycleBin() {
         setGotData(true)
     }
 
+    function handleClearClicked() {
+        setDrawShow(true)
+    }
+
+    function handleShadowClose() {
+        setDrawShow(false)
+    }
+
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
                 <AtActivityIndicator color='#169E3B' content='数据加载中...'></AtActivityIndicator>
             </View> : <View className='recyclebin'>
+                <RecycleBinTopSection itemsTotalNum={deletedItems.length} clearClicked={handleClearClicked} />
                 {deletedItems.map((item: PurchaseIntentionDisclosure) => {
                     return (
                         <RecycleBinCard key={item._id} _id={item._id} title={item.title} time={item.time} type={item.type} />
                     )
                 })}
+                {drawShow && <Fragment>
+                    <SecondaryConfirmModal tipContent={tipContent} />
+                    <Shadow onClose={handleShadowClose} />
+                </Fragment>}
             </View>}
         </Fragment>
     )

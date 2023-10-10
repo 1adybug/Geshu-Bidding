@@ -3,7 +3,7 @@ const cloud = require("wx-server-sdk");
 // eslint-disable-next-line import/no-commonjs
 const axios = require("axios");
 // eslint-disable-next-line import/no-commonjs
-// const dayjs = require("dayjs");
+const dayjs = require("dayjs");
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
@@ -13,9 +13,9 @@ cloud.init({
 exports.main = async () => {
   const publicURL = "http://czj.huaian.gov.cn/zbcg/";
   try {
-    const res = await axios.get(publicURL + "/index3_2.html");
+    const res = await axios.get(publicURL + "/index3.html");
     const linkArr = extractListData(res.data).filter(
-      (item) => item.time === "2023-10-08"
+      (item) => item.time === dayjs().format("YYYY-MM-DD")
     );
     const resultList = [];
     for (const item of linkArr) {

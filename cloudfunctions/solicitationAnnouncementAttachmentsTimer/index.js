@@ -2,6 +2,8 @@
 const cloud = require("wx-server-sdk");
 // eslint-disable-next-line import/no-commonjs
 const axios = require("axios");
+// eslint-disable-next-line import/no-commonjs
+const dayjs = require("dayjs");
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
@@ -37,6 +39,7 @@ async function processArrItem(item) {
             title: item.title,
             link_href: item.href,
             attachments: extractAllFile(res.data),
+            time: dayjs().format("YYYY-MM-DD"),
           },
         });
       return;

@@ -159,3 +159,8 @@ export const Function_Fetch_Attachments = "fetchThisSolicitationAnnouncementAtta
  * 根据fileIDTail获取文件TempURL
 */
 export const Function_Fetch_FIleTempDownloadURL_By_FileIDTail = "fetchFileDownloadURl"
+
+/**
+ * 清空回收站
+*/
+export const Function_Clear_Recyclebin = "clearRecycleBin"
