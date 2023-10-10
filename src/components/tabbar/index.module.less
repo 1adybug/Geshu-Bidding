@@ -1,23 +1,14 @@
-
 .tabbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    position: fixed;
-    bottom: 0;
-    background-color: rgb(242, 242, 242);
-    padding-top: 20px;
-    padding-bottom: 30px;
-    .tab {
-      width: 100px;
-      height: 100px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      img {
-        width: 60px;
-        height: 60px;
-      }
-    }
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  .tab-item,
+  .tab-item-actived {
+    padding: 10px 20px;
+    font-size: 32px;
   }
+  .tab-item-actived {
+    color: #169e3b;
+    border-bottom: 2px solid #169e3b;
+  }
+}

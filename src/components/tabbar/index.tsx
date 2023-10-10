@@ -1,24 +1,29 @@
 import { View } from "@tarojs/components";
-import Home from "../../assets/home.png"
-import List from "../../assets/list.png"
-import My from "../../assets/my.png"
+import { useState } from "react";
 import "./index.module.less"
 
-export default function Tabbar() {
+interface TabbarProps {
+    projects?: PurchaseIntentionDisclosureProject[]
+    clickWhich: (summary: string) => void
+}
+
+export default function Tabbar(props: TabbarProps) {
+
+    const { projects, clickWhich } = props
+
+    const [activedTabItem, setActivedTabItem] = useState(projects ? projects[0].projectSummary : "")
+
+    function tabItemClick(e: PurchaseIntentionDisclosureProject) {
+        setActivedTabItem(e.projectSummary)
+        clickWhich(e.projectSummary)
+    }
     return (
         <View className='tabbar'>
-            <View className='tab'>
-                <img src={Home} alt='' />
-                <View>首页</View>
-            </View>
-            <View className='tab'>
-                <img src={List} alt='' />
-                <View>列表</View>
-            </View>
-            <View className='tab'>
-                <img src={My} alt='' />
-                <View>我的</View>
-            </View>
+            {projects?.map((item, index) => {
+                return <View onClick={() => tabItemClick(item)} key={item.projectSummary} className={activedTabItem === item.projectSummary ? 'tab-item-actived' : 'tab-item'}>
+                    项目{index + 1}
+                </View>
+            })}
         </View>
     )
 }

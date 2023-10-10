@@ -14,7 +14,7 @@ exports.main = async (event) => {
     const db = cloud.database();
 
     const result = await db
-      .collection("purchase_intention_disclosure_detail")
+      .collection("new_purchase_intention_disclosure_detail")
       .where({
         link_id: link_id,
       })

@@ -23,14 +23,10 @@ declare interface PurchaseIntentionDisclosure {
 declare interface PurchaseIntentionDisclosureDetail {
   _id: string;
   link_id: string;
-  no: string;
-  projectName: string;
-  purchaseRequirementsSummary: string;
-  purchaseBudget: string;
-  expectedPurchaseMonth: string;
-  whetherForSmallAndMediumEnterprise: string;
-  whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts: string;
-  remark: string;
+  link_href: string;
+  title: string;
+  time: string;
+  projects: PurchaseIntentionDisclosureProject[];
 }
 
 /**
@@ -43,8 +39,24 @@ declare interface PurchaseSolicitationAnnouncementDetail {
   project_name: string;
   project_no: string;
   budget: string;
-  submission_time: string
+  submission_time: string;
   principal_unit: string;
   project_principal: string;
   principal_contact: string;
+}
+
+declare interface PurchaseIntentionDisclosureProject {
+  projectName: string;
+  projectSummary: string;
+  budget: string;
+  purchaseMonth: string;
+  /**
+   * 是否专门面向中小企业采购
+   * */
+  sfzmmxzxqycg: string;
+  /**
+   * 是否采购节能产品、环境标志产品
+   */
+  sfcgjncphjbzcp: string;
+  remark: string;
 }

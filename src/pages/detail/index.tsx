@@ -18,6 +18,7 @@ import { CardProps } from "@/components/card";
 import { fetchThisSolicitationAnnouncementAttachments } from "@/services/fetchThisSolicitationAnnouncementAttachments";
 import PreviewAndDownload from "@/components/previewAndDownload";
 import Shadow from "@/components/shadow";
+import PurchaseIntentionDisclosureDetailSecondSection from "@/components/purchaseIntentionDisclosureDetailSecondSection";
 import "./index.module.less"
 
 interface ThisPurchaseIntentionDisclosureDetail extends PurchaseIntentionDisclosureDetail {
@@ -59,6 +60,8 @@ export default function Detail() {
 
     async function getThisDetail(id: string) {
         if (currentListItemId === "0") {
+            console.log(1);
+            
             const res = await findSinglePurchaseIntentionDisclosure(id)
             const res1 = await findSinglePurchaseIntentionDisclosureDetailByLinkId(id)
             setThisPurchaseIntentionDisclosureDetail({ releaseTime: res.result.data[0].time, isCollected: res.result.data[0].is_collected, ...res1.result.data[0] })
@@ -233,8 +236,9 @@ export default function Detail() {
                 <AtActivityIndicator color='#169E3B' content={activityIndicatorContent}></AtActivityIndicator>
             </View> : <Fragment>
                 {currentListItemId === "0" ? <View className='detail' >
-                    <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.projectName} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
-                    <DetailSecondSection projectSummarize={thisPurchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={thisPurchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={thisPurchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={thisPurchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={thisPurchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={thisPurchaseIntentionDisclosureDetail?.remark} />
+                    <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.title} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
+                    <PurchaseIntentionDisclosureDetailSecondSection projects={thisPurchaseIntentionDisclosureDetail?.projects} />
+                    {/* <DetailSecondSection projectSummarize={thisPurchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={thisPurchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={thisPurchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={thisPurchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={thisPurchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={thisPurchaseIntentionDisclosureDetail?.remark} /> */}
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View> : <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
