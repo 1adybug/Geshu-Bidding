@@ -19,7 +19,6 @@ export default function Attachments(props: AttachmentsProps) {
         const res = await fetchFileDownloadURl(fileIDPrev + "_" + e.content)
         if (!res) return
         modalChange(e.content, res.result.fileList[0].tempFileURL)
-        
     }
 
     return (

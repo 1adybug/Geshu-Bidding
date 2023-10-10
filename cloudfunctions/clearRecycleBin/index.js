@@ -18,23 +18,31 @@ const failResponse = {
 
 // eslint-disable-next-line import/no-commonjs
 exports.main = async () => {
-  const purchaseIntentionDisclosureClearRes = await db
-    .collection("purchase_intention_disclosure")
-    .where({
-      is_completely_deleted: false,
-    })
-    .update({
-      is_completely_deleted: true,
-    });
-  if (!purchaseIntentionDisclosureClearRes) return failResponse;
-  const purchaseSolicitationAnnouncementClearRes = await db
-    .collection("purchase_solicitation_announcement")
-    .where({
-      is_completely_deleted: false,
-    })
-    .update({
-      is_completely_deleted: true,
-    });
-  if (!purchaseSolicitationAnnouncementClearRes) return failResponse;
-  return successResponse;
+  try {
+    const purchaseIntentionDisclosureClearRes = await db
+      .collection("purchase_intention_disclosure")
+      .where({
+        is_completely_deleted: false,
+      })
+      .update({
+        data: {
+          is_completely_deleted: true,
+        },
+      });
+    if (!purchaseIntentionDisclosureClearRes) return failResponse;
+    const purchaseSolicitationAnnouncementClearRes = await db
+      .collection("purchase_solicitation_announcement")
+      .where({
+        is_completely_deleted: false,
+      })
+      .update({
+        data: {
+          is_completely_deleted: true,
+        },
+      });
+    if (!purchaseSolicitationAnnouncementClearRes) return failResponse;
+    return successResponse;
+  } catch (err) {
+    console.log("清空回收站失败：" + err);
+  }
 };

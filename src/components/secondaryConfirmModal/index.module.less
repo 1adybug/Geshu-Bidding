@@ -5,11 +5,47 @@
   transform: translateX(-50%) translateY(-50%);
   padding: 20px;
   width: 500px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 50px;
+  z-index: 2;
+  background-color: #fff;
+  border-radius: 10px;
   .title {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 600;
+  }
+  .bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 30px;
+    margin-top: 50px;
+    .first-section {
+      display: flex;
+      column-gap: 20px;
+      align-items: center;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+      .tip-content {
+        color: gray;
+        font-size: 26px;
+      }
+    }
+    .second-section {
+      display: flex;
+      column-gap: 20px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 50px;
+      .cancel,
+      .confirm {
+        padding: 4px 40px;
+        border-radius: 6px;
+        color: #6a6a6a;
+        font-size: 26px;
+        background-color: rgb(230, 230, 230);
+        border: 1px solid #f0f0f0;
+      }
+    }
   }
 }
