@@ -9,8 +9,8 @@ import sortListItemData, { SortType } from '@/utils/sortListItemData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
 import Taro, { useDidShow } from '@tarojs/taro';
-// import { getCrawlData } from '@/services/crawlData';
-// import extractListData from '@/utils/extractListData';
+import { getCrawlData } from '@/services/crawlData';
+import extractListData from '@/utils/extractListData';
 import { AtActivityIndicator } from 'taro-ui';
 import { wyDeepClone } from 'wangyong-utils';
 import { exportToExcelFn } from '@/services/exportToExcel';
@@ -78,7 +78,7 @@ export default function Index() {
       const res = await getPurchaseIntentionDisclosures()
       if (!res.result) return
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-      setProjectList(resultData)
+      setProjectList(resultData.filter(e => e.time !== "2023-10-12"))
       setGotData(true)
       const newResultData: CardProps[] = wyDeepClone(resultData)
       const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
@@ -91,7 +91,7 @@ export default function Index() {
       const res = await getPurchaseSocilitationAnnouncements()
       if (!res.result) return
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-      setProjectList(resultData)
+      setProjectList(resultData.filter(e => e.time !== "2023-10-12"))
       setGotData(true)
       const newResultData: CardProps[] = wyDeepClone(resultData)
       const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
