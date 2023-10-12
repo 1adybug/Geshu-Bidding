@@ -142,25 +142,39 @@ export const Function_Fetch_Exported_File_Download_URL =
 
 /**
  * 获取即将被导出的采购（征集）公告数据
-*/
-export const Function_Fetch_Purchase_Solicitation_Announcement_Details_Will_Be_Exported = "fetchPurchaseSolicitationAnnouncementDataWillBeExported"
+ */
+export const Function_Fetch_Purchase_Solicitation_Announcement_Details_Will_Be_Exported =
+  "fetchPurchaseSolicitationAnnouncementDataWillBeExported";
 
 /**
  * 获取附件
-*/
-export const Function_Fetch_Attachment_File = "fetchAndUploadFile"
+ */
+export const Function_Fetch_Attachment_File = "fetchAndUploadFile";
 
 /**
  * 获取附件2
-*/
-export const Function_Fetch_Attachments = "fetchThisSolicitationAnnouncementAttachments"
+ */
+export const Function_Fetch_Attachments =
+  "fetchThisSolicitationAnnouncementAttachments";
 
 /**
  * 根据fileIDTail获取文件TempURL
-*/
-export const Function_Fetch_FIleTempDownloadURL_By_FileIDTail = "fetchFileDownloadURl"
+ */
+export const Function_Fetch_FIleTempDownloadURL_By_FileIDTail =
+  "fetchFileDownloadURl";
 
 /**
  * 清空回收站
-*/
-export const Function_Clear_Recyclebin = "clearRecycleBin"
+ */
+export const Function_Clear_Recyclebin = "clearRecycleBin";
+
+/**
+ * 获取所有被删除的项目
+ */
+export const Function_Get_All_Items_Deleted = "getAllDeletedItems";
+
+/**
+ * 更新采购（征集）公告详情
+ */
+export const Function_Update_Purchase_Announcement_Detail =
+  "updateSinglePurchaseAnnouncementDetail";

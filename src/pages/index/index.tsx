@@ -9,15 +9,15 @@ import sortListItemData, { SortType } from '@/utils/sortListItemData';
 import { fuzzySearch } from '@/services/fuzzySearch';
 import FilterCard from '@/components/filterCard';
 import Taro, { useDidShow } from '@tarojs/taro';
-import { getCrawlData } from '@/services/crawlData';
-import extractListData from '@/utils/extractListData';
+// import { getCrawlData } from '@/services/crawlData';
+// import extractListData from '@/utils/extractListData';
 import { AtActivityIndicator } from 'taro-ui';
 import { wyDeepClone } from 'wangyong-utils';
 import { exportToExcelFn } from '@/services/exportToExcel';
 import CopyExportedFileDownloadModal from '@/components/copyExportedFileDownloadURlModal';
 import { fetchExportedFileDownloadURl } from '@/services/fetchExportedFileDownloadURl';
 import { fetchPurchaseSolicitationAnnouncementDataWillBeExported } from '@/services/fetchPurchaseSolicitationAnnouncementDataWillBeExported';
-import { downloadAttachment } from '@/services/downloadAttachment';
+// import { downloadAttachment } from '@/services/downloadAttachment';
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -41,7 +41,7 @@ export default function Index() {
   useEffect(() => {
     onListItemClicked("0", "desc")
     init()
-    // getCrawlData("0").then(res => {
+    // getCrawlData("1").then(res => {
     //   if (res.result) {
     //     extractListData(res.result)
     //   }
@@ -132,10 +132,11 @@ export default function Index() {
         item.detail[0].submission_time,
         item.detail[0].principal_unit,
         item.detail[0].project_principal,
-        item.detail[0].principal_contact
+        item.detail[0].principal_contact,
+        item.detail[0].remark
       ]
     })
-    initArr.splice(0, 0, ["项目编号", "项目名称", "预算金额（万元）", "投标时间", "采购人单位", "采购人姓名", "采购人联系方式"])
+    initArr.splice(0, 0, ["项目编号", "项目名称", "预算金额（万元）", "投标截止时间", "采购人单位", "采购人姓名", "采购人联系方式", "备注"])
     const res1 = await exportToExcelFn(initArr)
     if (!res1) return
     const resDownloadURl = await fetchExportedFileDownloadURl(res1.result)

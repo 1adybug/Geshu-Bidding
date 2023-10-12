@@ -15,7 +15,7 @@ exports.main = async () => {
     const res = await db
       .collection("purchase_intention_disclosure")
       .where({
-        time: "2023-10-10",
+        time: "2023-10-11",
       })
       .get();
     for (const item of res.data) {

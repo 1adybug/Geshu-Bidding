@@ -1,0 +1,45 @@
+.remark-edit-modal {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 20px;
+  width: 500px;
+  z-index: 2;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 30px;
+  .title {
+    font-size: 34px;
+  }
+  .textarea {
+    width: 460px;
+    border: 1px solid rgb(233, 233, 233);
+    border-radius: 6px;
+    padding: 10px;
+  }
+  .button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+    .cancel,
+    .submit {
+      padding: 8px 70px;
+      border-radius: 6px;
+      font-size: 26px;
+    }
+    .cancel {
+      border: 1px solid #dfdfdf;
+      color: #000000;
+    }
+    .submit {
+      background-color: #169e3b;
+      color: #fff;
+    }
+  }
+}

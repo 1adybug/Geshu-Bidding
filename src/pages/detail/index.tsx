@@ -4,7 +4,6 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { findSinglePurchaseIntentionDisclosure } from "@/services/findSinglePurchaseIntentionDisclosureDetail";
 import { findSinglePurchaseSolicitationAnnouncement } from "@/services/findSinglePurchaseSolicitationAnnouncement";
 import DetailFirstSection from "@/components/detailFirstSection";
-import DetailSecondSection from "@/components/detailSecondSection";
 import { findSinglePurchaseIntentionDisclosureDetailByLinkId } from "@/services/findSinglePurchaseIntentionDisclosureDetailByLinkId";
 import { findSinglePurchaseSolicitationAnnouncementDetail } from "@/services/findSinglePurchaseSolicitationAnnouncementDetail";
 import DetailSecondSectionForPurchaseSolicitation from "@/components/detailSecondSectionForPurchaseSolicitation";
@@ -19,6 +18,7 @@ import { fetchThisSolicitationAnnouncementAttachments } from "@/services/fetchTh
 import PreviewAndDownload from "@/components/previewAndDownload";
 import Shadow from "@/components/shadow";
 import PurchaseIntentionDisclosureDetailSecondSection from "@/components/purchaseIntentionDisclosureDetailSecondSection";
+import RemarkEditModal from "@/components/remarkEditModal";
 import "./index.module.less"
 
 interface ThisPurchaseIntentionDisclosureDetail extends PurchaseIntentionDisclosureDetail {
@@ -52,6 +52,7 @@ export default function Detail() {
     const [drawShow, setDrawShow] = useState(false)
     const [attachmentTitle, setAttachmentTitle] = useState("")
     const [attachmentDownloadURL, setAttachmentDownloadURL] = useState("")
+    const [remarkEditShow, setRemarkEditShow] = useState(false)
 
     useEffect(() => {
         if (!_id) return
@@ -60,8 +61,6 @@ export default function Detail() {
 
     async function getThisDetail(id: string) {
         if (currentListItemId === "0") {
-            console.log(1);
-            
             const res = await findSinglePurchaseIntentionDisclosure(id)
             const res1 = await findSinglePurchaseIntentionDisclosureDetailByLinkId(id)
             setThisPurchaseIntentionDisclosureDetail({ releaseTime: res.result.data[0].time, isCollected: res.result.data[0].is_collected, ...res1.result.data[0] })
@@ -230,6 +229,19 @@ export default function Detail() {
         setDrawShow(true)
     }
 
+    function handleRemarkEditClick() {
+        setRemarkEditShow(true)
+    }
+
+    function handleRemarkEditCancel() {
+        setRemarkEditShow(false)
+    }
+
+    function handleRemarkEditSubmit() {
+        _id && getThisDetail(_id)
+        setRemarkEditShow(false)
+    }
+
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
@@ -238,16 +250,16 @@ export default function Detail() {
                 {currentListItemId === "0" ? <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseIntentionDisclosureDetail?.title} releaseTime={thisPurchaseIntentionDisclosureDetail?.releaseTime} isCollected={thisPurchaseIntentionDisclosureDetail?.isCollected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
                     <PurchaseIntentionDisclosureDetailSecondSection projects={thisPurchaseIntentionDisclosureDetail?.projects} />
-                    {/* <DetailSecondSection projectSummarize={thisPurchaseIntentionDisclosureDetail?.purchaseRequirementsSummary} purchaseBudget={thisPurchaseIntentionDisclosureDetail?.purchaseBudget} estimatedPurchaseMonth={thisPurchaseIntentionDisclosureDetail?.expectedPurchaseMonth} isForSmallOrMediumEnterprise={thisPurchaseIntentionDisclosureDetail?.whetherForSmallAndMediumEnterprise} toPurchaseEnergysavingOrEnvironmentalLabelingProducts={thisPurchaseIntentionDisclosureDetail?.whetherPurchaseEnergySavingAndEnvironmentalLabelingProducts} remark={thisPurchaseIntentionDisclosureDetail?.remark} /> */}
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View> : <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
-                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} fileIDPrev={fileIDPrev} modalChange={handleAttachModal} />
+                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} fileIDPrev={fileIDPrev} modalChange={handleAttachModal} remarkEditClick={handleRemarkEditClick} remark={thisPurchaseSolicitationAnnouncementDetail?.remark} />
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View>}
             </Fragment>}
             {drawShow && <PreviewAndDownload attachmentTitle={attachmentTitle} url={attachmentDownloadURL} closeModal={onCloseDrawShow} onActivityIndicatorContentChange={handleGrandChildEvent} />}
-            {drawShow && <Shadow onClose={onCloseDrawShow} />}
+            {(drawShow || remarkEditShow) && <Shadow onClose={onCloseDrawShow} />}
+            {remarkEditShow && <RemarkEditModal remark={thisPurchaseSolicitationAnnouncementDetail?.remark} editCancel={handleRemarkEditCancel} editSubmit={handleRemarkEditSubmit} link_id={_id} />}
             <AtModal isOpened={modalOpen}>
                 <AtModalHeader>提示</AtModalHeader>
                 <AtModalContent>

@@ -16,7 +16,7 @@ export default function RecycleBinTopSection(props: RecycleBinTopSectionProps) {
 
     return (
         <View className='recycle-bin-top-section'>
-            <View className='total-num'>共&nbsp;{itemsTotalNum}&nbsp;条</View>
+            {/* <View className='total-num'>共&nbsp;{itemsTotalNum}&nbsp;条</View> */}
             <View onClick={clearBin} className='clear-button'>一键清空</View>
         </View>
     )

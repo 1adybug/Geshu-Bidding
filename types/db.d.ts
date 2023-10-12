@@ -43,6 +43,7 @@ declare interface PurchaseSolicitationAnnouncementDetail {
   principal_unit: string;
   project_principal: string;
   principal_contact: string;
+  remark: string;
 }
 
 declare interface PurchaseIntentionDisclosureProject {
