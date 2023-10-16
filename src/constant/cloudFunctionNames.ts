@@ -178,3 +178,62 @@ export const Function_Get_All_Items_Deleted = "getAllDeletedItems";
  */
 export const Function_Update_Purchase_Announcement_Detail =
   "updateSinglePurchaseAnnouncementDetail";
+
+/**
+ * 获取地方公告
+ */
+export const Function_Fetch_Local_Announcement = "fetchLocalAnnouncement";
+
+/**
+ * 获取地方公告详情
+ */
+export const Function_Fetch_Local_Announcement_detail =
+  "fetchLocalAnnouncementDetail";
+
+/**
+ * 获取地方公告详情附件
+ */
+export const Function_Fetch_Local_Announcement_Attachments =
+  "fetchLocalAnnouncementAttachments";
+
+/**
+ * 查询单个地方公告
+ */
+export const Function_Find_Single_Local_Announcement =
+  "findSIngleLocalAnnouncement";
+
+/**
+ * 收藏单个地方公告
+ */
+export const Function_Collect_Single_Local_Announcement =
+  "collectSingleLocalAnnouncement";
+
+/**
+ * 删除单个地方公告
+ */
+export const Function_Delete_Single_Local_Announcement =
+  "deleteSingleLocalAnnouncement";
+
+/**
+ * 彻底删除单个地方公告
+ */
+export const Function_Completely_Delete_Single_Local_Announcement =
+  "completeltyDeleteSingleLocalAnnouncement";
+
+/**
+ * 还原单个地方公告
+ */
+export const Function_Restitute_Single_Local_Announcement =
+  "restituteSingleLocalAnnouncement";
+
+/**
+ * 更新单个地方公告详情
+ */
+export const Function_Update_Single_Local_Announcement_Detail =
+  "updateSIngleLocalAnnouncementDetail";
+
+/**
+ * 获取地方公告的导出数据
+ */
+export const Function_Fetch_Local_Announcement_Data_Will_Be_Exported =
+  "fetchLocalAnnouncementDataWillBeExported";

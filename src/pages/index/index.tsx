@@ -18,6 +18,9 @@ import CopyExportedFileDownloadModal from '@/components/copyExportedFileDownload
 import { fetchExportedFileDownloadURl } from '@/services/fetchExportedFileDownloadURl';
 import { fetchPurchaseSolicitationAnnouncementDataWillBeExported } from '@/services/fetchPurchaseSolicitationAnnouncementDataWillBeExported';
 // import { downloadAttachment } from '@/services/downloadAttachment';
+import { fetchLocalAnnouncement } from '@/services/fetchLocalAnnouncement';
+import { fetchLocalAnnouncementDataWillBeExported } from '@/services/fetchLocalAnnouncementDataWillBeExported';
+import sortExportData from '@/utils/sortExportData';
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -39,13 +42,13 @@ export default function Index() {
   });
 
   useEffect(() => {
-    onListItemClicked("0", "desc")
+    // onListItemClicked("0", "desc")
     init()
-    getCrawlData("0").then(res => {
-      if (res.result) {
-        extractListData(res.result)
-      }
-    })
+    // getCrawlData("1").then(res => {
+    //   if (res.result) {
+    //     extractListData(res.result)
+    //   }
+    // })
     // queryDataDetails()
   }, [])
 
@@ -54,6 +57,7 @@ export default function Index() {
       if (!res) return
       onListItemClicked(res.data.currentListItemId, "desc")
       setShouldActivedListItemId(res.data.currentListItemId)
+      setCurrentListItemId(res.data.currentListItemId)
     })
     return
   }
@@ -100,6 +104,18 @@ export default function Index() {
       setShouldActivedListItemId("1")
       return
     }
+    if (listItemId === "2") {
+      const res = await fetchLocalAnnouncement()
+      if (!res.result) return
+      const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
+      setProjectList(resultData)
+      setGotData(true)
+      const newResultData: CardProps[] = wyDeepClone(resultData)
+      const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
+      if (!res1) return
+      rememberCurrentListItemId("2")
+      setShouldActivedListItemId("2")
+    }
   }
 
   async function rememberCurrentListItemId(id: string) {
@@ -122,12 +138,20 @@ export default function Index() {
   async function exportData() {
     setAtActivityIndicatorContent("数据正在处理中...")
     setGotData(false)
-    const res = await fetchPurchaseSolicitationAnnouncementDataWillBeExported()
+    let res: FetchPurchaseSolicitationAnnouncementDetailsWillBeExported | null = null
+    if (currentListItemId === "1") {
+      res = await fetchPurchaseSolicitationAnnouncementDataWillBeExported()
+    }
+    if (currentListItemId === "2") {
+      res = await fetchLocalAnnouncementDataWillBeExported()
+    }
     if (!res) return
-    let initArr = res.result.data.map((item: PurchaseSolicitationAnnouncementDetailWrapper) => {
+    const resDataCopy = sortExportData(wyDeepClone(res.result.data), "desc")
+    let initArr = resDataCopy.map((item: PurchaseSolicitationAnnouncementDetailWrapper) => {
       return [
         item.detail[0].project_no,
         item.detail[0].project_name,
+        item.time,
         item.detail[0].budget,
         item.detail[0].submission_time,
         item.detail[0].principal_unit,
@@ -136,7 +160,7 @@ export default function Index() {
         item.detail[0].remark
       ]
     })
-    initArr.splice(0, 0, ["项目编号", "项目名称", "预算金额（万元）", "投标截止时间", "采购人单位", "采购人姓名", "采购人联系方式", "备注"])
+    initArr.splice(0, 0, ["项目编号", "项目名称", "发布时间", "预算金额（万元）", "投标截止时间", "采购人单位", "采购人姓名", "采购人联系方式", "备注"])
     const res1 = await exportToExcelFn(initArr)
     if (!res1) return
     const resDownloadURl = await fetchExportedFileDownloadURl(res1.result)
@@ -167,7 +191,7 @@ export default function Index() {
           </View>
           <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
           {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}
-          <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />
+          {(currentListItemId === "1" || currentListItemId === "2") && <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />}
           {(drawShow || filterShow || copyExportedFileURlModalVisible) && <Shadow onClose={onCloseDrawShow} />}
         </Fragment>}
     </View>

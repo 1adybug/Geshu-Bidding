@@ -6,6 +6,7 @@ import { wyDeepClone } from "wangyong-utils";
 import { CollectionCard } from "@/components/collectionCard";
 import { AtActivityIndicator } from "taro-ui";
 import { useDidShow } from "@tarojs/taro";
+import { fetchLocalAnnouncement } from "@/services/fetchLocalAnnouncement";
 import dayjs from "dayjs";
 import "./index.module.less"
 
@@ -25,7 +26,8 @@ export default function MyCollections() {
     async function getAllCollections() {
         const res = await getPurchaseIntentionDisclosures()
         const res1 = await getPurchaseSocilitationAnnouncements()
-        const list = wyDeepClone([...res.result, ...res1.result]).filter(e => e.is_collected)
+        const res2 = await fetchLocalAnnouncement()
+        const list = wyDeepClone([...res.result, ...res1.result,...res2.result]).filter(e => e.is_collected)
         setMycollections(list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix()))
         setGotData(true)
     }

@@ -1,18 +1,20 @@
 import { Textarea, View } from "@tarojs/components"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { updateSinglePurchaseAnnouncementDetail } from "@/services/updateSinglePurchaseAnnouncementDetail"
+import { updateSingleLocalAnnouncementDetail } from "@/services/updateSIngleLocalAnnouncementDetail"
 import "./index.module.less"
 
 interface RemarkEditModalProps {
     link_id?: string
     remark?: string
+    currentListItemId?: string
     editCancel: () => void
     editSubmit: () => void
 }
 
 export default function RemarkEditModal(props: RemarkEditModalProps) {
 
-    const { link_id, remark, editCancel, editSubmit } = props
+    const { link_id, remark, currentListItemId, editCancel, editSubmit } = props
 
     const [currentRemark, setCurrentRemark] = useState(remark)
 
@@ -21,9 +23,16 @@ export default function RemarkEditModal(props: RemarkEditModalProps) {
     }
 
     async function submit() {
-        const res = await updateSinglePurchaseAnnouncementDetail(link_id, currentRemark)
-        if (!res) return
-        editSubmit()
+        if (currentListItemId === "1") {
+            const res = await updateSinglePurchaseAnnouncementDetail(link_id, currentRemark)
+            if (!res) return
+            editSubmit()
+        }
+        if (currentListItemId === "2") {
+            const res = await updateSingleLocalAnnouncementDetail(link_id, currentRemark)
+            if (!res) return
+            editSubmit()
+        }
     }
 
     function remarkInputed(e: any) {

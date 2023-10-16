@@ -47,6 +47,7 @@ interface FetchPurchaseSolicitationAnnouncementDetailsWillBeExported {
 }
 
 interface PurchaseSolicitationAnnouncementDetailWrapper {
+  time:string
   detail: PurchaseSolicitationAnnouncementDetail[];
 }
 

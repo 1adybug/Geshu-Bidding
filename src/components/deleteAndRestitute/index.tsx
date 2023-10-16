@@ -11,6 +11,10 @@ import { wyDeepClone } from "wangyong-utils";
 import { getPurchaseIntentionDisclosures } from "@/services/puchaseIntentionDisclosure";
 import { getPurchaseSocilitationAnnouncements } from "@/services/purchaseSocilitationAnnouncement";
 import sortListItemData from "@/utils/sortListItemData";
+import { deleteSingleLocalAnnouncement } from "@/services/deleteSingleLocalAnnouncement";
+import { fetchLocalAnnouncement } from "@/services/fetchLocalAnnouncement";
+import { restituteSingleLocalAnnouncement } from "@/services/restituteSingleLocalAnnouncement";
+import { collectSingleLocalAnnouncement } from "@/services/collectSingleLocalAnnouncement";
 import "./index.module.less"
 import { CardProps } from "../card";
 
@@ -39,6 +43,12 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
                 icon: "success",
                 duration: 1000
             })
+            const judgeIsEmpty = await getPurchaseIntentionDisclosures()
+            if (!judgeIsEmpty) return
+            if (!judgeIsEmpty.result.filter((item:CardProps)=> !item.is_deleted).length) {
+                Taro.navigateBack()
+                return
+            }
             const res1 = await fetchNext(currentId)
             if (!res1) return
             setCurrentId(res1)
@@ -59,6 +69,12 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
                 icon: "success",
                 duration: 1000
             })
+            const judgeIsEmpty = await getPurchaseSocilitationAnnouncements()
+            if (!judgeIsEmpty) return
+            if (!judgeIsEmpty.result.filter((item:CardProps)=> !item.is_deleted).length) {
+                Taro.navigateBack()
+                return
+            }
             const res1 = await fetchNext(currentId)
             if (!res1) return
             setCurrentId(res1)
@@ -68,6 +84,32 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
             const resultData: CardProps[] = sortListItemData(res2.result.filter(e => !e.is_deleted), "desc")
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res3 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
+            if (!res3) return
+            return
+        }
+        if (currentListItemId === "2") {
+            const res = await deleteSingleLocalAnnouncement(currentId)
+            if (!res) return
+            Taro.showToast({
+                title: "删除成功",
+                icon: "success",
+                duration: 1000
+            })
+            const judgeIsEmpty = await fetchLocalAnnouncement()
+            if (!judgeIsEmpty) return
+            if (!judgeIsEmpty.result.filter((item:CardProps)=> !item.is_deleted).length) {
+                Taro.navigateBack()
+                return
+            }
+            const res1 = await fetchNext(currentId)
+            if (!res1) return
+            setCurrentId(res1)
+            updateId(res1)
+            const res2 = await fetchLocalAnnouncement()
+            if (!res2.result) return
+            const resultData: CardProps[] = sortListItemData(res2.result.filter(e => !e.is_deleted), "desc")
+            const newResultData: CardProps[] = wyDeepClone(resultData)
+            const res3 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
             if (!res3) return
             return
         }
@@ -90,6 +132,12 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
             Taro.navigateBack()
             return
         }
+        if (currentListItemId === "2") {
+            const res = await restituteSingleLocalAnnouncement(_id)
+            if (!res) return
+            Taro.navigateBack()
+            return
+        }
     }
 
     async function handleCancelCollect() {
@@ -103,6 +151,12 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
         }
         if (currentListItemId === "1") {
             const res = await collectSinglePurchaseSolicitationAnnouncement(id, false)
+            if (!res) return
+            Taro.navigateBack()
+            return
+        }
+        if (currentListItemId === "2") {
+            const res = await collectSingleLocalAnnouncement(id, false)
             if (!res) return
             Taro.navigateBack()
             return

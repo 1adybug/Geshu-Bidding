@@ -12,6 +12,10 @@ export const dataList: SideBarContentListData[] = [
     listItemId: "1",
     listItemText: "采购（征集）公告",
   },
+  {
+    listItemId: "2",
+    listItemText: "地方公告"
+  }
   // {
   //   listItemId: "2",
   //   listItemText: "更正公告",

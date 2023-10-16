@@ -25,7 +25,15 @@ exports.main = async () => {
       .orderBy("time", "desc")
       .get();
     if (!AnnouncementRes) return;
-    return [...intentionRes.data, ...AnnouncementRes.data];
+    const LocalAnnouncementRes = await db
+      .collection("local_announcement")
+      .where({
+        is_deleted: true,
+      })
+      .orderBy("time", "desc")
+      .get();
+    if (!LocalAnnouncementRes) return;
+    return [...intentionRes.data, ...AnnouncementRes.data,...LocalAnnouncementRes.data];
   } catch (err) {
     console.log("获取删除项出错：" + err);
   }
