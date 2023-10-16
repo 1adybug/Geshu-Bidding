@@ -1,6 +1,7 @@
 import { View } from "@tarojs/components";
 import copyToClipboard from "@/utils/copyToClipboard";
 import Taro from "@tarojs/taro";
+import CloseModalIcon from "../../assets/closeModalIcon.png"
 import "./index.module.less"
 
 interface PreviewAndDownloadProps {
@@ -27,6 +28,7 @@ export default function PreviewAndDownload(props: PreviewAndDownloadProps) {
                 if (res1.statusCode === 200) {
                     Taro.openDocument({
                         filePath: res1.tempFilePath,
+                        showMenu: true,
                         success: function () {
                             console.log('打开文档成功')
                         }
@@ -40,6 +42,7 @@ export default function PreviewAndDownload(props: PreviewAndDownloadProps) {
 
     return (
         <View className='preview-and-download'>
+            <img src={CloseModalIcon} alt='' className='close-modal-icon' onClick={() => closeModal()} />
             <View className='top-container'>
                 <View className='title'>{attachmentTitle}</View>
                 <View className='tip'>提示：下载需复制该链接至浏览器中打开</View>

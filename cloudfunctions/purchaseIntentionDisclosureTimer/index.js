@@ -1,4 +1,3 @@
-// 云函数入口文件
 // eslint-disable-next-line import/no-commonjs
 const cloud = require("wx-server-sdk");
 // eslint-disable-next-line import/no-commonjs

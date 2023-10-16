@@ -82,7 +82,7 @@ export default function Index() {
       const res = await getPurchaseIntentionDisclosures()
       if (!res.result) return
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-      setProjectList(resultData)
+      setProjectList(resultData.filter(e => e.time !== "2023-10-15"))
       setGotData(true)
       const newResultData: CardProps[] = wyDeepClone(resultData)
       const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
@@ -95,7 +95,7 @@ export default function Index() {
       const res = await getPurchaseSocilitationAnnouncements()
       if (!res.result) return
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-      setProjectList(resultData)
+      setProjectList(resultData.filter(e => e.time !== "2023-10-15"))
       setGotData(true)
       const newResultData: CardProps[] = wyDeepClone(resultData)
       const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
@@ -108,7 +108,7 @@ export default function Index() {
       const res = await fetchLocalAnnouncement()
       if (!res.result) return
       const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-      setProjectList(resultData)
+      setProjectList(resultData.filter(e => e.time !== "2023-10-15"))
       setGotData(true)
       const newResultData: CardProps[] = wyDeepClone(resultData)
       const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })

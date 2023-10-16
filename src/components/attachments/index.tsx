@@ -2,22 +2,24 @@ import { View } from "@tarojs/components"
 import { Attachment } from "@/pages/detail"
 // import extractFileSuffix from "@/utils/extractFileSuffix"
 // import { downloadAttachment } from "@/services/downloadAttachment"
-import Taro from "@tarojs/taro"
 import { fetchFileDownloadURl } from "@/services/fetchFileDownloadURl"
 import "./index.module.less"
 
 interface AttachmentsProps {
     fileIDPrev: string
     attachments: Attachment[]
+    attachmentClicked: (gotDataStatus: boolean) => void
     modalChange: (title: string, downloadURL: string) => void
 }
 
 export default function Attachments(props: AttachmentsProps) {
-    const { fileIDPrev, attachments,modalChange } = props
+    const { fileIDPrev, attachments, attachmentClicked, modalChange } = props
 
     async function attachmentClick(e: Attachment) {
+        attachmentClicked(false)
         const res = await fetchFileDownloadURl(fileIDPrev + "_" + e.content)
         if (!res) return
+        attachmentClicked(true)
         modalChange(e.content, res.result.fileList[0].tempFileURL)
     }
 

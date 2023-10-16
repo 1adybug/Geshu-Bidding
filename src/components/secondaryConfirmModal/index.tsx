@@ -1,5 +1,6 @@
 import { clearRecycleBin } from "@/services/clearRecycleBin"
 import { View } from "@tarojs/components"
+import CloseModalIcon from "../../assets/closeModalIcon.png"
 import Alarm from "../../assets/alarm.jpg"
 import "./index.module.less"
 
@@ -27,6 +28,7 @@ export default function SecondaryConfirmModal(props: SecondaryConfirmModalProps)
 
     return (
         <View className='secondary-confir-modal'>
+            <img src={CloseModalIcon} alt='' className='close-modal-icon' onClick={() => closeModal()} />
             <View className='title'>提示</View>
             <View className='bottom-container'>
                 <View className='first-section'>

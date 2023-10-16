@@ -94,16 +94,16 @@ export default function Detail() {
         }
         if (currentListItemId === "2") {
             const res1 = await findSIngleLocalAnnouncement(id)
-            if(!res1) return
+            if (!res1) return
             const res = await fetchLocalAnnouncementDetail(id)
             if (!res) return
             const obj = {
                 releaseTime: res1.result[0].time,
                 is_collected: res1.result[0].is_collected
             }
-            setThisPurchaseSolicitationAnnouncementDetail({...obj,...res.result[0]})
+            setThisPurchaseSolicitationAnnouncementDetail({ ...obj, ...res.result[0] })
             const res2 = await fetchLocalAnnouncementAttachments(res1.result[0].href)
-            if(!res2) return
+            if (!res2) return
             if (res2.result) {
                 setAttachments(res2.result[0].attachments)
                 setFileIDPrev(res2.result[0].title)
@@ -314,6 +314,11 @@ export default function Detail() {
         setRemarkEditShow(false)
     }
 
+    function handleAttachmentClicked(e: boolean) {
+        setActivityIndicatorContent("请稍候...")
+        setGotData(e)
+    }
+
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
@@ -326,7 +331,7 @@ export default function Detail() {
                 </View>}
                 {(currentListItemId === "1" || currentListItemId === "2") && <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
-                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} fileIDPrev={fileIDPrev} modalChange={handleAttachModal} remarkEditClick={handleRemarkEditClick} remark={thisPurchaseSolicitationAnnouncementDetail?.remark} />
+                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} fileIDPrev={fileIDPrev} modalChange={handleAttachModal} remarkEditClick={handleRemarkEditClick} remark={thisPurchaseSolicitationAnnouncementDetail?.remark} attachmentClicked={handleAttachmentClicked} />
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View>}
             </Fragment>}

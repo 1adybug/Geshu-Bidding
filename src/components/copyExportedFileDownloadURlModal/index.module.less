@@ -11,6 +11,13 @@
   row-gap: 10px;
   padding: 20px;
   width: 500px;
+  .closeModalIcon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+  }
   .title {
     font-size: 30px;
     color: #393939;
@@ -35,12 +42,23 @@
       color: rgb(189, 189, 189);
     }
   }
-  .copy-url-button {
-    padding: 16px 40px;
-    text-align: center;
-    background-color: #169e3b;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 28px;
+  .bottom {
+    display: flex;
+    column-gap: 10px;
+    .preview,
+    .copy-url-button {
+      padding: 16px;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 28px;
+      color: #fff;
+      width: 100%;
+    }
+    .preview {
+      background-color: #169e3b;
+    }
+    .copy-url-button {
+      background-color: #767676;
+    }
   }
 }
