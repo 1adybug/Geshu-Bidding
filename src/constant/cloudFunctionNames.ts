@@ -239,6 +239,11 @@ export const Function_Fetch_Local_Announcement_Data_Will_Be_Exported =
   "fetchLocalAnnouncementDataWillBeExported";
 
 /**
- * 获取用户信息
+ * 获取所有用户
 */
-export const Function_Get_UserInfo = ""
+export const Function_Get_All_Users = "getAllUsers"
+
+/**
+ * 获取所有角色
+*/
+export const Function_Get_All_Roles = "getAllRoles"

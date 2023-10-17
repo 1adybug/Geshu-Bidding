@@ -62,6 +62,10 @@ export default function My() {
             Taro.navigateTo({ url: "/pages/mycollections/index" })
             return
         }
+        if (itemText === "用户管理") {
+            Taro.navigateTo({ url: "/pages/usersManage/index" })
+            return
+        }
     }
 
     return (

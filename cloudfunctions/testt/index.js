@@ -13,7 +13,7 @@ cloud.init({
 exports.main = async () => {
   const publicURL = "http://czj.huaian.gov.cn/zbcg/";
   try {
-    const res = await axios.get(publicURL + "/index3.html");
+    const res = await axios.get(publicURL + "/index3_2.html");
     const linkArr = extractListData(res.data).filter(
       (item) => item.time === dayjs().format("YYYY-MM-DD")
     );
