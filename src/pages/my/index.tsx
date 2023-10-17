@@ -5,6 +5,7 @@ import PersonalInfoIcon from "@/assets/personalInfoIcon.jpg"
 import MyCollectionsIcon from "@/assets/myCollectionsIcon.jpg"
 import RecycleBinIcon from "@/assets/recycleBinIcon.jpg"
 import SettingIcon from "@/assets/settingIcon.jpg"
+import UsersManage from "@/assets/usersManage.png"
 import "./index.module.less"
 
 
@@ -42,6 +43,11 @@ export default function My() {
         },
         {
             id: "3",
+            imgSrc: UsersManage,
+            text: "用户管理"
+        },
+        {
+            id: "4",
             imgSrc: SettingIcon,
             text: "设置"
         }
@@ -56,7 +62,6 @@ export default function My() {
             Taro.navigateTo({ url: "/pages/mycollections/index" })
             return
         }
-
     }
 
     return (

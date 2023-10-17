@@ -59,8 +59,8 @@ export default function Detail() {
     const [attachmentTitle, setAttachmentTitle] = useState("")
     const [attachmentDownloadURL, setAttachmentDownloadURL] = useState("")
     const [remarkEditShow, setRemarkEditShow] = useState(false)
-    const completelyDeleteThisItemTipContent = "确定要永久删除这一项吗？"
-    const [completelyDeleteModalShow, setCompletelyDeleteModalShow] = useState(false)
+    // const completelyDeleteThisItemTipContent = "确定要永久删除这一项吗？"
+    // const [completelyDeleteModalShow, setCompletelyDeleteModalShow] = useState(false)
 
     useEffect(() => {
         if (!_id) return
@@ -144,8 +144,7 @@ export default function Detail() {
 
     function onCompletelyDelete(id: string) {
         setWillDeleteItemId(id)
-        // setModalOpen(true)
-
+        setModalOpen(true)
     }
 
     async function onCollected(id: string, sourceId: string, collectedStaus: boolean) {

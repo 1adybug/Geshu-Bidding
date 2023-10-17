@@ -6,6 +6,7 @@ export default defineAppConfig({
     "pages/my/index",
     "pages/recyclebin/index",
     "pages/mycollections/index",
+    "pages/usersManage/index"
   ],
   window: {
     backgroundTextStyle: "light",
@@ -37,5 +38,5 @@ export default defineAppConfig({
         selectedIconPath: "assets/myActived.jpg",
       },
     ],
-  },
+  }
 });

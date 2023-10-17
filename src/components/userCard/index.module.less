@@ -1,0 +1,30 @@
+.user-card {
+  height: 300px;
+  border-radius: 8px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  .top {
+    display: flex;
+    column-gap: 20px;
+  }
+  .bottom {
+    margin-left: auto;
+    display: flex;
+    column-gap: 20px;
+    .edit,
+    .delete {
+      padding: 20px 50px;
+      border-radius: 8px;
+    }
+    .edit {
+      border: 1px solid #169e3b;
+      color: #169e3b;
+    }
+    .delete {
+      border: 1px solid red;
+      color: red;
+    }
+  }
+}

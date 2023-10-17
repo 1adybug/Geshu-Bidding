@@ -237,3 +237,8 @@ export const Function_Update_Single_Local_Announcement_Detail =
  */
 export const Function_Fetch_Local_Announcement_Data_Will_Be_Exported =
   "fetchLocalAnnouncementDataWillBeExported";
+
+/**
+ * 获取用户信息
+*/
+export const Function_Get_UserInfo = ""
