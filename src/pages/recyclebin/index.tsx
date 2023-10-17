@@ -30,7 +30,7 @@ export default function RecycleBin() {
         const res = await getAllDeletedItems()
         const list = wyDeepClone(res.result.filter(e => e.is_deleted).filter(e => !e.is_completely_deleted))
         setDeletedItems(list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix()))
-        if(!res) return
+        if (!res) return
         setGotData(true)
     }
 
@@ -42,11 +42,11 @@ export default function RecycleBin() {
         setDrawShow(false)
     }
 
-    function handleCloseModal(){
+    function handleCloseModal() {
         setDrawShow(false)
     }
 
-    function handleClearSucceed(){
+    function handleClearSucceed() {
         getAllDeleteds()
     }
 

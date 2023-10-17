@@ -21,7 +21,6 @@ export default function SecondaryConfirmModal(props: SecondaryConfirmModalProps)
     async function confirm() {
         const res = await clearRecycleBin()
         if (!res) return
-        console.log(res);
         clearSucceed()
         closeModal()
     }

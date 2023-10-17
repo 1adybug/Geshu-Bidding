@@ -2,6 +2,8 @@
 const cloud = require("wx-server-sdk");
 // eslint-disable-next-line import/no-commonjs
 const axios = require("axios");
+// eslint-disable-next-line import/no-commonjs
+// const dayjs = require("dayjs");
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }); // 使用当前云环境
 
@@ -14,7 +16,7 @@ exports.main = async () => {
     const res = await db
       .collection("purchase_intention_disclosure")
       .where({
-        time: "2023-10-13",
+        time: "2023-10-16",
       })
       .get();
     for (const item of res.data) {
