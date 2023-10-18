@@ -44,11 +44,11 @@ export default function Index() {
   useEffect(() => {
     // onListItemClicked("0", "desc")
     init()
-    getCrawlData("1").then(res => {
-      if (res.result) {
-        extractListData(res.result)
-      }
-    })
+    // getCrawlData("1").then(res => {
+    //   if (res.result) {
+    //     extractListData(res.result)
+    //   }
+    // })
     // queryDataDetails()
   }, [])
 

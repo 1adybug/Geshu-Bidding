@@ -1,11 +1,14 @@
 import { View } from "@tarojs/components"
-import Avator from "@/assets/avator.jpg"
+// import Avator from "@/assets/avator.jpg"
+// import { useEffect, useState } from "react"
+// import Taro from "@tarojs/taro"
 import "./index.module.less"
 
-interface UserCardProps {
+export interface UserCardProps {
+    avatorUrl: string
     userId: string
     userName: string
-    role: string
+    roleName: string
     password: string
     editOption: (userId: string) => void
     deleteOption: (userId: string) => void
@@ -13,18 +16,15 @@ interface UserCardProps {
 
 const UserCard = (props: UserCardProps) => {
 
-    const { userId, userName, role, password, editOption, deleteOption } = props
+    const { avatorUrl, userId, userName, roleName, password, editOption, deleteOption } = props
 
     return (
         <View className='user-card'>
             <View className='top'>
-                <img src={Avator} alt='' className='avator' />
+                <img src={avatorUrl} alt='' />
                 <View className='top-right'>
-                    <View className='top-right-top'>
-                        <View className='username'>{userName}</View>
-                        <View className='role'>{role}</View>
-                    </View>
-                    <View className='password'>{password}</View>
+                    <View className='username'>{userName}</View>
+                    <View className='role'>{roleName}</View>
                 </View>
             </View>
             <View className='bottom'>
