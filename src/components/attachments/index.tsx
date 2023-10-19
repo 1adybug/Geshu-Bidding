@@ -13,6 +13,7 @@ interface AttachmentsProps {
 }
 
 export default function Attachments(props: AttachmentsProps) {
+
     const { fileIDPrev, attachments, attachmentClicked, modalChange } = props
 
     async function attachmentClick(e: Attachment) {

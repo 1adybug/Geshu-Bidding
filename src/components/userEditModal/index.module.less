@@ -13,4 +13,57 @@
   justify-content: center;
   align-items: center;
   row-gap: 30px;
+  .close-modal-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+  }
+  .title {
+    font-size: 40px;
+  }
+  .form-item-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    .form-item {
+      display: flex;
+      align-items: center;
+      .input {
+        border-bottom: 1px solid #bcbcbc;
+      }
+      .picker {
+        display: flex;
+        align-items: center;
+        .selected-value {
+          border-bottom: 1px solid #bcbcbc;
+        }
+      }
+    }
+  }
+  .btn-group {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    .cancel,
+    .submit {
+      border: none;
+      width: 180px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      border-radius: 12px;
+    }
+    .cancel {
+      border: 1px solid #dfdfdf;
+      color: #000000;
+    }
+    .submit {
+      background-color: #169e3b;
+      color: #fff;
+    }
+  }
 }

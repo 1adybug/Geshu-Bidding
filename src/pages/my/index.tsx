@@ -37,14 +37,14 @@ export default function My() {
             text: "我的收藏"
         },
         {
-            id: "2",
-            imgSrc: RecycleBinIcon,
-            text: "回收站"
-        },
-        {
             id: "3",
             imgSrc: UsersManage,
             text: "用户管理"
+        },
+        {
+            id: "2",
+            imgSrc: RecycleBinIcon,
+            text: "回收站"
         },
         {
             id: "4",

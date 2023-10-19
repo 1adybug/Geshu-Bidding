@@ -14,7 +14,7 @@ interface SearchProps {
 export default function Search(props: SearchProps) {
 
     const { changeDrawShow, changeFilterShow, valueInputed } = props
-    const [keyword, setKeyword] = useState("盱眙县")
+    const [keyword, setKeyword] = useState("")
 
     const handleClick = () => {
         changeDrawShow()

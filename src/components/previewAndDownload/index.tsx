@@ -20,17 +20,29 @@ export default function PreviewAndDownload(props: PreviewAndDownloadProps) {
         closeModal()
     }
 
+
+    function getFileExtension(urlString: string): any {
+        const regex = /\.([^.]+)$/;
+        const match = urlString.match(regex);
+        if (match) {
+            return match[1];
+        }
+        return ""; 
+    }
+
     function handlePreview() {
         onActivityIndicatorContentChange("正在跳转，请稍后...")
+        console.log(url);
         Taro.downloadFile({
             url,
             success: function (res1) {
                 if (res1.statusCode === 200) {
                     Taro.openDocument({
                         filePath: res1.tempFilePath,
+                        fileType: getFileExtension(url),
                         showMenu: true,
-                        success: function () {
-                            console.log('打开文档成功')
+                        success: function (res) {
+                            console.log('打开文档成功',res)
                         }
                     })
                     onActivityIndicatorContentChange("已完成跳转")

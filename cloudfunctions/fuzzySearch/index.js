@@ -13,6 +13,8 @@ const db = cloud.database();
 exports.main = async (event) => {
   const { currentListItemId, keyword } = event;
 
+  console.log(currentListItemId, keyword);
+
   let collectionName = "purchase_intention_disclosure";
 
   if (currentListItemId === "1") {
@@ -20,23 +22,7 @@ exports.main = async (event) => {
   }
 
   if (currentListItemId === "2") {
-    collectionName = "correct_announcement";
-  }
-
-  if (currentListItemId === "3") {
-    collectionName = "bid_rejection_or_termination_announcement";
-  }
-
-  if (currentListItemId === "4") {
-    collectionName = "results_or_shortlisted_announcement";
-  }
-
-  if (currentListItemId === "5") {
-    collectionName = "contract_announcement";
-  }
-
-  if (currentListItemId === "6") {
-    collectionName = "other_announcement";
+    collectionName = "local_announcement";
   }
 
   try {
