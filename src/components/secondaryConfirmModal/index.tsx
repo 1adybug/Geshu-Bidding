@@ -1,10 +1,12 @@
 import { clearRecycleBin } from "@/services/clearRecycleBin"
+import { deleteUser } from "@/services/deleteUser"
 import { View } from "@tarojs/components"
 import CloseModalIcon from "../../assets/closeModalIcon.png"
 import Alarm from "../../assets/alarm.jpg"
 import "./index.module.less"
 
 interface SecondaryConfirmModalProps {
+    userId?: string
     tipContent: string
     closeModal: () => void
     clearSucceed: () => void
@@ -12,17 +14,23 @@ interface SecondaryConfirmModalProps {
 
 export default function SecondaryConfirmModal(props: SecondaryConfirmModalProps) {
 
-    const { tipContent, closeModal, clearSucceed } = props
-
-    function cancel() {
-        closeModal()
-    }
+    const { userId, tipContent, closeModal, clearSucceed } = props
 
     async function confirm() {
-        const res = await clearRecycleBin()
-        if (!res) return
-        clearSucceed()
-        closeModal()
+        if (tipContent === "确认要永久删除这些数据吗？") {
+            const res = await clearRecycleBin()
+            if (!res) return
+            clearSucceed()
+            closeModal()
+            return
+        }
+        if (tipContent === "确定要删除这位用户吗?") {
+            const res = await deleteUser(userId)
+            if (!res) return
+            clearSucceed()
+            closeModal()
+            return
+        }
     }
 
     return (
@@ -35,7 +43,7 @@ export default function SecondaryConfirmModal(props: SecondaryConfirmModalProps)
                     <View className='tip-content'>{tipContent}</View>
                 </View>
                 <View className='second-section'>
-                    <View className='cancel' onClick={cancel}>否</View>
+                    <View className='cancel' onClick={() => closeModal()}>否</View>
                     <View className='confirm' onClick={confirm}>是</View>
                 </View>
             </View>

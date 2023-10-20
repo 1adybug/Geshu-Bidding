@@ -3,12 +3,12 @@ import { Fragment, useEffect, useState } from "react"
 import getAllUsers from "@/services/getAllUsers"
 import UserCard, { UserCardProps } from "@/components/userCard"
 import getAllRoles from "@/services/getAllRoles"
-// import Taro from "@tarojs/taro"
 import { AtActivityIndicator } from "taro-ui"
 import UserEditModal from "@/components/userEditModal"
 import AddUserIcon from "@/assets/adduserIcon.pic.jpg"
 import Shadow from "@/components/shadow"
 import Taro from "@tarojs/taro"
+import SecondaryConfirmModal from "@/components/secondaryConfirmModal"
 import "./index.module.less"
 
 interface User {
@@ -17,6 +17,7 @@ interface User {
     roleId: string
     username: string
     password: string
+    is_deleted: boolean
 }
 
 type SpecialUser = Pick<UserCardProps, "userId" | "userName" | "roleName" | "avatorUrl" | "password">
@@ -32,7 +33,9 @@ const UsersManage = () => {
     const [userList, setUserList] = useState<SpecialUser[]>([])
     const [gotData, setGotData] = useState(false)
     const [editModalShow, setEditModalShow] = useState(false)
+    const [deleteSecondConfirmShow, setDeleteSecondConfirmShow] = useState(false)
     const [editUserInfo, setEditUserInfo] = useState<SpecialUser | null | undefined>(null)
+    const [deleteUserId, setDeleteUserId] = useState("")
 
     useEffect(() => {
         init()
@@ -49,29 +52,34 @@ const UsersManage = () => {
                 avatorUrl: item.avatorUrl,
                 userName: item.username,
                 roleName: rolesRes.result.find((roleItem: Role) => roleItem.roleId === item.roleId).roleName,
-                password: item.password
+                password: item.password,
+                is_deleted: item.is_deleted
             }
-        }))
+        }).filter((user: User) => !user.is_deleted))
         Taro.setStorage({ key: "roleList", data: rolesRes.result })
         setGotData(true)
     }
 
     function handleEdit(e: string) {
         setEditUserInfo(userList.find((user: SpecialUser) => user.userId === e))
-        console.log(2, userList.find((user: SpecialUser) => user.userId === e));
         setEditModalShow(true)
     }
 
     function handleDelete(e: string) {
-
+        setDeleteUserId(e)
+        setDeleteSecondConfirmShow(true)
     }
 
-    function handleSubmit(e: any) {
-        console.log(5, e)
+    function handleDeleteUserSucceed() {
+        init()
     }
 
     function handleCloseUserEditModal() {
         setEditModalShow(false)
+    }
+
+    function handleUpdateSucceed() {
+        init()
     }
 
     return (
@@ -83,8 +91,9 @@ const UsersManage = () => {
                     })}
                 </View>
                 <img src={AddUserIcon} className='add-user-icon' />
-                {editModalShow && <Shadow onClose={() => setEditModalShow(false)} />}
-                {editModalShow && <UserEditModal submit={handleSubmit} userName={editUserInfo?.userName} roleName={editUserInfo?.roleName} password={editUserInfo?.password} closeUserEditModal={handleCloseUserEditModal} />}
+                {(editModalShow || deleteSecondConfirmShow) && <Shadow onClose={() => setEditModalShow(false)} />}
+                {editModalShow && <UserEditModal userName={editUserInfo?.userName} roleName={editUserInfo?.roleName} password={editUserInfo?.password} closeUserEditModal={handleCloseUserEditModal} userId={editUserInfo?.userId} updateSucceed={handleUpdateSucceed} source='edit' />}
+                {deleteSecondConfirmShow && <SecondaryConfirmModal tipContent='确定要删除这位用户吗?' closeModal={() => setDeleteSecondConfirmShow(false)} clearSucceed={handleDeleteUserSucceed} userId={deleteUserId} />}
             </Fragment>
                 : <View className='data-loading-container'>
                     <AtActivityIndicator color='#169E3B' content='加载中...'></AtActivityIndicator>

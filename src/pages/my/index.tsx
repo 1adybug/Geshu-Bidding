@@ -68,6 +68,18 @@ export default function My() {
         }
     }
 
+    async function logout() {
+        const res = await Taro.removeStorage({ key: "userinfo" })
+        if (!res) {
+            Taro.showToast({
+                title: "退出失败！",
+                icon: "error",
+                duration: 2000
+            })
+            return
+        }
+    }
+
     return (
         <View className='my'>
             <View className='solid-color-base-floor'></View>
@@ -85,6 +97,7 @@ export default function My() {
                     )
                 })}
             </View>
+            <View className='logout' onClick={logout}>退出登录</View>
         </View>
     )
 }

@@ -5,18 +5,17 @@ const axios = require("axios");
 // eslint-disable-next-line import/no-commonjs
 // const dayjs = require("dayjs");
 
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }); // 使用当前云环境
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }); 
 
 const db = cloud.database();
 
-// 云函数入口函数
 // eslint-disable-next-line import/no-commonjs
 exports.main = async () => {
   try {
     const res = await db
       .collection("purchase_intention_disclosure")
       .where({
-        time: "2023-10-18",
+        time: "2023-10-19",
       })
       .get();
     for (const item of res.data) {

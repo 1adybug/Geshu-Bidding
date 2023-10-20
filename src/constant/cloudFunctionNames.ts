@@ -240,10 +240,25 @@ export const Function_Fetch_Local_Announcement_Data_Will_Be_Exported =
 
 /**
  * 获取所有用户
-*/
-export const Function_Get_All_Users = "getAllUsers"
+ */
+export const Function_Get_All_Users = "getAllUsers";
 
 /**
  * 获取所有角色
-*/
-export const Function_Get_All_Roles = "getAllRoles"
+ */
+export const Function_Get_All_Roles = "getAllRoles";
+
+/**
+ * 更新用户信息
+ */
+export const Function_Update_UserInfo = "updateUser";
+
+/**
+ * 删除用户
+ */
+export const Function_Delete_User = "deleteUser";
+
+/**
+ * 登录
+ */
+export const Function_Login = "login";

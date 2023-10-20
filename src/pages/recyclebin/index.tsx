@@ -16,7 +16,6 @@ export default function RecycleBin() {
     const [deletedItems, setDeletedItems] = useState<PurchaseIntentionDisclosure[]>([])
     const [gotData, setGotData] = useState(false)
     const [drawShow, setDrawShow] = useState(false)
-    const tipContent = `确认要永久删除这些数据吗？`
 
     useDidShow(() => {
         getAllDeleteds()
@@ -62,7 +61,7 @@ export default function RecycleBin() {
                     )
                 })}
                 {drawShow && <Fragment>
-                    <SecondaryConfirmModal tipContent={tipContent} closeModal={handleCloseModal} clearSucceed={handleClearSucceed} />
+                    <SecondaryConfirmModal tipContent='确认要永久删除这些数据吗？' closeModal={handleCloseModal} clearSucceed={handleClearSucceed} />
                     <Shadow onClose={handleShadowClose} />
                 </Fragment>}
             </View>}

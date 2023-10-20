@@ -6,7 +6,8 @@ export default defineAppConfig({
     "pages/my/index",
     "pages/recyclebin/index",
     "pages/mycollections/index",
-    "pages/usersManage/index"
+    "pages/usersManage/index",
+    "pages/home/index",
   ],
   window: {
     backgroundTextStyle: "light",
@@ -20,7 +21,7 @@ export default defineAppConfig({
     borderStyle: "black",
     list: [
       {
-        pagePath: "pages/index/index",
+        pagePath: "pages/home/index",
         text: "首页",
         iconPath: "assets/home.jpg",
         selectedIconPath: "assets/homeActived.jpg",
@@ -38,5 +39,5 @@ export default defineAppConfig({
         selectedIconPath: "assets/myActived.jpg",
       },
     ],
-  }
+  },
 });

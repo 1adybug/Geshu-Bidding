@@ -1,7 +1,4 @@
 import { View } from "@tarojs/components"
-// import Avator from "@/assets/avator.jpg"
-// import { useEffect, useState } from "react"
-// import Taro from "@tarojs/taro"
 import "./index.module.less"
 
 export interface UserCardProps {
@@ -16,7 +13,7 @@ export interface UserCardProps {
 
 const UserCard = (props: UserCardProps) => {
 
-    const { avatorUrl, userId, userName, roleName, password, editOption, deleteOption } = props
+    const { avatorUrl, userId, userName, roleName, editOption, deleteOption } = props
 
     return (
         <View className='user-card'>
@@ -29,7 +26,7 @@ const UserCard = (props: UserCardProps) => {
             </View>
             <View className='bottom'>
                 <View className='edit' onClick={() => editOption(userId)}>编辑</View>
-                <View className='delete' onClick={() => deleteOption(userId)}>删除</View>
+                {roleName !== "超级管理员" && <View className='delete' onClick={() => deleteOption(userId)}>删除</View>}
             </View>
         </View>
     )
