@@ -1,15 +1,17 @@
 import UserInfoCard from "@/components/userInfoCard";
 import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import PersonalInfoIcon from "@/assets/personalInfoIcon.jpg"
 import MyCollectionsIcon from "@/assets/myCollectionsIcon.jpg"
 import RecycleBinIcon from "@/assets/recycleBinIcon.jpg"
 import SettingIcon from "@/assets/settingIcon.jpg"
 import UsersManage from "@/assets/usersManage.png"
+import { Fragment, useEffect, useState } from "react";
+import getAllRoles from "@/services/getAllRoles";
+import { findUserById } from "@/services/findUserById";
 import "./index.module.less"
-
-
 import ArrowRight from "../../assets/arrowRight.png"
+import { Role } from "../usersManage";
 
 interface ListItem {
     id: string
@@ -17,13 +19,15 @@ interface ListItem {
     text: string
 }
 
+interface UserInfo {
+    username: string
+    avatorUrl: string
+    roleName: string
+}
+
 export default function My() {
 
-    const userInfo = {
-        userWechatNo: "wy19945372694",
-        userWechatName: "白云苍狗",
-        userWechatImgURL: "xxxxxxxxxx"
-    }
+    const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
     const listItems: ListItem[] = [
         {
@@ -68,9 +72,35 @@ export default function My() {
         }
     }
 
+    useDidShow(() => {
+        init()
+    })
+
+    useEffect(() => {
+        init()
+    }, [])
+
+    async function init() {
+        const res = await Taro.getStorage({ key: "userInfo" })
+        if (!res) return
+        const avatorUrlRes = await findUserById(res.data.userId)
+        if (!avatorUrlRes) return
+        const rolesRes = await getAllRoles()
+        if (!rolesRes) return
+        const userDetail = {
+            username: avatorUrlRes.result[0].username,
+            avatorUrl: avatorUrlRes.result[0].avatorUrl,
+            roleName: rolesRes.result.find((role: Role) => role.roleId === avatorUrlRes.result[0].roleId).roleName
+        }
+        setUserInfo(userDetail)
+        Taro.setStorage({ key: "roleList", data: rolesRes.result })
+        Taro.setStorage({ key: "userDetail", data: userDetail })
+    }
+
     async function logout() {
-        const res = await Taro.removeStorage({ key: "userinfo" })
-        if (!res) {
+        const res = await Taro.removeStorage({ key: "userInfo" })
+        const res2 = await Taro.removeStorage({ key: "userDetail" })
+        if (!res && !res2) {
             Taro.showToast({
                 title: "退出失败！",
                 icon: "error",
@@ -78,26 +108,31 @@ export default function My() {
             })
             return
         }
+        Taro.navigateTo({ url: "/pages/index/index" })
     }
 
     return (
         <View className='my'>
             <View className='solid-color-base-floor'></View>
-            <UserInfoCard userWechatNo={userInfo.userWechatNo} userWechatName={userInfo.userWechatName} userWechatImgURL={userInfo.userWechatImgURL} />
+            <UserInfoCard avatorUrl={userInfo?.avatorUrl} username={userInfo?.username} roleName={userInfo?.roleName} />
             <View className='features'>
                 {listItems.map((item: ListItem) => {
                     return (
-                        <View className='feature' key={item.id} onClick={() => handleClick(item.text)}>
-                            <View className='left'>
-                                <img src={item.imgSrc} alt='' />
-                                <View className='text'>{item.text}</View>
-                            </View>
-                            <img src={ArrowRight} alt='' />
-                        </View>
+                        <Fragment key={item.id}>
+                            {!(userInfo?.roleName === "普通用户" && item.text === "用户管理") && <View className='feature' onClick={() => handleClick(item.text)}>
+                                <View className='left'>
+                                    <img src={item.imgSrc} alt='' />
+                                    <View className='text'>{item.text}</View>
+                                </View>
+                                <img src={ArrowRight} alt='' />
+                            </View>}
+                        </Fragment>
                     )
                 })}
             </View>
-            <View className='logout' onClick={logout}>退出登录</View>
+            <View className='logout-btn-wrapper'>
+                <View className='logout' onClick={logout}>退出登录</View>
+            </View>
         </View>
     )
 }

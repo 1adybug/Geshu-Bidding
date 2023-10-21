@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react"
 import { View } from "@tarojs/components"
 import UserEditModal from "@/components/userEditModal"
-import Logo from "@/assets/logo.jpeg"
+import Logo from "@/assets/logo.jpg"
 import Taro from "@tarojs/taro"
 import Shadow from "@/components/shadow"
 import "./index.module.less"
@@ -9,30 +9,33 @@ import "./index.module.less"
 export default function Index() {
 
   const [loginModalOpen, setLoginModalOpen] = useState(false)
+  const [isLoged, setIsLoged] = useState(false)
 
   useEffect(() => {
     init()
-    // return () => {
-    //   console.log(12);
-
-    //   Taro.showTabBar(); // 页面返回时显示 TabBar
-    // }
   }, [])
 
   async function init() {
-    // const res = await Taro.getStorage({ key: "" })
+    try {
+      await Taro.getStorage({ key: "userInfo" })
+      Taro.reLaunch({
+        url: '/pages/home/index'
+      })
+    } catch (err) {
+      setIsLoged(true)
+      return
+    }
   }
 
   function handleUpdateSucceed() {
-    console.log(1);
     Taro.reLaunch({
-      url: '/pages/home/index' // 跳转到主页
+      url: '/pages/home/index'
     })
   }
 
   return (
     <View className='index'>
-      <View className='container'>
+      {isLoged && <View className='container'>
         <View className='top'>
           <img src={Logo} alt='' />
           <View className='title'>格数招标</View>
@@ -43,7 +46,7 @@ export default function Index() {
             <UserEditModal source='login' closeUserEditModal={() => setLoginModalOpen(false)} updateSucceed={handleUpdateSucceed} />
             <Shadow onClose={() => setLoginModalOpen(false)} />
           </Fragment>}
-      </View>
+      </View>}
     </View>
   )
 }

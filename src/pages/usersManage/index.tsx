@@ -4,7 +4,7 @@ import getAllUsers from "@/services/getAllUsers"
 import UserCard, { UserCardProps } from "@/components/userCard"
 import getAllRoles from "@/services/getAllRoles"
 import { AtActivityIndicator } from "taro-ui"
-import UserEditModal from "@/components/userEditModal"
+import UserEditModal, { Source } from "@/components/userEditModal"
 import AddUserIcon from "@/assets/adduserIcon.pic.jpg"
 import Shadow from "@/components/shadow"
 import Taro from "@tarojs/taro"
@@ -36,6 +36,7 @@ const UsersManage = () => {
     const [deleteSecondConfirmShow, setDeleteSecondConfirmShow] = useState(false)
     const [editUserInfo, setEditUserInfo] = useState<SpecialUser | null | undefined>(null)
     const [deleteUserId, setDeleteUserId] = useState("")
+    const [editModalSource, setEditModalSource] = useState<Source>("edit")
 
     useEffect(() => {
         init()
@@ -44,23 +45,23 @@ const UsersManage = () => {
     async function init() {
         const usersRes = await getAllUsers()
         if (!usersRes) return
-        const rolesRes = await getAllRoles()
+        const rolesRes = await Taro.getStorage({ key: "roleList" })
         if (!rolesRes) return
         setUserList(usersRes.result.map((item: User) => {
             return {
                 userId: item._id,
                 avatorUrl: item.avatorUrl,
                 userName: item.username,
-                roleName: rolesRes.result.find((roleItem: Role) => roleItem.roleId === item.roleId).roleName,
+                roleName: rolesRes.data.find((roleItem: Role) => roleItem.roleId === item.roleId).roleName,
                 password: item.password,
                 is_deleted: item.is_deleted
             }
         }).filter((user: User) => !user.is_deleted))
-        Taro.setStorage({ key: "roleList", data: rolesRes.result })
         setGotData(true)
     }
 
     function handleEdit(e: string) {
+        setEditModalSource("edit")
         setEditUserInfo(userList.find((user: SpecialUser) => user.userId === e))
         setEditModalShow(true)
     }
@@ -82,6 +83,11 @@ const UsersManage = () => {
         init()
     }
 
+    function addClick(){
+        setEditModalSource("add")
+        setEditModalShow(true)
+    }
+
     return (
         <Fragment>
             {gotData ? <Fragment>
@@ -90,9 +96,9 @@ const UsersManage = () => {
                         return <UserCard key={item.userId} userId={item.userId} userName={item.userName} roleName={item.roleName} password={item.password} editOption={handleEdit} deleteOption={handleDelete} avatorUrl={item.avatorUrl} />
                     })}
                 </View>
-                <img src={AddUserIcon} className='add-user-icon' />
+                <img src={AddUserIcon} className='add-user-icon' onClick={addClick} />
                 {(editModalShow || deleteSecondConfirmShow) && <Shadow onClose={() => setEditModalShow(false)} />}
-                {editModalShow && <UserEditModal userName={editUserInfo?.userName} roleName={editUserInfo?.roleName} password={editUserInfo?.password} closeUserEditModal={handleCloseUserEditModal} userId={editUserInfo?.userId} updateSucceed={handleUpdateSucceed} source='edit' />}
+                {editModalShow && <UserEditModal userName={editUserInfo?.userName} roleName={editUserInfo?.roleName} password={editUserInfo?.password} closeUserEditModal={handleCloseUserEditModal} userId={editUserInfo?.userId} updateSucceed={handleUpdateSucceed} source={editModalSource} avatorUrl={editUserInfo?.avatorUrl} />}
                 {deleteSecondConfirmShow && <SecondaryConfirmModal tipContent='确定要删除这位用户吗?' closeModal={() => setDeleteSecondConfirmShow(false)} clearSucceed={handleDeleteUserSucceed} userId={deleteUserId} />}
             </Fragment>
                 : <View className='data-loading-container'>

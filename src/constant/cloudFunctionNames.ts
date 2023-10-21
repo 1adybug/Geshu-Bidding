@@ -262,3 +262,33 @@ export const Function_Delete_User = "deleteUser";
  * 登录
  */
 export const Function_Login = "login";
+
+/**
+ * 查找用户头像
+ */
+export const Function_Find_User_AvatorUrl = "findUserAvatorUrl";
+
+/**
+ * 通过userId查找用户
+ */
+export const Function_Find_User_By_Id = "findUserById";
+
+/**
+ * 编辑头像
+ */
+export const Function_Edit_Avator = "updateAvator";
+
+/**
+ * 更新用户头像
+ */
+export const Function_Update_Avator = "updateUserAvator";
+
+/**
+ * 获取头像下载地址
+ */
+export const Function_Fetch_Avator_Url = "fetchAvatorUrl";
+
+/**
+ * 添加用戶
+ */
+export const Function_Add_User = "addUser";

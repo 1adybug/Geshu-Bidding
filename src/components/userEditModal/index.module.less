@@ -1,9 +1,9 @@
 .user-edit-modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  padding: 20px;
+  padding: 40px;
   width: 500px;
   z-index: 2;
   background-color: #fff;
@@ -15,36 +15,49 @@
   row-gap: 30px;
   .close-modal-icon {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 20px;
+    right: 20px;
     width: 40px;
     height: 40px;
   }
   .title {
-    font-size: 30px;
+    font-size: 42px;
     color: #000000;
   }
   .form-item-container {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 40px;
+    .avator-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        border: 1px solid #9a9a9a;
+      }
+    }
     .form-item {
       display: flex;
       align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dbdbdb;
+      .picker-wrapper {
+        width: 390px;
+      }
       .label,
       .input,
       .selected-value {
-        font-size: 28px;
+        font-size: 38px;
       }
       .input {
-        border-bottom: 1px solid #dbdbdb;
+        width: 200px;
       }
       .picker {
         display: flex;
         align-items: center;
-        .selected-value {
-          border-bottom: 1px solid #dbdbdb;
-        }
       }
     }
   }
@@ -57,7 +70,7 @@
     .submit {
       border: none;
       width: 180px;
-      height: 50px;
+      height: 80px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -65,7 +78,7 @@
       border-radius: 12px;
     }
     .cancel {
-      border: 1px solid #dfdfdf;
+      border: 1px solid #ffffff;
       color: #000000;
     }
     .submit {

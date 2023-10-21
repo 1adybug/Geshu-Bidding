@@ -1,19 +1,21 @@
 import { View } from "@tarojs/components"
-import Avator from "../../assets/avator.jpg"
 import "./index.module.less"
 
 interface UserInfoCardProps {
-    userWechatNo: string
-    userWechatName: string
-    userWechatImgURL: string
+    avatorUrl?: string
+    username?: string
+    roleName?: string
 }
 
 export default function UserInfoCard(props: UserInfoCardProps) {
-    const { userWechatName } = props
+    const { avatorUrl, username, roleName } = props
     return (
         <View className='userinfo-card'>
-            <img src={Avator} alt='' />
-            <View className='username'>{userWechatName ? userWechatName : "登录/注册"}</View>
+            <img src={avatorUrl} alt='' />
+            <View className='right-wrapper'>
+                <View className='username'>{username}</View>
+                <View className='rolename'>{roleName}</View>
+            </View>
         </View>
     )
 }
