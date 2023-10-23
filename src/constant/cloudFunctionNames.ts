@@ -292,3 +292,13 @@ export const Function_Fetch_Avator_Url = "fetchAvatorUrl";
  * 添加用戶
  */
 export const Function_Add_User = "addUser";
+
+/**
+ * 更新用户头像
+ */
+export const Function_Update_User_AvatorURL = "updateUserAvatorURL";
+
+/**
+ * 更新用户信息
+*/
+export const Function_Update_UserInfo_Sec = "updateUserInfoSec"

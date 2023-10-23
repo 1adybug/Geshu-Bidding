@@ -28,6 +28,7 @@ interface UserInfo {
 export default function My() {
 
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+    const [userId, setUserId] = useState("")
 
     const listItems: ListItem[] = [
         {
@@ -58,6 +59,10 @@ export default function My() {
     ]
 
     function handleClick(itemText: string) {
+        if (itemText === "个人信息") {
+            Taro.navigateTo({ url: `/pages/personalInfo/index?userId=${userId}` })
+            return
+        }
         if (itemText === "回收站") {
             Taro.navigateTo({ url: "/pages/recyclebin/index" })
             return
@@ -83,6 +88,7 @@ export default function My() {
     async function init() {
         const res = await Taro.getStorage({ key: "userInfo" })
         if (!res) return
+        setUserId(res.data.userId)
         const avatorUrlRes = await findUserById(res.data.userId)
         if (!avatorUrlRes) return
         const rolesRes = await getAllRoles()
@@ -114,7 +120,7 @@ export default function My() {
     return (
         <View className='my'>
             <View className='solid-color-base-floor'></View>
-            <UserInfoCard avatorUrl={userInfo?.avatorUrl} username={userInfo?.username} roleName={userInfo?.roleName} />
+            <UserInfoCard avatorUrl={userInfo?.avatorUrl} username={userInfo?.username} roleName={userInfo?.roleName} userId={userId} />
             <View className='features'>
                 {listItems.map((item: ListItem) => {
                     return (

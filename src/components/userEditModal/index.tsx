@@ -175,10 +175,10 @@ const UserEditModal = (props: UserEditModalProps) => {
                 sourceType: ['album']
             });
             Taro.showLoading({
-                title:"头像上传中..."
+                title: "头像上传中..."
             })
             const uploadRes = await Taro.cloud.uploadFile({
-                cloudPath: 'avators/' + Date.now() + "." + res.tempFilePaths[0].split(".")[1], // 云存储中的文件路径
+                cloudPath: 'avators/' + Date.now() + "." + res.tempFilePaths[0].split(".")[1],
                 filePath: res.tempFilePaths[0]
             })
             if (!uploadRes) return

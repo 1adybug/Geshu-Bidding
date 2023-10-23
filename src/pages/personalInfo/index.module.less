@@ -1,0 +1,39 @@
+.personal-info {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #e2e2e2;
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff;
+    &:not(:first-child) {
+      border-top: 1px solid rgb(244, 244, 244);
+    }
+    .label,
+    .value {
+      font-size: 36px;
+    }
+    .right {
+      display: flex;
+      column-gap: 20px;
+      align-items: center;
+      .avator {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+      }
+
+      .value {
+        color: rgb(103, 103, 103);
+      }
+
+      .arrow-right {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
