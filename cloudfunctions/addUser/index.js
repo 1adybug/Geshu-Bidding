@@ -15,6 +15,7 @@ exports.main = async (event) => {
       .collection("users")
       .where({
         username: addUsername,
+        is_deleted: false,
       })
       .get();
     if (!checkRes) return;

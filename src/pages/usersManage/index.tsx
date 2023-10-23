@@ -7,7 +7,7 @@ import { AtActivityIndicator } from "taro-ui"
 import UserEditModal, { Source } from "@/components/userEditModal"
 import AddUserIcon from "@/assets/adduserIcon.pic.jpg"
 import Shadow from "@/components/shadow"
-import Taro from "@tarojs/taro"
+import Taro, { useRouter } from "@tarojs/taro"
 import SecondaryConfirmModal from "@/components/secondaryConfirmModal"
 import "./index.module.less"
 
@@ -30,6 +30,8 @@ export interface Role {
 
 const UsersManage = () => {
 
+    const router = useRouter()
+    const { roleId } = router.params
     const [userList, setUserList] = useState<SpecialUser[]>([])
     const [gotData, setGotData] = useState(false)
     const [editModalShow, setEditModalShow] = useState(false)
@@ -83,7 +85,7 @@ const UsersManage = () => {
         init()
     }
 
-    function addClick(){
+    function addClick() {
         setEditModalSource("add")
         setEditModalShow(true)
     }
@@ -96,7 +98,7 @@ const UsersManage = () => {
                         return <UserCard key={item.userId} userId={item.userId} userName={item.userName} roleName={item.roleName} password={item.password} editOption={handleEdit} deleteOption={handleDelete} avatorUrl={item.avatorUrl} />
                     })}
                 </View>
-                <img src={AddUserIcon} className='add-user-icon' onClick={addClick} />
+                {roleId === "000" && <img src={AddUserIcon} className='add-user-icon' onClick={addClick} />}
                 {(editModalShow || deleteSecondConfirmShow) && <Shadow onClose={() => setEditModalShow(false)} />}
                 {editModalShow && <UserEditModal userName={editUserInfo?.userName} roleName={editUserInfo?.roleName} password={editUserInfo?.password} closeUserEditModal={handleCloseUserEditModal} userId={editUserInfo?.userId} updateSucceed={handleUpdateSucceed} source={editModalSource} avatorUrl={editUserInfo?.avatorUrl} />}
                 {deleteSecondConfirmShow && <SecondaryConfirmModal tipContent='确定要删除这位用户吗?' closeModal={() => setDeleteSecondConfirmShow(false)} clearSucceed={handleDeleteUserSucceed} userId={deleteUserId} />}

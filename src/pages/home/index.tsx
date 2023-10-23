@@ -81,7 +81,7 @@ const Home = () => {
             const res = await getPurchaseIntentionDisclosures()
             if (!res.result) return
             const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-            setProjectList(resultData)
+            setProjectList(resultData.filter(e => e.time !== "2023-10-23"))
             setGotData(true)
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
@@ -94,7 +94,7 @@ const Home = () => {
             const res = await getPurchaseSocilitationAnnouncements()
             if (!res.result) return
             const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-            setProjectList(resultData)
+            setProjectList(resultData.filter(e => e.time !== "2023-10-23"))
             setGotData(true)
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
@@ -107,7 +107,7 @@ const Home = () => {
             const res = await fetchLocalAnnouncement()
             if (!res.result) return
             const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-            setProjectList(resultData)
+            setProjectList(resultData.filter(e => e.time !== "2023-10-23"))
             setGotData(true)
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
@@ -124,9 +124,16 @@ const Home = () => {
     }
 
     async function getCurrentListItemId() {
-        const res = await Taro.getStorage({ key: "currentListItemId" })
-        if (!res) return
-        return res
+        try {
+            const res = await Taro.getStorage({ key: "currentListItemId" })
+            return res
+        } catch (err) {
+            return {
+                data: {
+                    currentListItemId: "0"
+                }
+            }
+        }
     }
 
     const onValueInputed = async (keyword: string) => {

@@ -1,4 +1,6 @@
 import { View } from "@tarojs/components"
+import { useEffect, useState } from "react"
+import Taro from "@tarojs/taro"
 import "./index.module.less"
 
 export interface UserCardProps {
@@ -14,6 +16,17 @@ export interface UserCardProps {
 const UserCard = (props: UserCardProps) => {
 
     const { avatorUrl, userId, userName, roleName, editOption, deleteOption } = props
+    const [currentRoleId, setCurrentRoleId] = useState("")
+
+    useEffect(() => {
+        init()
+    }, [])
+
+    async function init() {
+        const res = await Taro.getStorage({ key: "userDetail" })
+        if (!res) return
+        setCurrentRoleId(res.data.roleId)
+    }
 
     return (
         <View className='user-card'>
@@ -25,7 +38,7 @@ const UserCard = (props: UserCardProps) => {
                 </View>
             </View>
             <View className='bottom'>
-                <View className='edit' onClick={() => editOption(userId)}>编辑</View>
+                {!(currentRoleId === "001" && roleName === "超级管理员") && <View className='edit' onClick={() => editOption(userId)}>编辑</View>}
                 {roleName !== "超级管理员" && <View className='delete' onClick={() => deleteOption(userId)}>删除</View>}
             </View>
         </View>

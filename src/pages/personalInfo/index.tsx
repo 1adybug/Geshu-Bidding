@@ -1,6 +1,6 @@
 import { View } from "@tarojs/components"
 import ArrowRight from "@/assets/arrowRight.png"
-import Taro, { useRouter } from "@tarojs/taro"
+import Taro, { useDidShow, useRouter } from "@tarojs/taro"
 import { useEffect, useState } from "react"
 import { findUserById } from "@/services/findUserById"
 import { updateUserAvatorURL } from "@/services/updateUserAvatorURL"
@@ -11,6 +11,7 @@ interface PersonalInfoProps {
     userId?: string
     avatorUrl?: string
     username?: string
+    roleId?: string
     roleName?: string
     password?: string
 }
@@ -20,6 +21,10 @@ const PersonalInfo = () => {
     const router = useRouter()
     const { userId } = router.params
     const [userinfo, setUserinfo] = useState<PersonalInfoProps | null>(null)
+
+    useDidShow(() => {
+        init()
+    })
 
     useEffect(() => {
         init()
@@ -34,13 +39,14 @@ const PersonalInfo = () => {
             userId,
             avatorUrl: res.result[0].avatorUrl,
             username: res.result[0].username,
+            roleId: res.result[0].roleId,
             roleName: roleListRes.data.find((role: Role) => role.roleId === res.result[0].roleId).roleName,
             password: res.result[0].password
         })
         return true
     }
 
-    async function test() {
+    async function changeAvator() {
         const res = await Taro.showActionSheet({
             itemList: ['从手机相册选择']
         })
@@ -74,36 +80,51 @@ const PersonalInfo = () => {
         return
     }
 
+    function tabClick(index: number) {
+        if (index === 0) {
+            Taro.navigateTo({ url: `/pages/setUsername/index?userId=${userId}&userName=${userinfo?.username}` })
+            return
+        }
+        if (index === 1) {
+            Taro.navigateTo({ url: `/pages/setPassword/index?userId=${userId}&password=${userinfo?.password}` })
+            return
+        }
+        if (index === 2) {
+            Taro.navigateTo({ url: `/pages/setRole/index?userId=${userId}&roleName=${userinfo?.roleName}` })
+            return
+        }
+    }
+
     return (
         <View className='personal-info'>
             <View className='item'>
                 <View className='label'>头像</View>
-                <View className='right' onClick={test}>
+                <View className='right' onClick={changeAvator}>
                     <img className='avator' src={userinfo ? userinfo.avatorUrl : ""} />
                     <img className='arrow-right' src={ArrowRight} />
                 </View>
             </View>
-            <View className='item'>
+            <View className='item' onClick={() => tabClick(0)}>
                 <View className='label'>用户名</View>
                 <View className='right'>
                     <View className='value'>{userinfo ? userinfo.username : ""}</View>
                     <img className='arrow-right' src={ArrowRight} />
                 </View>
             </View>
-            <View className='item'>
+            <View className='item' onClick={() => tabClick(1)}>
                 <View className='label'>密码</View>
                 <View className='right'>
                     <View className='value'>{userinfo ? userinfo.password : ""}</View>
                     <img className='arrow-right' src={ArrowRight} />
                 </View>
             </View>
-            <View className='item'>
+            {userinfo?.roleId === "000" && <View className='item' onClick={() => tabClick(2)}>
                 <View className='label'>角色</View>
                 <View className='right'>
                     <View className='value'>{userinfo ? userinfo.roleName : ""}</View>
                     <img className='arrow-right' src={ArrowRight} />
                 </View>
-            </View>
+            </View>}
         </View>
     )
 }

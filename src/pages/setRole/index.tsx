@@ -1,17 +1,20 @@
 import { updateUserInfoSec } from "@/services/updateUserInfoSec"
-import { Input, Picker, View } from "@tarojs/components"
-import Taro from "@tarojs/taro"
+import { Picker, View } from "@tarojs/components"
+import Taro, { useRouter } from "@tarojs/taro"
 import { useEffect, useState } from "react"
+import DropDownArrowIcon from "@/assets/dropDownArrow.png"
 import { Role } from "../usersManage"
+import "./index.module.less"
 
-interface SetRoleProps {
-    userId: string
-    roleId: string
-}
 
-const SetRole = (props: SetRoleProps) => {
+const SetRole = () => {
 
-    const { userId, roleId } = props
+    const router = useRouter()
+    const { userId, roleName } = router.params
+    const [currentRoleId, setCurrentRoleId] = useState<string | undefined>("")
+    const options = ["超级管理员", "管理员", "普通用户"]
+    const [selectedValue, setSelectedValue] = useState(roleName);
+    const [currentRoleList, setCurrentRoleList] = useState<Role[]>([])
 
     useEffect(() => {
         init()
@@ -20,30 +23,29 @@ const SetRole = (props: SetRoleProps) => {
     async function init() {
         const res = await Taro.getStorage({ key: "roleList" })
         if (!res) return
-        const roleName = res.data.find((role: Role) => role.roleId === roleId).roleName
+        setCurrentRoleId(res.data.find((role: Role) => role.roleName === roleName).roleId)
         roleName ? setSelectedValue(roleName) : setSelectedValue("")
+        setCurrentRoleList(res.data)
     }
 
-    const [currentRoleId, setCurrentRoleId] = useState(roleId)
-    const options = ["超级管理员", "管理员", "普通用户"]
-    const [selectedValue, setSelectedValue] = useState("");
-
     async function complete() {
-        const res = await updateUserInfoSec(userId, roleId)
+        const res = await updateUserInfoSec(userId, undefined, undefined, currentRoleId)
         if (!res) return
         Taro.navigateBack()
     }
 
-    function handlePickerChange() {
-
+    function handlePickerChange(e: any) {
+        const { value } = e.detail;
+        setSelectedValue(options[value]);
+        setCurrentRoleId(currentRoleList.find((role: Role) => role.roleName === options[value])?.roleId)
     }
 
     return (
-        <View className='set-username'>
+        <View className='set-role'>
             <Picker className='picker-wrapper' mode='selector' name='rolename' range={options} value={options.indexOf(selectedValue ? selectedValue : "")} onChange={handlePickerChange}>
                 <View className='picker'>
-                    <View className='label'>角色：</View>
                     <View className='selected-value'>{selectedValue}</View>
+                    <img src={DropDownArrowIcon} className='drop-down-arrow' />
                 </View>
             </Picker>
             <View className='btn-group'>

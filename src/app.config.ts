@@ -9,6 +9,9 @@ export default defineAppConfig({
     "pages/usersManage/index",
     "pages/home/index",
     "pages/personalInfo/index",
+    "pages/setUsername/index",
+    "pages/setPassword/index",
+    "pages/setRole/index",
   ],
   window: {
     backgroundTextStyle: "light",

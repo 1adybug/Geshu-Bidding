@@ -20,6 +20,7 @@ interface ListItem {
 }
 
 interface UserInfo {
+    roleId: string
     username: string
     avatorUrl: string
     roleName: string
@@ -72,7 +73,15 @@ export default function My() {
             return
         }
         if (itemText === "用户管理") {
-            Taro.navigateTo({ url: "/pages/usersManage/index" })
+            Taro.navigateTo({ url: `/pages/usersManage/index?roleId=${userInfo?.roleId}` })
+            return
+        }
+        if (itemText === "设置") {
+            Taro.showToast({
+                title: "暂未开放",
+                icon: "error",
+                duration: 2000
+            })
             return
         }
     }
@@ -94,6 +103,7 @@ export default function My() {
         const rolesRes = await getAllRoles()
         if (!rolesRes) return
         const userDetail = {
+            roleId: avatorUrlRes.result[0].roleId,
             username: avatorUrlRes.result[0].username,
             avatorUrl: avatorUrlRes.result[0].avatorUrl,
             roleName: rolesRes.result.find((role: Role) => role.roleId === avatorUrlRes.result[0].roleId).roleName

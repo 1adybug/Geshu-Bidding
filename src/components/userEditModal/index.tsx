@@ -50,7 +50,8 @@ const UserEditModal = (props: UserEditModalProps) => {
     })
 
     const [selectedValue, setSelectedValue] = useState(roleName);
-    const options = ["超级管理员", "管理员", "普通用户"]
+    const [currentRoleId, setCurrentRoleId] = useState("")
+    const options = currentRoleId === "000" ? ["超级管理员", "管理员", "普通用户"] : ["管理员", "普通用户"]
     const [editAvatorUrl, setEditAvatorUrl] = useState(avatorUrl)
     const [fileID, setFileID] = useState("")
 
@@ -58,7 +59,10 @@ const UserEditModal = (props: UserEditModalProps) => {
         init()
     }, [])
 
-    function init() {
+    async function init() {
+        const res = await Taro.getStorage({ key: "userDetail" })
+        if (!res) return
+        setCurrentRoleId(res.data.roleId)
         if (source === "add") {
             setEditAvatorUrl("")
             setFormData({})
