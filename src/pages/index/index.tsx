@@ -33,6 +33,10 @@ export default function Index() {
     })
   }
 
+  function test() {
+    Taro.navigateTo({ url: "/pages/login/index" })
+  }
+
   return (
     <View className='index'>
       {isLoged && <View className='container'>
@@ -40,7 +44,7 @@ export default function Index() {
           <img src={Logo} alt='' />
           <View className='title'>格数招标</View>
         </View>
-        <View className='login-button' onClick={() => setLoginModalOpen(true)}>登录</View>
+        <View className='login-button' onClick={test}>登录</View>
         {loginModalOpen &&
           <Fragment>
             <UserEditModal source='login' closeUserEditModal={() => setLoginModalOpen(false)} updateSucceed={handleUpdateSucceed} />

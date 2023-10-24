@@ -12,6 +12,7 @@ export default defineAppConfig({
     "pages/setUsername/index",
     "pages/setPassword/index",
     "pages/setRole/index",
+    "pages/login/index",
   ],
   window: {
     backgroundTextStyle: "light",
