@@ -7,8 +7,10 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 // eslint-disable-next-line import/no-commonjs
 exports.main = async (event) => {
   const { fileIDTail } = event;
+  console.log(fileIDTail);
   try {
-    const publicFileIDPrev = "cloud://geshu-bidding-5gnhpdzpb49a69a4.6765-geshu-bidding-5gnhpdzpb49a69a4-1309350967/purchaseAnnouncementAttachments/"
+    const publicFileIDPrev =
+      "cloud://geshu-bidding-5gnhpdzpb49a69a4.6765-geshu-bidding-5gnhpdzpb49a69a4-1309350967/purchaseAnnouncementAttachments/";
     const res = await cloud.getTempFileURL({
       fileList: [publicFileIDPrev + fileIDTail],
     });
