@@ -3,19 +3,17 @@ import { Fragment, useEffect, useState } from "react";
 import { wyDeepClone } from "wangyong-utils";
 import RecycleBinCard from "@/components/recycleBinCard";
 import { AtActivityIndicator } from "taro-ui"
-import { useDidShow } from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import dayjs from "dayjs";
-import RecycleBinTopSection from "@/components/recyclebinTopSection";
-import Shadow from "@/components/shadow";
-import SecondaryConfirmModal from "@/components/secondaryConfirmModal";
 import { getAllDeletedItems } from "@/services/getAllDeletedItems";
+import EmptyRecycleBinIcon from "@/assets/emptyRecycleBinIcon.jpg"
+import { clearRecycleBin } from "@/services/clearRecycleBin";
 import "./index.module.less"
 
 export default function RecycleBin() {
 
     const [deletedItems, setDeletedItems] = useState<PurchaseIntentionDisclosure[]>([])
     const [gotData, setGotData] = useState(false)
-    const [drawShow, setDrawShow] = useState(false)
 
     useDidShow(() => {
         getAllDeleteds()
@@ -34,36 +32,37 @@ export default function RecycleBin() {
     }
 
     function handleClearClicked() {
-        setDrawShow(true)
-    }
-
-    function handleShadowClose() {
-        setDrawShow(false)
-    }
-
-    function handleCloseModal() {
-        setDrawShow(false)
-    }
-
-    function handleClearSucceed() {
-        getAllDeleteds()
+        Taro.showModal({
+            title: '提示',
+            content: '确定要清空这些数据吗？',
+            success: async function (res) {
+                if (res.confirm) {
+                    const res1 = await clearRecycleBin()
+                    if (!res1) return
+                    getAllDeleteds()
+                    Taro.showToast({    
+                        title: "清空成功！",
+                        icon: "success",
+                        duration: 2000
+                    })
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
     }
 
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
-                <AtActivityIndicator color='#169E3B' content='数据加载中...'></AtActivityIndicator>
+                <AtActivityIndicator color='#169E3B' content='加载中...'></AtActivityIndicator>
             </View> : <View className='recyclebin'>
-                <RecycleBinTopSection itemsTotalNum={deletedItems.length} clearClicked={handleClearClicked} />
                 {deletedItems.map((item: PurchaseIntentionDisclosure) => {
                     return (
                         <RecycleBinCard key={item._id} _id={item._id} title={item.title} time={item.time} type={item.type} />
                     )
                 })}
-                {drawShow && <Fragment>
-                    <SecondaryConfirmModal tipContent='确认要永久删除这些数据吗？' closeModal={handleCloseModal} clearSucceed={handleClearSucceed} />
-                    <Shadow onClose={handleShadowClose} />
-                </Fragment>}
+                <img src={EmptyRecycleBinIcon} className='empty-icon' onClick={handleClearClicked} />
             </View>}
         </Fragment>
     )

@@ -21,17 +21,10 @@ export default function PreviewAndDownload(props: PreviewAndDownloadProps) {
     }
 
 
-    // function getFileExtension(urlString: string): any {
-    //     const regex = /\.([^.]+)$/;
-    //     const match = urlString.match(regex);
-    //     if (match) {
-    //         return match[1];
-    //     }
-    //     return ""; 
-    // }
-
     function handlePreview() {
         onActivityIndicatorContentChange("正在跳转，请稍后...")
+        console.log(1,url);
+        
         Taro.downloadFile({
             url,
             success: function (res1) {

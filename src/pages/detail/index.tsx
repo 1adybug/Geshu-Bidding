@@ -1,4 +1,4 @@
-import { Button, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { Fragment, useEffect, useState } from "react";
 import Taro, { useRouter } from "@tarojs/taro";
 import { findSinglePurchaseIntentionDisclosure } from "@/services/findSinglePurchaseIntentionDisclosureDetail";
@@ -7,7 +7,7 @@ import DetailFirstSection from "@/components/detailFirstSection";
 import { findSinglePurchaseIntentionDisclosureDetailByLinkId } from "@/services/findSinglePurchaseIntentionDisclosureDetailByLinkId";
 import { findSinglePurchaseSolicitationAnnouncementDetail } from "@/services/findSinglePurchaseSolicitationAnnouncementDetail";
 import DetailSecondSectionForPurchaseSolicitation from "@/components/detailSecondSectionForPurchaseSolicitation";
-import { AtActivityIndicator, AtModal, AtModalAction, AtModalContent, AtModalHeader } from "taro-ui";
+import { AtActivityIndicator } from "taro-ui";
 import DeleteAndRestitute from "@/components/deleteAndRestitute";
 import { completelyDeleteSinglePurchaseIntention } from "@/services/completelyDeleteSinglePurchaseIntention";
 import { completetlyDeleteSinglePurchaseSolicitation } from "@/services/completetlyDeleteSinglePurchaseSolicitation";
@@ -24,7 +24,6 @@ import { fetchLocalAnnouncementAttachments } from "@/services/fetchLocalAnnounce
 import { findSIngleLocalAnnouncement } from "@/services/findSIngleLocalAnnouncement";
 import { collectSingleLocalAnnouncement } from "@/services/collectSingleLocalAnnouncement";
 import { completeltyDeleteSingleLocalAnnouncement } from "@/services/completeltyDeleteSingleLocalAnnouncement";
-import SecondaryConfirmModal from "@/components/secondaryConfirmModal";
 import "./index.module.less"
 
 interface ThisPurchaseIntentionDisclosureDetail extends PurchaseIntentionDisclosureDetail {
@@ -49,18 +48,16 @@ export default function Detail() {
     const [thisPurchaseIntentionDisclosureDetail, setThisPurchaseIntentionDisclosureDetail] = useState<ThisPurchaseIntentionDisclosureDetail | null>(null)
     const [thisPurchaseSolicitationAnnouncementDetail, setThisPurchaseSolicitationAnnouncementDetail] = useState<ThisPurchaseSolicitationAnnouncementDetail | null>(null)
     const [gotData, setGotData] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false)
+    const [setModalOpen] = useState(false)
     const [willDeleteItemId, setWillDeleteItemId] = useState("")
     const [freshId, setfreshId] = useState(_id)
     const [attachments, setAttachments] = useState<Attachment[]>([])
-    const [activityIndicatorContent, setActivityIndicatorContent] = useState("数据正在加载中...")
+    const [activityIndicatorContent, setActivityIndicatorContent] = useState("加载中...")
     const [fileIDPrev, setFileIDPrev] = useState("")
     const [drawShow, setDrawShow] = useState(false)
     const [attachmentTitle, setAttachmentTitle] = useState("")
     const [attachmentDownloadURL, setAttachmentDownloadURL] = useState("")
     const [remarkEditShow, setRemarkEditShow] = useState(false)
-    // const completelyDeleteThisItemTipContent = "确定要永久删除这一项吗？"
-    // const [completelyDeleteModalShow, setCompletelyDeleteModalShow] = useState(false)
 
     useEffect(() => {
         if (!_id) return
@@ -122,21 +119,18 @@ export default function Detail() {
         if (currentListItemId === "0") {
             const res = await completelyDeleteSinglePurchaseIntention(willDeleteItemId)
             if (!res) return
-            setModalOpen(false)
             Taro.navigateBack()
             return
         }
         if (currentListItemId === "1") {
             const res = await completetlyDeleteSinglePurchaseSolicitation(willDeleteItemId)
             if (!res) return
-            setModalOpen(false)
             Taro.navigateBack()
             return
         }
         if (currentListItemId === "2") {
             const res = await completeltyDeleteSingleLocalAnnouncement(willDeleteItemId)
             if (!res) return
-            setModalOpen(false)
             Taro.navigateBack()
             return
         }
@@ -144,7 +138,17 @@ export default function Detail() {
 
     function onCompletelyDelete(id: string) {
         setWillDeleteItemId(id)
-        setModalOpen(true)
+        Taro.showModal({
+            title: '提示',
+            content: '确定要永久删除这一项吗？',
+            success: function (res) {
+                if (res.confirm) {
+                    confirmCompletelyDelete()
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
     }
 
     async function onCollected(id: string, sourceId: string, collectedStaus: boolean) {
@@ -282,20 +286,21 @@ export default function Detail() {
     }
 
     function handleGrandChildEvent(e: string) {
-        if (e === "正在跳转，请稍后...") {
+        if (e === "请稍后...") {
             setGotData(false)
             setActivityIndicatorContent(e)
             return
         }
         if (e === "已完成跳转") {
             setGotData(true)
-            setActivityIndicatorContent("数据正在加载中...")
+            setActivityIndicatorContent("加载中...")
             return
         }
     }
 
     function onCloseDrawShow() {
         setDrawShow(false)
+        setRemarkEditShow(false)
     }
 
     function handleAttachModal(title: string, downloadURL: string) {
@@ -341,17 +346,6 @@ export default function Detail() {
             {drawShow && <PreviewAndDownload attachmentTitle={attachmentTitle} url={attachmentDownloadURL} closeModal={onCloseDrawShow} onActivityIndicatorContentChange={handleGrandChildEvent} />}
             {(drawShow || remarkEditShow) && <Shadow onClose={onCloseDrawShow} />}
             {remarkEditShow && <RemarkEditModal remark={thisPurchaseSolicitationAnnouncementDetail?.remark} editCancel={handleRemarkEditCancel} editSubmit={handleRemarkEditSubmit} link_id={_id} currentListItemId={currentListItemId} />}
-            {/* {completelyDeleteModalShow && <SecondaryConfirmModal tipContent={completelyDeleteThisItemTipContent} closeModal={() => setCompletelyDeleteModalShow(false)} clearSucceed={() => setCompletelyDeleteModalShow(false)} />} */}
-            <AtModal isOpened={modalOpen}>
-                <AtModalHeader>提示</AtModalHeader>
-                <AtModalContent>
-                    确定要彻底删除吗？
-                </AtModalContent>
-                <AtModalAction>
-                    <Button onClick={() => setModalOpen(false)}>取消</Button>
-                    <Button onClick={confirmCompletelyDelete}>确定</Button>
-                </AtModalAction>
-            </AtModal>
         </Fragment>
     )
 }

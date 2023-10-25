@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.module.less"
 
 interface TabbarProps {
@@ -17,6 +17,11 @@ export default function Tabbar(props: TabbarProps) {
         setActivedTabItem(e.projectSummary)
         clickWhich(e.projectSummary)
     }
+
+    useEffect(() => {
+        projects ? setActivedTabItem(projects[0].projectSummary) : setActivedTabItem("")
+    }, [projects])
+
     return (
         <View className='tabbar'>
             {projects?.map((item, index) => {

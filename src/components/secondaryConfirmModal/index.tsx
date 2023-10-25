@@ -1,5 +1,5 @@
 import { clearRecycleBin } from "@/services/clearRecycleBin"
-import { deleteUser } from "@/services/deleteUser"
+// import { deleteUser } from "@/services/deleteUser"
 import { View } from "@tarojs/components"
 import CloseModalIcon from "../../assets/closeModalIcon.png"
 import Alarm from "../../assets/alarm.jpg"
@@ -24,13 +24,13 @@ export default function SecondaryConfirmModal(props: SecondaryConfirmModalProps)
             closeModal()
             return
         }
-        if (tipContent === "确定要删除这位用户吗?") {
-            const res = await deleteUser(userId)
-            if (!res) return
-            clearSucceed()
-            closeModal()
-            return
-        }
+        // if (tipContent === "确定要删除这位用户吗?") {
+        //     const res = await deleteUser(userId)
+        //     if (!res) return
+        //     clearSucceed()
+        //     closeModal()
+        //     return
+        // }
     }
 
     return (

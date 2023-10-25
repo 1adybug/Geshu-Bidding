@@ -37,11 +37,11 @@ export default function My() {
             imgSrc: PersonalInfoIcon,
             text: "个人信息"
         },
-        {
-            id: "1",
-            imgSrc: MyCollectionsIcon,
-            text: "我的收藏"
-        },
+        // {
+        //     id: "1",
+        //     imgSrc: MyCollectionsIcon,
+        //     text: "我的收藏"
+        // },
         {
             id: "3",
             imgSrc: UsersManage,
@@ -114,17 +114,33 @@ export default function My() {
     }
 
     async function logout() {
-        const res = await Taro.removeStorage({ key: "userInfo" })
-        const res2 = await Taro.removeStorage({ key: "userDetail" })
-        if (!res && !res2) {
-            Taro.showToast({
-                title: "退出失败！",
-                icon: "error",
-                duration: 2000
-            })
-            return
-        }
-        Taro.navigateTo({ url: "/pages/index/index" })
+        Taro.showActionSheet({
+            itemList: ["退出登录"],
+            itemColor: "#fa1f02",
+            success: async (res) => {
+                if (res.tapIndex === 0) {
+                    const removeRes = await Taro.removeStorage({ key: "userInfo" })
+                    const res2 = await Taro.removeStorage({ key: "userDetail" })
+                    if (!removeRes && !res2) {
+                        Taro.showToast({
+                            title: "退出失败！",
+                            icon: "error",
+                            duration: 2000
+                        })
+                        return
+                    }
+                    Taro.navigateTo({ url: "/pages/index/index" })
+                    return
+                }
+                if (res.errMsg) {
+                    console.log("出错：" + res.errMsg);
+                    return
+                }
+            },
+            fail: (res) => {
+                console.log("出错：" + res.errMsg);
+            }
+        })
     }
 
     return (

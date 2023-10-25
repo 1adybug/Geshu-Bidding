@@ -34,7 +34,7 @@ const Home = () => {
     const [shouldActivedListItemId, setShouldActivedListItemId] = useState("0")
     const [exportedFileDownloadURl, setExportedFileDownloadURl] = useState("")
     const [copyExportedFileURlModalVisible, setCopyExportedFileURlModalVisible] = useState(false)
-    const [atActivityIndicatorContent, setAtActivityIndicatorContent] = useState("数据正在加载中...")
+    const [atActivityIndicatorContent, setAtActivityIndicatorContent] = useState("加载中...")
 
     useDidShow(() => {
         init()
@@ -43,7 +43,7 @@ const Home = () => {
     useEffect(() => {
         // onListItemClicked("0", "desc")
         init()
-        // getCrawlData("0").then(res => {
+        // getCrawlData("1").then(res => {
         //   if (res.result) {
         //     extractListData(res.result)
         //   }

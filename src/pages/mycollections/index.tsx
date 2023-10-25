@@ -35,7 +35,7 @@ export default function MyCollections() {
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
-                <AtActivityIndicator color='#169E3B' content='数据加载中...'></AtActivityIndicator>
+                <AtActivityIndicator color='#169E3B' content='加载中...'></AtActivityIndicator>
             </View> : <View className='my-collections'>
                 {mycollections.map((item: PurchaseIntentionDisclosure) => {
                     return (

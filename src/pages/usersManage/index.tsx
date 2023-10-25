@@ -2,13 +2,12 @@ import { View } from "@tarojs/components"
 import { Fragment, useEffect, useState } from "react"
 import getAllUsers from "@/services/getAllUsers"
 import UserCard, { UserCardProps } from "@/components/userCard"
-import getAllRoles from "@/services/getAllRoles"
 import { AtActivityIndicator } from "taro-ui"
 import UserEditModal, { Source } from "@/components/userEditModal"
-import AddUserIcon from "@/assets/adduserIcon.pic.jpg"
+import AddUserIcon from "@/assets/adduserIcon.jpg"
 import Shadow from "@/components/shadow"
 import Taro, { useRouter } from "@tarojs/taro"
-import SecondaryConfirmModal from "@/components/secondaryConfirmModal"
+import { deleteUser } from "@/services/deleteUser"
 import "./index.module.less"
 
 interface User {
@@ -35,9 +34,7 @@ const UsersManage = () => {
     const [userList, setUserList] = useState<SpecialUser[]>([])
     const [gotData, setGotData] = useState(false)
     const [editModalShow, setEditModalShow] = useState(false)
-    const [deleteSecondConfirmShow, setDeleteSecondConfirmShow] = useState(false)
     const [editUserInfo, setEditUserInfo] = useState<SpecialUser | null | undefined>(null)
-    const [deleteUserId, setDeleteUserId] = useState("")
     const [editModalSource, setEditModalSource] = useState<Source>("edit")
 
     useEffect(() => {
@@ -69,12 +66,31 @@ const UsersManage = () => {
     }
 
     function handleDelete(e: string) {
-        setDeleteUserId(e)
-        setDeleteSecondConfirmShow(true)
-    }
-
-    function handleDeleteUserSucceed() {
-        init()
+        Taro.showModal({
+            title: "提示",
+            content: "确定要删除这位用户吗?",
+            success: async (res) => {
+                if (res.confirm) {
+                    const delRes = await deleteUser(e)
+                    if (!delRes) return
+                    init()
+                    Taro.showToast({
+                        title: "删除成功！",
+                        icon: "success",
+                        duration: 2000
+                    })
+                    return
+                }
+                if (res.cancel) {
+                    console.log("取消删除！");
+                    return
+                }
+                if (res.errMsg) {
+                    console.log("出错：" + res.errMsg);
+                    return
+                }
+            }
+        })
     }
 
     function handleCloseUserEditModal() {
@@ -99,9 +115,8 @@ const UsersManage = () => {
                     })}
                 </View>
                 {roleId === "000" && <img src={AddUserIcon} className='add-user-icon' onClick={addClick} />}
-                {(editModalShow || deleteSecondConfirmShow) && <Shadow onClose={() => setEditModalShow(false)} />}
+                {editModalShow && <Shadow onClose={() => setEditModalShow(false)} />}
                 {editModalShow && <UserEditModal userName={editUserInfo?.userName} roleName={editUserInfo?.roleName} password={editUserInfo?.password} closeUserEditModal={handleCloseUserEditModal} userId={editUserInfo?.userId} updateSucceed={handleUpdateSucceed} source={editModalSource} avatorUrl={editUserInfo?.avatorUrl} />}
-                {deleteSecondConfirmShow && <SecondaryConfirmModal tipContent='确定要删除这位用户吗?' closeModal={() => setDeleteSecondConfirmShow(false)} clearSucceed={handleDeleteUserSucceed} userId={deleteUserId} />}
             </Fragment>
                 : <View className='data-loading-container'>
                     <AtActivityIndicator color='#169E3B' content='加载中...'></AtActivityIndicator>

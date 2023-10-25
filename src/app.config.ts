@@ -32,6 +32,12 @@ export default defineAppConfig({
         selectedIconPath: "assets/homeActived.jpg",
       },
       {
+        pagePath: "pages/mycollections/index",
+        text: "收藏",
+        iconPath: "assets/defaultCollections.png",
+        selectedIconPath: "assets/activedCollections.png",
+      },
+      {
         pagePath: "pages/list/index",
         text: "项目",
         iconPath: "assets/own.jpg",

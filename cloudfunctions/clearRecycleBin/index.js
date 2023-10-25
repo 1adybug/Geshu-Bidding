@@ -22,6 +22,7 @@ exports.main = async () => {
     const purchaseIntentionDisclosureClearRes = await db
       .collection("purchase_intention_disclosure")
       .where({
+        is_deleted: true,
         is_completely_deleted: false,
       })
       .update({
@@ -32,9 +33,7 @@ exports.main = async () => {
     if (!purchaseIntentionDisclosureClearRes) return failResponse;
     const purchaseSolicitationAnnouncementClearRes = await db
       .collection("purchase_solicitation_announcement")
-      .where({
-        is_completely_deleted: false,
-      })
+      .where({ is_deleted: true, is_completely_deleted: false })
       .update({
         data: {
           is_completely_deleted: true,
