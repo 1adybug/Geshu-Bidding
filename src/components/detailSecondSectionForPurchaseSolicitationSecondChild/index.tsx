@@ -14,9 +14,9 @@ export default function DetailSecondSectionForPurchaseSolicitationSecondChild(pr
 
     const { principal_unit, project_principal, principal_contact, remark, remarkEditClick } = props
 
-    function remarkEdit() {
-        remarkEditClick()
-    }
+    // function remarkEdit() {
+    //     remarkEditClick()
+    // }
 
     return (
         <View className='detail-second-section-for-purchase-solicitation-second-child'>
@@ -34,13 +34,13 @@ export default function DetailSecondSectionForPurchaseSolicitationSecondChild(pr
                     <View className='name'>联系方式：</View>
                     <View className='data'>{principal_contact ? principal_contact : "无"}</View>
                 </View>
-                <View className='remark'>
+                {/* <View className='remark'>
                     <View className='label'>
                         <View className='name'>备注：</View>
                         <img src={EditIcon} onClick={remarkEdit} />
                     </View>
                     <View className='data'>{remark ? remark : "无"}</View>
-                </View>
+                </View> */}
             </View>
         </View>
     )

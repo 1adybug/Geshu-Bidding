@@ -6,7 +6,7 @@ import { AtActivityIndicator } from "taro-ui"
 import UserEditModal, { Source } from "@/components/userEditModal"
 import AddUserIcon from "@/assets/adduserIcon.jpg"
 import Shadow from "@/components/shadow"
-import Taro, { useRouter } from "@tarojs/taro"
+import Taro, { useDidShow, useRouter } from "@tarojs/taro"
 import { deleteUser } from "@/services/deleteUser"
 import "./index.module.less"
 
@@ -37,9 +37,9 @@ const UsersManage = () => {
     const [editUserInfo, setEditUserInfo] = useState<SpecialUser | null | undefined>(null)
     const [editModalSource, setEditModalSource] = useState<Source>("edit")
 
-    useEffect(() => {
+    useDidShow(() => {
         init()
-    }, [])
+    })
 
     async function init() {
         const usersRes = await getAllUsers()
@@ -102,8 +102,9 @@ const UsersManage = () => {
     }
 
     function addClick() {
-        setEditModalSource("add")
-        setEditModalShow(true)
+        // setEditModalSource("add")
+        // setEditModalShow(true)
+        Taro.navigateTo({ url: `/pages/personalInfo/index?source=addUser` })
     }
 
     return (
@@ -111,7 +112,7 @@ const UsersManage = () => {
             {gotData ? <Fragment>
                 <View className='users-manage'>
                     {userList.map((item: SpecialUser) => {
-                        return <UserCard key={item.userId} userId={item.userId} userName={item.userName} roleName={item.roleName} password={item.password} editOption={handleEdit} deleteOption={handleDelete} avatorUrl={item.avatorUrl} />
+                        return <UserCard key={item.userId} userId={item.userId} userName={item.userName} roleName={item.roleName} password={item.password} deleteOption={handleDelete} avatorUrl={item.avatorUrl} />
                     })}
                 </View>
                 {roleId === "000" && <img src={AddUserIcon} className='add-user-icon' onClick={addClick} />}

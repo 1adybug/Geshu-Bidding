@@ -61,7 +61,7 @@ export default function My() {
 
     function handleClick(itemText: string) {
         if (itemText === "个人信息") {
-            Taro.navigateTo({ url: `/pages/personalInfo/index?userId=${userId}` })
+            Taro.navigateTo({ url: `/pages/personalInfo/index?userId=${userId}&source=personInfo` })
             return
         }
         if (itemText === "回收站") {

@@ -9,13 +9,12 @@ export interface UserCardProps {
     userName: string
     roleName: string
     password: string
-    editOption: (userId: string) => void
     deleteOption: (userId: string) => void
 }
 
 const UserCard = (props: UserCardProps) => {
 
-    const { avatorUrl, userId, userName, roleName, editOption, deleteOption } = props
+    const { avatorUrl, userId, userName, roleName, deleteOption } = props
     const [currentRoleId, setCurrentRoleId] = useState("")
 
     useEffect(() => {
@@ -28,6 +27,10 @@ const UserCard = (props: UserCardProps) => {
         setCurrentRoleId(res.data.roleId)
     }
 
+    function handleEditClick() {
+        Taro.navigateTo({ url: `/pages/personalInfo/index?userId=${userId}&source=editUser` })
+    }
+
     return (
         <View className='user-card'>
             <View className='top'>
@@ -38,7 +41,7 @@ const UserCard = (props: UserCardProps) => {
                 </View>
             </View>
             <View className='bottom'>
-                {!(currentRoleId === "001" && roleName === "超级管理员") && <View className='edit' onClick={() => editOption(userId)}>编辑</View>}
+                {!(currentRoleId === "001" && roleName === "超级管理员") && <View className='edit' onClick={handleEditClick}>编辑</View>}
                 {roleName !== "超级管理员" && <View className='delete' onClick={() => deleteOption(userId)}>删除</View>}
             </View>
         </View>

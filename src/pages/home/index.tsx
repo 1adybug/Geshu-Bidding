@@ -43,11 +43,11 @@ const Home = () => {
     useEffect(() => {
         // onListItemClicked("0", "desc")
         init()
-        getCrawlData("0").then(res => {
-            if (res.result) {
-                extractListData(res.result)
-            }
-        })
+        // getCrawlData("0").then(res => {
+        //     if (res.result) {
+        //         extractListData(res.result)
+        //     }
+        // })
         // queryDataDetails()
     }, [])
 
@@ -137,13 +137,28 @@ const Home = () => {
     }
 
     const onValueInputed = async (keyword: string) => {
+        try {
+            const searchHistoryCache = await Taro.getStorage({ key: "searchHistory" })
+            if (!searchHistoryCache) return
+            let searchHistory: string[] = searchHistoryCache.data
+            searchHistory.push(keyword)
+            searchHistory = Array.from(new Set(searchHistory))
+            await Taro.setStorage({ key: "searchHistory", data: searchHistory })
+        } catch (err) {
+            let searchHistory: string[] = []
+            searchHistory.push(keyword)
+            searchHistory = Array.from(new Set(searchHistory))
+            await Taro.setStorage({ key: "searchHistory", data: searchHistory })
+        }
         const res = await fuzzySearch(currentListItemId, keyword)
         setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), "desc"))
     }
 
     async function exportData() {
-        setAtActivityIndicatorContent("数据正在处理中...")
-        setGotData(false)
+        // setAtActivityIndicatorContent("数据正在处理中...")
+        Taro.showLoading({
+            title:"正在导出"
+        })
         let res: FetchPurchaseSolicitationAnnouncementDetailsWillBeExported | null = null
         if (currentListItemId === "1") {
             res = await fetchPurchaseSolicitationAnnouncementDataWillBeExported()
@@ -171,9 +186,24 @@ const Home = () => {
         if (!res1) return
         const resDownloadURl = await fetchExportedFileDownloadURl(res1.result)
         if (!resDownloadURl) return
-        setGotData(true)
-        setExportedFileDownloadURl(resDownloadURl.result.fileList[0].tempFileURL)
-        copyExportedFileURlModalVisible ? setCopyExportedFileURlModalVisible(false) : setCopyExportedFileURlModalVisible(true)
+        Taro.downloadFile({
+            url: resDownloadURl.result.fileList[0].tempFileURL,
+            success: function (downloadFileRes) {
+                if (downloadFileRes.statusCode === 200) {
+                    Taro.openDocument({
+                        filePath: downloadFileRes.tempFilePath,
+                        showMenu: true,
+                        success: function () {
+                            Taro.hideLoading()
+                            console.log('打开文档成功')
+                        }
+                    })
+                }
+            }
+        })
+        // setGotData(true)
+        // setExportedFileDownloadURl(resDownloadURl.result.fileList[0].tempFileURL)
+        // copyExportedFileURlModalVisible ? setCopyExportedFileURlModalVisible(false) : setCopyExportedFileURlModalVisible(true)
     }
 
     function onCloseDownloadURLModal() {
@@ -198,7 +228,7 @@ const Home = () => {
                     <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
                     {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}
                     {(currentListItemId === "1" || currentListItemId === "2") && <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />}
-                    {(drawShow || filterShow || copyExportedFileURlModalVisible) && <Shadow onClose={onCloseDrawShow} />}
+                    {(drawShow || copyExportedFileURlModalVisible) && <Shadow onClose={onCloseDrawShow} />}
                 </Fragment>}
         </View>
     )

@@ -1,6 +1,6 @@
 import { View } from "@tarojs/components";
 import { Fragment, useEffect, useState } from "react";
-import Taro, { useRouter } from "@tarojs/taro";
+import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import { findSinglePurchaseIntentionDisclosure } from "@/services/findSinglePurchaseIntentionDisclosureDetail";
 import { findSinglePurchaseSolicitationAnnouncement } from "@/services/findSinglePurchaseSolicitationAnnouncement";
 import DetailFirstSection from "@/components/detailFirstSection";
@@ -48,7 +48,6 @@ export default function Detail() {
     const [thisPurchaseIntentionDisclosureDetail, setThisPurchaseIntentionDisclosureDetail] = useState<ThisPurchaseIntentionDisclosureDetail | null>(null)
     const [thisPurchaseSolicitationAnnouncementDetail, setThisPurchaseSolicitationAnnouncementDetail] = useState<ThisPurchaseSolicitationAnnouncementDetail | null>(null)
     const [gotData, setGotData] = useState(false)
-    const [setModalOpen] = useState(false)
     const [willDeleteItemId, setWillDeleteItemId] = useState("")
     const [freshId, setfreshId] = useState(_id)
     const [attachments, setAttachments] = useState<Attachment[]>([])
@@ -60,9 +59,13 @@ export default function Detail() {
     const [remarkEditShow, setRemarkEditShow] = useState(false)
 
     useEffect(() => {
-        if (!_id) return
-        getThisDetail(_id)
+        init()
     }, [])
+
+    function init() {
+        if (!freshId) return
+        getThisDetail(freshId)
+    }
 
     async function getThisDetail(id: string) {
         if (currentListItemId === "0") {
@@ -339,11 +342,11 @@ export default function Detail() {
                 </View>}
                 {(currentListItemId === "1" || currentListItemId === "2") && <View className='detail' >
                     <DetailFirstSection projectName={thisPurchaseSolicitationAnnouncementDetail?.title} releaseTime={thisPurchaseSolicitationAnnouncementDetail?.releaseTime} isCollected={thisPurchaseSolicitationAnnouncementDetail?.is_collected} currentListItemId={currentListItemId} source={source} _id={freshId} collect={onCollected} />
-                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} fileIDPrev={fileIDPrev} modalChange={handleAttachModal} remarkEditClick={handleRemarkEditClick} remark={thisPurchaseSolicitationAnnouncementDetail?.remark} attachmentClicked={handleAttachmentClicked} />
+                    <DetailSecondSectionForPurchaseSolicitation project_name={thisPurchaseSolicitationAnnouncementDetail?.project_name} project_no={thisPurchaseSolicitationAnnouncementDetail?.project_no} project_principal={thisPurchaseSolicitationAnnouncementDetail?.project_principal} principal_contact={thisPurchaseSolicitationAnnouncementDetail?.principal_contact} budget={thisPurchaseSolicitationAnnouncementDetail?.budget} principal_unit={thisPurchaseSolicitationAnnouncementDetail?.principal_unit} submission_time={thisPurchaseSolicitationAnnouncementDetail?.submission_time} haveAttachments={attachments.length > 0} attachments={attachments} fileIDPrev={fileIDPrev} modalChange={handleAttachModal} remarkEditClick={handleRemarkEditClick} remark={thisPurchaseSolicitationAnnouncementDetail?.remark} attachmentClicked={handleAttachmentClicked} link_id={_id} currentListItemId={currentListItemId} />
                     <DeleteAndRestitute _id={freshId} currentListItemId={currentListItemId} source={source} completelyDelete={onCompletelyDelete} fetchNext={handleFetchNext} fetchPrev={handleFetchPrev} updateId={handleUpdateId} />
                 </View>}
             </Fragment>}
-            {drawShow && <PreviewAndDownload attachmentTitle={attachmentTitle} url={attachmentDownloadURL} closeModal={onCloseDrawShow} onActivityIndicatorContentChange={handleGrandChildEvent} />}
+            {/* {drawShow && <PreviewAndDownload attachmentTitle={attachmentTitle} url={attachmentDownloadURL} closeModal={onCloseDrawShow} onActivityIndicatorContentChange={handleGrandChildEvent} />} */}
             {(drawShow || remarkEditShow) && <Shadow onClose={onCloseDrawShow} />}
             {remarkEditShow && <RemarkEditModal remark={thisPurchaseSolicitationAnnouncementDetail?.remark} editCancel={handleRemarkEditCancel} editSubmit={handleRemarkEditSubmit} link_id={_id} currentListItemId={currentListItemId} />}
         </Fragment>

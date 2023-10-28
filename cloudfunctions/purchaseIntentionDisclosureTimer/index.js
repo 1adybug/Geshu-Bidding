@@ -5,7 +5,7 @@ const axios = require("axios");
 // eslint-disable-next-line import/no-commonjs
 // const dayjs = require("dayjs");
 
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV }); 
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
 
@@ -15,7 +15,7 @@ exports.main = async () => {
     const res = await db
       .collection("purchase_intention_disclosure")
       .where({
-        time: "2023-10-25",
+        time: "2023-10-27",
       })
       .get();
     for (const item of res.data) {

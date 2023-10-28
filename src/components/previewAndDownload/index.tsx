@@ -23,23 +23,7 @@ export default function PreviewAndDownload(props: PreviewAndDownloadProps) {
 
     function handlePreview() {
         onActivityIndicatorContentChange("正在跳转，请稍后...")
-        console.log(1,url);
         
-        Taro.downloadFile({
-            url,
-            success: function (res1) {
-                if (res1.statusCode === 200) {
-                    Taro.openDocument({
-                        filePath: res1.tempFilePath,
-                        showMenu: true,
-                        success: function (res) {
-                            console.log('打开文档成功',res)
-                        }
-                    })
-                    onActivityIndicatorContentChange("已完成跳转")
-                }
-            }
-        })
         closeModal()
     }
 

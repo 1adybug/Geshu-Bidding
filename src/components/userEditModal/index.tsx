@@ -5,10 +5,8 @@ import { updateUser } from "@/services/updateUser";
 import Taro from "@tarojs/taro";
 import { findUserAvatorUrl } from "@/services/findUserAvatorUrl";
 import { updateAvator } from "@/services/updateUserAvator";
-import { editAvator } from "@/services/updateAvator";
 import { fetchAvatorUrl } from "@/services/fetchAvatorUrl";
 import { addUser } from "@/services/addUser";
-import dayjs from "dayjs";
 import CloseModalIcon from "../../assets/closeModalIcon.png"
 import "./index.module.less"
 

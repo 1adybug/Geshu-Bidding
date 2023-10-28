@@ -3,37 +3,66 @@
   flex-direction: column;
   height: 100vh;
   background-color: #fbf9f9;
-  .item {
+  .top-container {
+    display: flex;
+    flex-direction: column;
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #fff;
+      &:not(:first-child) {
+        border-top: 1px solid rgb(244, 244, 244);
+      }
+      .label,
+      .value {
+        font-size: 36px;
+      }
+      .right {
+        display: flex;
+        column-gap: 20px;
+        align-items: center;
+
+        .input {
+          width: 200px;
+        }
+
+        .avator {
+          width: 160px;
+          height: 160px;
+          border-radius: 50%;
+          border: 1px solid #9a9a9a;
+        }
+
+        .value {
+          color: rgb(103, 103, 103);
+        }
+
+        .arrow-right {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+  .btn-group {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #fff;
-    &:not(:first-child) {
-      border-top: 1px solid rgb(244, 244, 244);
+    padding: 12px 10px;
+    margin-top: 20px;
+    .cancel,
+    .submit {
+      padding: 10px 46px;
+      border-radius: 8px;
     }
-    .label,
-    .value {
-      font-size: 36px;
+    .cancel {
+      background-color: #ffffff;
+      border: 1px solid #eeeeee;
     }
-    .right {
-      display: flex;
-      column-gap: 20px;
-      align-items: center;
-      .avator {
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-      }
-
-      .value {
-        color: rgb(103, 103, 103);
-      }
-
-      .arrow-right {
-        width: 20px;
-        height: 20px;
-      }
+    .submit {
+      background-color: #169e3b;
+      color: #fff;
     }
   }
 }

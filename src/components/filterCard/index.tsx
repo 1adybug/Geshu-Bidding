@@ -1,6 +1,6 @@
 import { View } from "@tarojs/components";
 import { SortType } from "@/utils/sortListItemData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.module.less"
 
 interface FilterCardProps {
@@ -35,6 +35,11 @@ export default function FilterCard(props: FilterCardProps) {
     const [activedCondition, setActivedCondition] = useState("0")
 
     const { visible, currentListItemId, changeFilterShow, changeFilterCondition } = props
+    const [show, setShow] = useState(visible)
+
+    useEffect(() => {
+        setShow(visible)
+    }, [visible])
 
     const handleReset = () => {
         setActivedCondition("-1")
@@ -57,7 +62,7 @@ export default function FilterCard(props: FilterCardProps) {
     }
 
     return (
-        <View className={`filter ${visible ? 'show' : ''}`}>
+        <View className={`filter ${show ? 'show' : ''}`}>
             <View className='top'>
                 <View className='type'>按发布时间：</View>
                 <View className='tags'>

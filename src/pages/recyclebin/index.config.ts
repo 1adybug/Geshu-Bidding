@@ -1,4 +1,3 @@
 export default definePageConfig({
-    navigationBarTitleText: "回收站",
-  });
-  
+  navigationBarTitleText: "回收站",
+});
