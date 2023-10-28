@@ -94,18 +94,18 @@ export default function Search(props: SearchProps) {
         <View className='search'>
             <View className='top'>
                 <img src={ExpandSidebarIcon} alt='' onClick={handleClick} />
-                <View className={`wrapper ${historyShow ? 'wrapper-sec' : ''}`}>
+                <View className={`wrapper ${(historyShow && searchHistoryList.length) ? 'wrapper-sec' : ''}`}>
                     <View className='icon-box'>
                         <img src={SearchIcon} alt='' onClick={handleSearch} />
                     </View>
                     <Input placeholderClass='placeholder' placeholder='请输入项目名称' value={keyword} onInput={handleInput} onConfirm={handleSearch} onFocus={handleOnFocus} onBlur={() => setHistoryShow(false)} />
                     <View className='clear-input'>
-                        <img src={ClearInputIcon} onClick={handleClearInput} />
+                        {keyword.length ? <img src={ClearInputIcon} onClick={handleClearInput} /> : <img />}
                     </View>
                 </View>
                 <img src={FilterIcon} alt='' onClick={filterIconClick} />
             </View>
-            <View className={`search-history ${historyShow ? 'search-history-show' : ''}`}>
+            {bottomShow && <View className={`search-history ${historyShow ? 'search-history-show' : ''}`}>
                 <View className='list' onClick={() => console.log(1)}>
                     {
                         searchHistoryList.map((e: string) => {
@@ -115,11 +115,11 @@ export default function Search(props: SearchProps) {
                         })
                     }
                 </View>
-                {bottomShow && <View className='bottom'>
+                <View className='bottom'>
                     <View className='desc'>搜索历史</View>
                     <View className='clear' onClick={clearhistory}>清空</View>
-                </View>}
-            </View>
+                </View>
+            </View>}
         </View>
     )
 }

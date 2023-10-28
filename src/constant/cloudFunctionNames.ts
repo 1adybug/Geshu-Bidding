@@ -300,5 +300,10 @@ export const Function_Update_User_AvatorURL = "updateUserAvatorURL";
 
 /**
  * 更新用户信息
-*/
-export const Function_Update_UserInfo_Sec = "updateUserInfoSec"
+ */
+export const Function_Update_UserInfo_Sec = "updateUserInfoSec";
+
+/**
+ * 最近浏览点击记录
+ */
+export const Function_Recently_Viewed = "recentlyViewed";

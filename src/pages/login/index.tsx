@@ -62,7 +62,7 @@ const Login = () => {
                     </View>
                 </View>
                 <View className='btn-group'>
-                    <View className='cancel-btn' onClick={() => Taro.navigateBack()} >取消</View>
+                    {/* <View className='cancel-btn' onClick={() => Taro.navigateBack()} >取消</View> */}
                     <View className='login-btn' onClick={submit} >登录</View>
                 </View>
                 <img src={LoginCardLittleCircle} className='right-mid-circle' />
