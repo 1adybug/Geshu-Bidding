@@ -21,6 +21,7 @@ import { fetchPurchaseSolicitationAnnouncementDataWillBeExported } from '@/servi
 import { fetchLocalAnnouncement } from '@/services/fetchLocalAnnouncement';
 import { fetchLocalAnnouncementDataWillBeExported } from '@/services/fetchLocalAnnouncementDataWillBeExported';
 import sortExportData from '@/utils/sortExportData';
+import { fetchRecentlyViewed } from "@/services/fetchRecentlyViewed";
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -77,6 +78,8 @@ const Home = () => {
 
     const onListItemClicked = async (listItemId: string, sortType: SortType) => {
         setCurrentListItemId(listItemId)
+        rememberCurrentListItemId(listItemId)
+        setShouldActivedListItemId(listItemId)
         if (listItemId === "0") {
             const res = await getPurchaseIntentionDisclosures()
             if (!res.result) return
@@ -86,8 +89,8 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
             if (!res1) return
-            rememberCurrentListItemId("0")
-            setShouldActivedListItemId("0")
+            // rememberCurrentListItemId("0")
+            // setShouldActivedListItemId("0")
             return
         }
         if (listItemId === "1") {
@@ -99,8 +102,8 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
             if (!res1) return
-            rememberCurrentListItemId("1")
-            setShouldActivedListItemId("1")
+            // rememberCurrentListItemId("1")
+            // setShouldActivedListItemId("1")
             return
         }
         if (listItemId === "2") {
@@ -112,11 +115,14 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
             if (!res1) return
-            rememberCurrentListItemId("2")
-            setShouldActivedListItemId("2")
+            // rememberCurrentListItemId("2")
+            // setShouldActivedListItemId("2")
         }
-        if(listItemId === "3"){
-            
+        if (listItemId === "3") {
+            const res = await fetchRecentlyViewed()
+            if (!res) return
+            console.log(res);
+
         }
     }
 
@@ -160,7 +166,7 @@ const Home = () => {
     async function exportData() {
         // setAtActivityIndicatorContent("数据正在处理中...")
         Taro.showLoading({
-            title:"正在导出"
+            title: "正在导出"
         })
         let res: FetchPurchaseSolicitationAnnouncementDetailsWillBeExported | null = null
         if (currentListItemId === "1") {

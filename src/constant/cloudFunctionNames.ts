@@ -307,3 +307,9 @@ export const Function_Update_UserInfo_Sec = "updateUserInfoSec";
  * 最近浏览点击记录
  */
 export const Function_Recently_Viewed = "recentlyViewed";
+
+
+/**
+ * 获取最近浏览数据
+*/
+export const Fetch_Recently_Viewes = "fetchRecentlyViewed"
