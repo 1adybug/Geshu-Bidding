@@ -115,6 +115,9 @@ const Home = () => {
             rememberCurrentListItemId("2")
             setShouldActivedListItemId("2")
         }
+        if(listItemId === "3"){
+            
+        }
     }
 
     async function rememberCurrentListItemId(id: string) {
