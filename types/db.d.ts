@@ -61,3 +61,33 @@ declare interface PurchaseIntentionDisclosureProject {
   sfcgjncphjbzcp: string;
   remark: string;
 }
+
+/**
+ * 最近浏览卡片接口（原始）
+ */
+declare interface RawRecentlyClickCard {
+  _id: string;
+  title: string;
+  href: string;
+  releaseTime: string;
+  type: "purchase_intention" | "purchase_solicitation" | "local_announcement";
+  clickedTime: string;
+  is_collected: boolean;
+  is_completely_deleted: boolean;
+  is_deleted: boolean;
+}
+
+/**
+ * 最近浏览卡片接口（新）
+ */
+declare interface RecentlyClickCard {
+  _id: string;
+  title: string;
+  href: string;
+  releaseTime: string;
+  type: "purchase_intention" | "purchase_solicitation" | "local_announcement";
+  clickedTime: string;
+  is_collected: boolean;
+  is_completely_deleted: boolean;
+  is_deleted: boolean;
+}

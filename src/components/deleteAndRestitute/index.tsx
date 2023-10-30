@@ -22,6 +22,7 @@ interface DeleteAndRestituteProps {
     _id?: string
     currentListItemId?: string
     source?: string
+    type?: string
     completelyDelete: (_id?: string) => void
     fetchPrev: (currentId?: string) => Promise<string>
     fetchNext: (currentDeleteItemId?: string) => Promise<string>
@@ -30,7 +31,7 @@ interface DeleteAndRestituteProps {
 
 export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
 
-    const { _id, currentListItemId, source, completelyDelete, fetchPrev, fetchNext, updateId } = props
+    const { _id, currentListItemId, source, type, completelyDelete, fetchPrev, fetchNext, updateId } = props
 
     const [currentId, setCurrentId] = useState(_id)
 
@@ -45,7 +46,7 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
             })
             const judgeIsEmpty = await getPurchaseIntentionDisclosures()
             if (!judgeIsEmpty) return
-            if (!judgeIsEmpty.result.filter((item:CardProps)=> !item.is_deleted).length) {
+            if (!judgeIsEmpty.result.filter((item: CardProps) => !item.is_deleted).length) {
                 Taro.navigateBack()
                 return
             }
@@ -71,7 +72,7 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
             })
             const judgeIsEmpty = await getPurchaseSocilitationAnnouncements()
             if (!judgeIsEmpty) return
-            if (!judgeIsEmpty.result.filter((item:CardProps)=> !item.is_deleted).length) {
+            if (!judgeIsEmpty.result.filter((item: CardProps) => !item.is_deleted).length) {
                 Taro.navigateBack()
                 return
             }
@@ -97,7 +98,7 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
             })
             const judgeIsEmpty = await fetchLocalAnnouncement()
             if (!judgeIsEmpty) return
-            if (!judgeIsEmpty.result.filter((item:CardProps)=> !item.is_deleted).length) {
+            if (!judgeIsEmpty.result.filter((item: CardProps) => !item.is_deleted).length) {
                 Taro.navigateBack()
                 return
             }
@@ -181,11 +182,11 @@ export default function DeleteAndRestitute(props: DeleteAndRestituteProps) {
         <Fragment>
             <View className='wrapper'>
                 {source === "myCollections" ? <View className='cancel-collect-button' onClick={handleCancelCollect}>取消收藏</View> : <View className='horizontal-sub-wrapper'>
-                    {source === "homePage" && <View className='prev' onClick={handlePrevClick}>上一条</View>}
+                    {source === "homePage" && type !== "recently" && <View className='prev' onClick={handlePrevClick}>上一条</View>}
                     <View className='delete-button' onClick={source === "homePage" ? handleDelete : handleCompletelyDelete}>
                         {source === "homePage" ? "删除" : "彻底删除"}
                     </View>
-                    {source === "homePage" && <View className='next' onClick={handleNextClick}>下一条</View>}
+                    {source === "homePage" && type !== "recently" && <View className='next' onClick={handleNextClick}>下一条</View>}
                     {source === "recycleBin" && <View className='restitute' onClick={handleRestitute}>还原</View>}
                 </View>}
             </View>

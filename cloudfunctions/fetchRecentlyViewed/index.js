@@ -8,8 +8,8 @@ const db = cloud.database();
 
 // eslint-disable-next-line import/no-commonjs
 exports.main = async () => {
-  const recentlyIdRes = await db.collection("demo").get();
-  if (!recentlyIdRes) return;
+  // const recentlyIdRes = await db.collection("demo").get();
+  // if (!recentlyIdRes) return;
   // const recentlyIdResData = wyDeepClone(recentlyIdRes.data);
   // const intentions = recentlyIdResData.filter(
   //   (e) => e.type === "purchase_intention"
@@ -25,7 +25,7 @@ exports.main = async () => {
     .collection("purchase_intention_disclosure")
     .aggregate()
     .lookup({
-      from: "demo",
+      from: "intentionRecently",
       localField: "_id",
       foreignField: "projectId",
       as: "detail",
@@ -39,10 +39,10 @@ exports.main = async () => {
     .limit(100)
     .end();
   const solicitationsLookUpRes = await db
-    .collection("purchase_intention_disclosure")
+    .collection("purchase_solicitation_announcement")
     .aggregate()
     .lookup({
-      from: "demo",
+      from: "solicitationRecently",
       localField: "_id",
       foreignField: "projectId",
       as: "detail",
@@ -56,10 +56,10 @@ exports.main = async () => {
     .limit(100)
     .end();
   const localLookUpRes = await db
-    .collection("purchase_intention_disclosure")
+    .collection("local_announcement")
     .aggregate()
     .lookup({
-      from: "demo",
+      from: "localRecently",
       localField: "_id",
       foreignField: "projectId",
       as: "detail",

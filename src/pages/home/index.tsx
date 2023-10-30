@@ -22,6 +22,7 @@ import { fetchLocalAnnouncement } from '@/services/fetchLocalAnnouncement';
 import { fetchLocalAnnouncementDataWillBeExported } from '@/services/fetchLocalAnnouncementDataWillBeExported';
 import sortExportData from '@/utils/sortExportData';
 import { fetchRecentlyViewed } from "@/services/fetchRecentlyViewed";
+import recentlySort from "@/utils/recentlySort";
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -36,6 +37,7 @@ const Home = () => {
     const [exportedFileDownloadURl, setExportedFileDownloadURl] = useState("")
     const [copyExportedFileURlModalVisible, setCopyExportedFileURlModalVisible] = useState(false)
     const [atActivityIndicatorContent, setAtActivityIndicatorContent] = useState("加载中...")
+    const [recentlyCardList, setrecentlyCardList] = useState<RecentlyClickCard[]>([])
 
     useDidShow(() => {
         init()
@@ -44,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         // onListItemClicked("0", "desc")
         init()
-        // getCrawlData("0").then(res => {
+        // getCrawlData("1").then(res => {
         //     if (res.result) {
         //         extractListData(res.result)
         //     }
@@ -78,8 +80,6 @@ const Home = () => {
 
     const onListItemClicked = async (listItemId: string, sortType: SortType) => {
         setCurrentListItemId(listItemId)
-        rememberCurrentListItemId(listItemId)
-        setShouldActivedListItemId(listItemId)
         if (listItemId === "0") {
             const res = await getPurchaseIntentionDisclosures()
             if (!res.result) return
@@ -89,9 +89,6 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
             if (!res1) return
-            // rememberCurrentListItemId("0")
-            // setShouldActivedListItemId("0")
-            return
         }
         if (listItemId === "1") {
             const res = await getPurchaseSocilitationAnnouncements()
@@ -102,9 +99,6 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
             if (!res1) return
-            // rememberCurrentListItemId("1")
-            // setShouldActivedListItemId("1")
-            return
         }
         if (listItemId === "2") {
             const res = await fetchLocalAnnouncement()
@@ -115,15 +109,30 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
             if (!res1) return
-            // rememberCurrentListItemId("2")
-            // setShouldActivedListItemId("2")
         }
         if (listItemId === "3") {
             const res = await fetchRecentlyViewed()
             if (!res) return
-            console.log(res);
-
+            const copyData = wyDeepClone(recentlySort(res.result.map((e: any) => {
+                return {
+                    _id: e._id,
+                    title: e.title,
+                    href: e.href,
+                    releaseTime: e.time,
+                    is_collected: e.is_collected,
+                    is_completely_deleted: e.is_completely_deleted,
+                    is_deleted: e.is_deleted,
+                    clickedTime: e.detail[0].clickedTime,
+                    type: e.type
+                }
+            })))
+            setrecentlyCardList(copyData)
+            setGotData(true)
+            const res1 = await Taro.setStorage({ key: "homePageData", data: { recentlyViewed: copyData } })
+            if (!res1) return
         }
+        rememberCurrentListItemId(listItemId)
+        setShouldActivedListItemId(listItemId)
     }
 
     async function rememberCurrentListItemId(id: string) {
@@ -227,13 +236,19 @@ const Home = () => {
                 </View> : <Fragment>
                     <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
                     <FilterCard changeFilterShow={onOpenFilterShow} visible={filterShow} currentListItemId={currentListItemId} changeFilterCondition={onListItemClicked} />
-                    <View className='main'>
+                    {currentListItemId === "3" ? <View className='main'>
+                        {recentlyCardList.map((project: RecentlyClickCard) => {
+                            return (
+                                <Card key={project._id} title={project.title} time={project.releaseTime} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} src='recently' lastClickedTime={project.clickedTime} type={project.type} />
+                            )
+                        })}
+                    </View> : <View className='main'>
                         {projectList.map((project: CardProps) => {
                             return (
                                 <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} />
                             )
                         })}
-                    </View>
+                    </View>}
                     <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
                     {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}
                     {(currentListItemId === "1" || currentListItemId === "2") && <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />}

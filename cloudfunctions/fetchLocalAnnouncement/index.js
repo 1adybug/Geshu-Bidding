@@ -10,7 +10,11 @@ const db = cloud.database();
 // eslint-disable-next-line import/no-commonjs
 exports.main = async () => {
   try {
-    const res = await db.collection("local_announcement").get();
+    const res = await db
+      .collection("local_announcement")
+      .orderBy("time", "desc")
+      .limit(92)
+      .get();
     if (!res) return;
     return res.data;
   } catch (err) {

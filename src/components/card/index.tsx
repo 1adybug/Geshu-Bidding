@@ -12,6 +12,9 @@ export interface CardProps {
     time: string
     is_collected?: boolean
     is_deleted?: boolean
+    lastClickedTime?: string
+    src?: string
+    type?: "purchase_intention" | "purchase_solicitation" | "local_announcement"
 }
 
 const typeRecord: Record<string, string> = {
@@ -20,11 +23,27 @@ const typeRecord: Record<string, string> = {
     "2": "local_announcement"
 }
 
+const recentlyCardType: Record<string, string> = {
+    "purchase_intention": "采购（意向）公开",
+    "purchase_solicitation": "采购（征集）公告",
+    "local_announcement": "地方公告"
+}
+
+const recentlySrcCurrentListItemId: Record<string, string> = {
+    "purchase_intention": "0",
+    "purchase_solicitation": "1",
+    "local_announcement": "2"
+}
+
 export default function Card(props: CardProps) {
 
-    const { currentListItemId, _id, title, time, is_collected } = props
+    const { src, lastClickedTime, currentListItemId, _id, title, time, is_collected, type } = props
 
     const handleClick = async () => {
+        if (src === "recently" && type) {
+            Taro.navigateTo({ url: `/pages/detail/index?_id=${_id}&currentListItemId=${recentlySrcCurrentListItemId[type]}&source=homePage&type=recently` })
+            return
+        }
         if (!currentListItemId) return
         Taro.navigateTo({ url: `/pages/detail/index?_id=${_id}&currentListItemId=${currentListItemId}&source=homePage` })
         const res = await recentlyViewed(_id, typeRecord[currentListItemId])
@@ -33,8 +52,12 @@ export default function Card(props: CardProps) {
 
     return (
         <View className='card' onClick={handleClick}>
-            <View className='project-name'>{title}</View>
+            <View className={src === "recently" ? 'section-one-for-recent' : 'section-one'}>
+                <View className='title'>{title}</View>
+                {src === "recently" && <View className='last-click-time'>上次浏览时间：{lastClickedTime}</View>}
+            </View>
             <View className='bottom'>
+                {src === "recently" && type && <View className='src'>来源：{recentlyCardType[type]}</View>}
                 <View className='release-time'>
                     <img src={Clock} alt='' />
                     <View className='data'>{time}</View>
