@@ -14,6 +14,7 @@ export default defineAppConfig({
     "pages/setRole/index",
     "pages/login/index",
     "pages/remarkedit/index",
+    "pages/addproject/index",
   ],
   window: {
     backgroundTextStyle: "light",

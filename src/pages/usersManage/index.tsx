@@ -1,10 +1,10 @@
 import { View } from "@tarojs/components"
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useState } from "react"
 import getAllUsers from "@/services/getAllUsers"
 import UserCard, { UserCardProps } from "@/components/userCard"
 import { AtActivityIndicator } from "taro-ui"
 import UserEditModal, { Source } from "@/components/userEditModal"
-import AddUserIcon from "@/assets/adduserIcon.jpg"
+import AddIcon from "@/assets/adduserIcon.jpg"
 import Shadow from "@/components/shadow"
 import Taro, { useDidShow, useRouter } from "@tarojs/taro"
 import { deleteUser } from "@/services/deleteUser"
@@ -115,7 +115,7 @@ const UsersManage = () => {
                         return <UserCard key={item.userId} userId={item.userId} userName={item.userName} roleName={item.roleName} password={item.password} deleteOption={handleDelete} avatorUrl={item.avatorUrl} />
                     })}
                 </View>
-                {roleId === "000" && <img src={AddUserIcon} className='add-user-icon' onClick={addClick} />}
+                {roleId === "000" && <img src={AddIcon} className='add-user-icon' onClick={addClick} />}
                 {editModalShow && <Shadow onClose={() => setEditModalShow(false)} />}
                 {editModalShow && <UserEditModal userName={editUserInfo?.userName} roleName={editUserInfo?.roleName} password={editUserInfo?.password} closeUserEditModal={handleCloseUserEditModal} userId={editUserInfo?.userId} updateSucceed={handleUpdateSucceed} source={editModalSource} avatorUrl={editUserInfo?.avatorUrl} />}
             </Fragment>
