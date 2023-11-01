@@ -89,6 +89,8 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
             if (!res1) return
+            rememberCurrentListItemId(listItemId)
+            setShouldActivedListItemId(listItemId)
         }
         if (listItemId === "1") {
             const res = await getPurchaseSocilitationAnnouncements()
@@ -99,6 +101,8 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
             if (!res1) return
+            rememberCurrentListItemId(listItemId)
+            setShouldActivedListItemId(listItemId)
         }
         if (listItemId === "2") {
             const res = await fetchLocalAnnouncement()
@@ -109,30 +113,30 @@ const Home = () => {
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
             if (!res1) return
+            rememberCurrentListItemId(listItemId)
+            setShouldActivedListItemId(listItemId)
         }
-        if (listItemId === "3") {
-            const res = await fetchRecentlyViewed()
-            if (!res) return
-            const copyData = wyDeepClone(recentlySort(res.result.map((e: any) => {
-                return {
-                    _id: e._id,
-                    title: e.title,
-                    href: e.href,
-                    releaseTime: e.time,
-                    is_collected: e.is_collected,
-                    is_completely_deleted: e.is_completely_deleted,
-                    is_deleted: e.is_deleted,
-                    clickedTime: e.detail[0].clickedTime,
-                    type: e.type
-                }
-            })))
-            setrecentlyCardList(copyData)
-            setGotData(true)
-            const res1 = await Taro.setStorage({ key: "homePageData", data: { recentlyViewed: copyData } })
-            if (!res1) return
-        }
-        rememberCurrentListItemId(listItemId)
-        setShouldActivedListItemId(listItemId)
+        // if (listItemId === "3") {
+        //     const res = await fetchRecentlyViewed()
+        //     if (!res) return
+        //     const copyData = wyDeepClone(recentlySort(res.result.map((e: any) => {
+        //         return {
+        //             _id: e._id,
+        //             title: e.title,
+        //             href: e.href,
+        //             releaseTime: e.time,
+        //             is_collected: e.is_collected,
+        //             is_completely_deleted: e.is_completely_deleted,
+        //             is_deleted: e.is_deleted,
+        //             clickedTime: e.detail[0].clickedTime,
+        //             type: e.type
+        //         }
+        //     })))
+        //     setrecentlyCardList(copyData)
+        //     setGotData(true)
+        //     const res1 = await Taro.setStorage({ key: "homePageData", data: { recentlyViewed: copyData } })
+        //     if (!res1) return
+        // }
     }
 
     async function rememberCurrentListItemId(id: string) {
@@ -236,19 +240,13 @@ const Home = () => {
                 </View> : <Fragment>
                     <Search changeDrawShow={onOpenDrawShow} valueInputed={onValueInputed} changeFilterShow={onOpenFilterShow} />
                     <FilterCard changeFilterShow={onOpenFilterShow} visible={filterShow} currentListItemId={currentListItemId} changeFilterCondition={onListItemClicked} />
-                    {currentListItemId === "3" ? <View className='main'>
-                        {recentlyCardList.map((project: RecentlyClickCard) => {
-                            return (
-                                <Card key={project._id} title={project.title} time={project.releaseTime} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} src='recently' lastClickedTime={project.clickedTime} type={project.type} />
-                            )
-                        })}
-                    </View> : <View className='main'>
+                    <View className='main'>
                         {projectList.map((project: CardProps) => {
                             return (
                                 <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} />
                             )
                         })}
-                    </View>}
+                    </View>
                     <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
                     {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}
                     {(currentListItemId === "1" || currentListItemId === "2") && <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />}

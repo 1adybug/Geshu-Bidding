@@ -1668,6 +1668,13 @@
   dependencies:
     classnames "^2.3.2"
 
+"@nutui/icons-react@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@nutui/icons-react/-/icons-react-0.0.1.tgz#df7b418fe106a5d9ba92d81c14d876ef1e714aa2"
+  integrity sha512-MB0M8rvfqVC50GZGT20Y8bAs9Yi+aIpDk+PcEwLQ55oevHlnUtYhytNjVUXFhRLrTQDt3BYDuH7nHOQW//ShGg==
+  dependencies:
+    classnames "^2.3.2"
+
 "@nutui/nutui-react-taro@^2.0.15":
   version "2.0.15"
   resolved "https://registry.npmjs.org/@nutui/nutui-react-taro/-/nutui-react-taro-2.0.15.tgz"
@@ -1675,6 +1682,22 @@
   dependencies:
     "@babel/runtime" "^7.21.0"
     "@nutui/icons-react-taro" "0.0.1"
+    "@nutui/touch-emulator" "^1.0.0"
+    "@react-spring/web" "~9.6.1"
+    "@use-gesture/react" "10.2.20"
+    async-validator "^4.2.5"
+    classnames "^2.3.2"
+    lodash.isequal "^4.5.0"
+    lodash.kebabcase "^4.1.1"
+    react-transition-group "^4.4.5"
+
+"@nutui/nutui-react@^2.0.22":
+  version "2.0.22"
+  resolved "https://registry.yarnpkg.com/@nutui/nutui-react/-/nutui-react-2.0.22.tgz#67bd54ee11e4db1b17b9e84ad61a3fa82b982a4f"
+  integrity sha512-37R74i0fckx1ATB7Y3hTGyrWthG04XxEHCvTQuzLwiICIUXmbYQ49I3lUo1Gotzchx7uRp2qOEQJPZyQ1rLcFA==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@nutui/icons-react" "0.0.1"
     "@nutui/touch-emulator" "^1.0.0"
     "@react-spring/web" "~9.6.1"
     "@use-gesture/react" "10.2.20"

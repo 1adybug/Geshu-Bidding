@@ -27,10 +27,10 @@
   },
   "cloudfunctionRoot": "cloudfunctions/",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "appid": "wxab39a7415b8f831b",
   "libVersion": "3.0.1",
   "packOptions": {
     "ignore": [],
     "include": []
-  },
-  "appid": "wxab39a7415b8f831b"
+  }
 }

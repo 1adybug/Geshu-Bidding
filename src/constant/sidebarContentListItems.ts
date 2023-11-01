@@ -16,8 +16,8 @@ export const dataList: SideBarContentListData[] = [
     listItemId: "2",
     listItemText: "地方公告",
   },
-  {
-    listItemId: "3",
-    listItemText: "最近浏览",
-  },
+  // {
+  //   listItemId: "3",
+  //   listItemText: "最近浏览",
+  // },
 ];

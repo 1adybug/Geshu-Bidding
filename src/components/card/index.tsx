@@ -58,10 +58,10 @@ export default function Card(props: CardProps) {
             </View>
             <View className='bottom'>
                 {src === "recently" && type && <View className='src'>来源：{recentlyCardType[type]}</View>}
-                <View className='release-time'>
+                {src !== "recently" && <View className='release-time'>
                     <img src={Clock} alt='' />
                     <View className='data'>{time}</View>
-                </View>
+                </View>}
                 {is_collected && <img src={CollectedIcon} alt='' />}
             </View>
         </View>

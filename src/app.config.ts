@@ -15,6 +15,7 @@ export default defineAppConfig({
     "pages/login/index",
     "pages/remarkedit/index",
     "pages/addproject/index",
+    "pages/recentlyviewed/index",
   ],
   window: {
     backgroundTextStyle: "light",
@@ -38,6 +39,12 @@ export default defineAppConfig({
         text: "收藏",
         iconPath: "assets/defaultCollections.png",
         selectedIconPath: "assets/activedCollections.png",
+      },
+      {
+        pagePath: "pages/recentlyviewed/index",
+        text: "最近浏览",
+        iconPath: "assets/recentlyViewedDefault.png",
+        selectedIconPath: "assets/recentlyViewedActived.png",
       },
       {
         pagePath: "pages/list/index",
