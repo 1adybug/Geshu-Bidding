@@ -1,0 +1,89 @@
+.project-detail {
+  .content {
+    height: 100vh;
+    overflow-y: scroll;
+    padding: 20px 20px 170px 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    .item {
+      display: flex;
+      align-items: center;
+      .label {
+        display: flex;
+        align-items: center;
+        .text {
+          width: 160px;
+          text-align: justify;
+          text-align-last: justify;
+          color: #666666;
+        }
+      }
+      .data-shouldpay {
+        color: green;
+      }
+      .data-unpaid {
+        color: red;
+      }
+      .file-preview {
+        color: blue;
+        border-bottom: 1px solid blue;
+      }
+    }
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+    }
+  }
+  .edit-wrapper {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    background-color: #fff;
+    border-top: 1px solid #ededed;
+    .edit,
+    .delete {
+      padding: 20px 130px;
+      color: #fff;
+      border-radius: 8px;
+    }
+    .edit {
+      background-color: #169e3b;
+    }
+    .delete {
+      background-color: red;
+    }
+  }
+}
+
+.makeout-or-payment {
+  border-radius: 12px;
+  padding: 20px 20px;
+  background-color: #ececec;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  color: #000000;
+  .item {
+    display: flex;
+    align-items: center;
+    .label {
+      display: flex;
+      align-items: center;
+      .text {
+        width: 160px;
+        text-align: justify;
+        text-align-last: justify;
+      }
+      .text-long {
+        width: 260px;
+      }
+    }
+  }
+}

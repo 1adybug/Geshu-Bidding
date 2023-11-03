@@ -308,8 +308,26 @@ export const Function_Update_UserInfo_Sec = "updateUserInfoSec";
  */
 export const Function_Recently_Viewed = "recentlyViewed";
 
-
 /**
  * 获取最近浏览数据
-*/
-export const Fetch_Recently_Viewes = "fetchRecentlyViewed"
+ */
+export const Fetch_Recently_Viewes = "fetchRecentlyViewed";
+
+/**
+ * 创建项目
+ */
+export const Create_Project = "createProject";
+
+/**
+ * 获取项目
+ */
+export const Get_Projects = "getProjects";
+
+/**
+ * 查找项目
+ */
+export const Find_Project = "findProject";
+
+export const Del_Project = "delProject"
+
+export const Update_Project = "updateProject"

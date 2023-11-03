@@ -4,15 +4,17 @@ import DropDownArrow from "@/assets/blackDropArrow.png"
 import Taro from '@tarojs/taro';
 import dayjs from 'dayjs';
 import DeleteDot from "@/assets/deleteDot.png"
+import { createProject } from '@/services/createProject';
+import extractFileSuffix from '@/utils/extractFileSuffix';
 import "./index.module.less"
 
-interface MakeOutItem {
+export interface MakeOutItem {
     id: string
     time: string
     amount: string
 }
 
-interface PaymentItem extends MakeOutItem { }
+export interface PaymentItem extends MakeOutItem { }
 
 const PagePicker = () => {
 
@@ -22,7 +24,9 @@ const PagePicker = () => {
     const [payments, setPayments] = useState<PaymentItem[]>([])
     const [deadline, setDeadline] = useState(dayjs().format("YYYY-MM-DD"))
     const [contractAttachmentUploadText, setcontractAttachmentUploadText] = useState("上传附件")
-    const [acceptancementUploadText, setacceptancementUploadText] = useState("上传附件")
+    const [acceptancementUploadText, setAcceptancementUploadText] = useState("上传附件")
+    const [contractFileID, setContractFileID] = useState("")
+    const [acceptancementFileID, setAcceptancementFileID] = useState("")
 
     function onWinningTimeChange(e) {
         setWinningTime(e.detail.value);
@@ -33,16 +37,38 @@ const PagePicker = () => {
     }
 
     async function submit(e: any) {
-        console.log(e);
-        console.log(makeOuts);
+        const userIdRes = await Taro.getStorage({ key: "userInfo" })
+        if (!userIdRes) return
+        if (e.detail.value.projectNo === "") {
+            Taro.showToast({
+                title: "项目编号为空",
+                icon: "error",
+                duration: 2000
+            })
+            return
+        }
+        const submitObj = { creator: userIdRes.data.userId, ...e.detail.value, winningTime, receptionTime, deadline, makeOuts: makeOuts, payments: payments, contractFileID: contractFileID, acceptancementFileID: acceptancementFileID }
+        const createRes = await createProject(submitObj)
+        if (!createRes) return
+        Taro.navigateBack()
     }
 
     function uploadContract() {
         Taro.chooseMessageFile({
             count: 1,
-            success: (res) => {
+            success: async (res) => {
                 const file = res.tempFiles[0];
+                Taro.showLoading({
+                    title: "上传中"
+                })
+                const uploadRes = await Taro.cloud.uploadFile({
+                    cloudPath: 'projects/contract/' + dayjs().format("YYYYMMDDHHmmss") + "." + extractFileSuffix(file.name),
+                    filePath: file.path
+                })
+                if (!uploadRes) return
+                setContractFileID(uploadRes.fileID)
                 setcontractAttachmentUploadText(file.name)
+                Taro.hideLoading()
             },
             fail: (err) => {
                 console.log("失败！" + err);
@@ -53,9 +79,19 @@ const PagePicker = () => {
     function uploadAcceptancement() {
         Taro.chooseMessageFile({
             count: 1,
-            success: (res) => {
+            success: async (res) => {
                 const file = res.tempFiles[0];
-                setacceptancementUploadText(file.name)
+                Taro.showLoading({
+                    title: "上传中"
+                })
+                const uploadRes = await Taro.cloud.uploadFile({
+                    cloudPath: 'projects/acceptancement/' + dayjs().format("YYYYMMDDHHmmss") + "." + extractFileSuffix(file.name),
+                    filePath: file.path
+                })
+                if (!uploadRes) return
+                setAcceptancementFileID(uploadRes.fileID)
+                setAcceptancementUploadText(file.name)
+                Taro.hideLoading()
             },
             fail: (err) => {
                 console.log("失败！" + err);
@@ -100,7 +136,7 @@ const PagePicker = () => {
     }
 
     function onPaymentInput(e: any, item: PaymentItem) {
-        setMakeOuts(prevPm => {
+        setPayments(prevPm => {
             const updatedPm = prevPm.map((pm: MakeOutItem) => {
                 if (pm.id === item.id) {
                     return { ...pm, amount: e.detail.value };
@@ -138,14 +174,14 @@ const PagePicker = () => {
                             <View className='name'>项目名称</View>
                             <View>：</View>
                         </View>
-                        <Input name='projectName' className='input' placeholder='' />
+                        <Input name='projectName' className='input' />
                     </View>
                     <View className='form-item'>
                         <View className='label'>
                             <View className='name'>项目编号</View>
                             <View>：</View>
                         </View>
-                        <Input name='projectNo' className='input' placeholder='' />
+                        <Input name='projectNo' className='input' />
                     </View>
                     <View className='form-item'>
                         <View className='label'>
@@ -161,10 +197,10 @@ const PagePicker = () => {
                     </View>
                     <View className='form-item'>
                         <View className='label'>
-                            <View className='name'>合同金额</View>
+                            <View className='name-long'>合同金额</View>
                             <View>：</View>
                         </View>
-                        <Input name='contractAmount' className='input' placeholder='' />
+                        <Input name='contractAmount' className='input' />
                     </View>
                     <View className='form-item'>
                         <View className='label'>
@@ -205,7 +241,7 @@ const PagePicker = () => {
                                         <View>：</View>
                                     </View>
                                     <Picker value='' mode='date' onChange={(e) => onMakeoutTimeChange(e, item)}>
-                                        <View className='picker'>
+                                        <View className='picker-short'>
                                             <View className='value'>{item.time}</View>
                                             <img src={DropDownArrow} />
                                         </View>
@@ -213,10 +249,10 @@ const PagePicker = () => {
                                 </View>
                                 <View className='form-item'>
                                     <View className='label'>
-                                        <View className='name'>开票金额</View>
+                                        <View className='name'>开票金额/比例</View>
                                         <View>：</View>
                                     </View>
-                                    <Input className='input' value={item.amount} onInput={(e) => onMakeoutInput(e, item)} />
+                                    <Input className='input-short' value={item.amount} onInput={(e) => onMakeoutInput(e, item)} />
                                 </View>
                             </View>
                         )
@@ -234,7 +270,7 @@ const PagePicker = () => {
                                         <View>：</View>
                                     </View>
                                     <Picker value='' mode='date' onChange={(e) => onPaymentChange(e, item)}>
-                                        <View className='picker'>
+                                        <View className='picker-short'>
                                             <View className='value'>{item.time}</View>
                                             <img src={DropDownArrow} />
                                         </View>
@@ -242,10 +278,10 @@ const PagePicker = () => {
                                 </View>
                                 <View className='form-item'>
                                     <View className='label'>
-                                        <View className='name'>付款金额</View>
+                                        <View className='name'>付款金额/比例</View>
                                         <View>：</View>
                                     </View>
-                                    <Input className='input' value={item.amount} onInput={(e) => onPaymentInput(e, item)} />
+                                    <Input className='input-short' value={item.amount} onInput={(e) => onPaymentInput(e, item)} />
                                 </View>
                             </View>
                         )
@@ -255,14 +291,14 @@ const PagePicker = () => {
                             <View className='name'>应付金额</View>
                             <View>：</View>
                         </View>
-                        <Input name='shouldPayAmount' className='input should-pay' placeholder='' />
+                        <Input name='shouldPayAmount' className='input should-pay' />
                     </View>
                     <View className='form-item'>
                         <View className='label'>
-                            <View className='name'>未付金额</View>
+                            <View className='name'>未付金额/比例</View>
                             <View>：</View>
                         </View>
-                        <Input name='unpaidAmount' className='input unpaid' placeholder='' />
+                        <Input name='unpaidAmount' className='input unpaid' />
                     </View>
                     <View className='form-item'>
                         <View className='label'>

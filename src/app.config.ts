@@ -16,6 +16,8 @@ export default defineAppConfig({
     "pages/remarkedit/index",
     "pages/addproject/index",
     "pages/recentlyviewed/index",
+    "pages/projectdetail/index",
+    "pages/projectedit/index",
   ],
   window: {
     backgroundTextStyle: "light",
@@ -42,9 +44,9 @@ export default defineAppConfig({
       },
       {
         pagePath: "pages/recentlyviewed/index",
-        text: "最近浏览",
-        iconPath: "assets/recentlyViewedDefault.png",
-        selectedIconPath: "assets/recentlyViewedActived.png",
+        text: "浏览记录",
+        iconPath: "assets/recentlyViewedDefault.jpg",
+        selectedIconPath: "assets/recentlyViewedActived.jpg",
       },
       {
         pagePath: "pages/list/index",

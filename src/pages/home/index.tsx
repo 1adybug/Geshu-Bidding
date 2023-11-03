@@ -45,9 +45,9 @@ const Home = () => {
 
     useEffect(() => {
         // onListItemClicked("0", "desc")
-        init()
+        // init()
         // getCrawlData("1").then(res => {
-        //     if (res.result) {
+        //     if (res.result){
         //         extractListData(res.result)
         //     }
         // })
