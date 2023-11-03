@@ -32,7 +32,7 @@ const PagePicker = () => {
 
     useEffect(() => {
         init()
-    },)
+    }, [])
 
     async function init() {
         if (!_id) return
@@ -41,13 +41,7 @@ const PagePicker = () => {
         setDetail(findRes.result.data[0])
     }
 
-    async function submit(e: any) {
-        if (contractAttachmentUploadText !== "更新附件") {
-            setDetail({ ...detail, contractFileID: contractFileID })
-        }
-        if (acceptancementUploadText !== "更新附件") {
-            setDetail({ ...detail, acceptancementFileID: acceptancementFileID })
-        }
+    async function submit() {
         if (detail.projectNo === "") {
             Taro.showToast({
                 title: "项目编号为空",
@@ -77,6 +71,7 @@ const PagePicker = () => {
                 if (!uploadRes) return
                 setContractFileID(uploadRes.fileID)
                 setcontractAttachmentUploadText(file.name)
+                setDetail({ ...detail, contractFileID: uploadRes.fileID })
                 Taro.hideLoading()
             },
             fail: (err) => {
@@ -100,6 +95,7 @@ const PagePicker = () => {
                 if (!uploadRes) return
                 setAcceptancementFileID(uploadRes.fileID)
                 setAcceptancementUploadText(file.name)
+                setDetail({ ...detail, acceptancementFileID: uploadRes.fileID })
                 Taro.hideLoading()
             },
             fail: (err) => {
@@ -203,11 +199,17 @@ const PagePicker = () => {
     function addMakeout() {
         const obj = { id: dayjs().format("YYYYMMDDHHmmss"), time: dayjs().format("YYYY-MM-DD"), amount: "" }
         setMakeOuts(prevState => [...prevState, obj])
+        const arrCopy = wyDeepClone(detail.makeOuts)
+        arrCopy.push(obj)
+        setDetail({ ...detail, makeOuts: arrCopy })
     }
 
     function addPayment() {
         const obj = { id: dayjs().format("YYYYMMDDHHmmss"), time: dayjs().format("YYYY-MM-DD"), amount: "" }
         setPayments(prevState => [...prevState, obj])
+        const arrCopy = wyDeepClone(detail.payments)
+        arrCopy.push(obj)
+        setDetail({ ...detail, payments: arrCopy })
     }
 
     function delMakeout(e: MakeOutItem) {
@@ -221,7 +223,8 @@ const PagePicker = () => {
         if (payments.length) {
             setPayments(payments.filter((pm: PaymentItem) => pm.id !== e.id))
         }
-        setDetail({ ...detail, payments: detail.payments.filter((mk: PaymentItem) => mk.id !== e.id) })
+        const detailCopy = wyDeepClone(detail)
+        setDetail({ ...detail, payments: detailCopy.payments.filter((mk: PaymentItem) => mk.id !== e.id) })
     }
 
     return (
