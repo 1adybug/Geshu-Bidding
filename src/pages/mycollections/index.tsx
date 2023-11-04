@@ -7,6 +7,9 @@ import { CollectionCard } from "@/components/collectionCard";
 import { AtActivityIndicator } from "taro-ui";
 import { useDidShow } from "@tarojs/taro";
 import { fetchLocalAnnouncement } from "@/services/fetchLocalAnnouncement";
+import getIntentionCollected from "@/services/getIntentionCollected";
+import getSolicitationCollected from "@/services/getSolicitationCollected";
+import getLocalCollected from "@/services/getLocalCollected";
 import dayjs from "dayjs";
 import "./index.module.less"
 
@@ -24,10 +27,13 @@ export default function MyCollections() {
     }, [])
 
     async function getAllCollections() {
-        const res = await getPurchaseIntentionDisclosures()
-        const res1 = await getPurchaseSocilitationAnnouncements()
-        const res2 = await fetchLocalAnnouncement()
-        const list = wyDeepClone([...res.result, ...res1.result,...res2.result]).filter(e => e.is_collected)
+        const res = await getIntentionCollected()
+        const res1 = await getSolicitationCollected()
+        const res2 = await getLocalCollected()
+        if (!res && !res1 && !res2) return
+        const list = wyDeepClone([...res.result, ...res1.result, ...res2.result])
+        console.log(list);
+        
         setMycollections(list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix()))
         setGotData(true)
     }

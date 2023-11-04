@@ -328,6 +328,27 @@ export const Get_Projects = "getProjects";
  */
 export const Find_Project = "findProject";
 
-export const Del_Project = "delProject"
+/**
+ * 删除项目
+ */
+export const Del_Project = "delProject";
 
-export const Update_Project = "updateProject"
+/**
+ * 更新项目
+ */
+export const Update_Project = "updateProject";
+
+/**
+ * 获取收藏的采购（意向）公开
+ */
+export const Get_Intention_Collected = "getIntentionCollected";
+
+/**
+ * 获取收藏的采购（征集）公告
+ */
+export const Get_Solicitation_Collected = "getSolicitationCollected";
+
+/**
+ * 获取收藏的地方公告
+ */
+export const Get_Local_Collected = "getLocalCollected";
