@@ -11,7 +11,7 @@ import FilterCard from '@/components/filterCard';
 import Taro, { useDidShow } from '@tarojs/taro';
 import { getCrawlData } from '@/services/crawlData';
 import extractListData from '@/utils/extractListData';
-import { AtActivityIndicator, AtButton } from 'taro-ui';
+import { AtActivityIndicator } from 'taro-ui';
 import { wyDeepClone } from 'wangyong-utils';
 import { exportToExcelFn } from '@/services/exportToExcel';
 import CopyExportedFileDownloadModal from '@/components/copyExportedFileDownloadURlModal';
@@ -37,7 +37,7 @@ const Home = () => {
     const [exportedFileDownloadURl, setExportedFileDownloadURl] = useState("")
     const [copyExportedFileURlModalVisible, setCopyExportedFileURlModalVisible] = useState(false)
     const [atActivityIndicatorContent, setAtActivityIndicatorContent] = useState("加载中...")
-    const [recentlyCardList, setrecentlyCardList] = useState<RecentlyClickCard[]>([])
+    // const [recentlyCardList, setrecentlyCardList] = useState<RecentlyClickCard[]>([])
 
     useDidShow(() => {
         init()
@@ -47,7 +47,7 @@ const Home = () => {
         // onListItemClicked("0", "desc")
         // init()
         // getCrawlData("1").then(res => {
-        //     if (res.result){
+        //     if (res.result) {
         //         extractListData(res.result)
         //     }
         // })

@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
+    padding: 20px 20px;
     width: 100%;
     column-gap: 20px;
     background-color: rgb(243, 243, 243);
@@ -20,28 +20,29 @@
       align-items: center;
       border-radius: 12px;
       background-color: #fff;
+      width: calc(100vw - 164px);
       input {
-        width: calc(100vw - 340px);
+        width: calc(100vw - 240px);
         border: none;
-        padding: 10px 0;
+        padding: 10px 0 10px 20px;
       }
       .placeholder {
         color: rgb(194, 194, 194);
         font-size: 28px;
       }
-      .icon-box {
-        padding: 12px 20px;
-        background-color: transparent;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-          width: 30px;
-          height: 30px;
-        }
-      }
+      // .icon-box {
+      //   padding: 12px 20px;
+      //   background-color: transparent;
+      //   border-top-left-radius: 10px;
+      //   border-bottom-left-radius: 10px;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      //   img {
+      //     width: 30px;
+      //     height: 30px;
+      //   }
+      // }
       .clear-input {
         padding: 12px 20px;
         background-color: transparent;
@@ -59,58 +60,57 @@
     .wrapper.wrapper-sec {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      // border-top: 2px solid #169e3b;
-      // border-left: 2px solid #169e3b;
-      // border-right: 2px solid #169e3b;
-      // input {
-      //   border-bottom: 1px solid #d1d1d1;
-      // }
+      border-top: 2px solid #169e3b;
+      border-left: 2px solid #169e3b;
+      border-right: 2px solid #169e3b;
     }
   }
-  .search-history {
-    width: calc(100vw - 195px);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
+  .second {
     position: absolute;
-    background-color: #ffffff;
-    transition: opacity 0.3s ease, height 0.3s ease;
-    height: 0;
-    opacity: 0;
-    display: none;
-    left: 50%;
-    top: 88px;
-    transform: translateX(-50%);
+    top: 76px;
+    display: flex;
+    justify-content: center;
     z-index: 1;
-    padding-top: 20px;
-    .list {
-      .list-item {
-        padding: 4px 20px;
-        color: #000000;
-        font-size: 36px;
+    .search-history {
+      width: calc(100vw - 164px);
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      background-color: #ffffff;
+      transition: opacity 0.3s ease, height 0.3s ease;
+      height: 0;
+      opacity: 0;
+      display: none;
+      padding-top: 20px;
+      .list {
+        .list-item {
+          padding: 4px 20px;
+          color: #000000;
+          font-size: 36px;
+        }
+      }
+      .bottom {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 20px 8px 20px;
+        .desc {
+          font-size: 26px;
+          color: #919191;
+        }
+        .clear {
+          font-size: 26px;
+          color: #169e3b;
+        }
       }
     }
-    .bottom {
-      display: flex;
-      justify-content: space-between;
-      padding: 20px 20px 8px 20px;
-      .desc {
-        font-size: 26px;
-        color: #919191;
-      }
-      .clear {
-        font-size: 26px;
-        color: #169e3b;
-      }
+    .search-history.search-history-show {
+      height: auto;
+      opacity: 1;
+      display: block;
+      border-bottom: 2px solid #169e3b;
+      border-left: 2px solid #169e3b;
+      border-right: 2px solid #169e3b;
     }
-  }
-  .search-history.search-history-show {
-    height: auto;
-    opacity: 1;
-    display: block;
-    // border-bottom: 2px solid #169e3b;
-    // border-left: 2px solid #169e3b;
-    // border-right: 2px solid #169e3b;
   }
 }

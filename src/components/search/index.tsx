@@ -95,9 +95,9 @@ export default function Search(props: SearchProps) {
             <View className='top'>
                 <img src={ExpandSidebarIcon} alt='' onClick={handleClick} />
                 <View className={`wrapper ${(historyShow && searchHistoryList.length) ? 'wrapper-sec' : ''}`}>
-                    <View className='icon-box'>
+                    {/* <View className='icon-box'>
                         <img src={SearchIcon} alt='' onClick={handleSearch} />
-                    </View>
+                    </View> */}
                     <Input placeholderClass='placeholder' placeholder='请输入项目名称' value={keyword} onInput={handleInput} onConfirm={handleSearch} onFocus={handleOnFocus} onBlur={() => setHistoryShow(false)} />
                     <View className='clear-input'>
                         {keyword.length ? <img src={ClearInputIcon} onClick={handleClearInput} /> : <img />}
@@ -105,21 +105,24 @@ export default function Search(props: SearchProps) {
                 </View>
                 <img src={FilterIcon} alt='' onClick={filterIconClick} />
             </View>
-            {bottomShow && <View className={`search-history ${historyShow ? 'search-history-show' : ''}`}>
-                <View className='list' onClick={() => console.log(1)}>
-                    {
-                        searchHistoryList.map((e: string) => {
-                            return (
-                                <View key={e} className='list-item' onClick={() => historyItemClick(e)}>{e}</View>
-                            )
-                        })
-                    }
+            {bottomShow && <View className='second'>
+                <View className={`search-history ${historyShow ? 'search-history-show' : ''}`}>
+                    <View className='list' onClick={() => console.log(1)}>
+                        {
+                            searchHistoryList.map((e: string) => {
+                                return (
+                                    <View key={e} className='list-item' onClick={() => historyItemClick(e)}>{e}</View>
+                                )
+                            })
+                        }
+                    </View>
+                    <View className='bottom'>
+                        <View className='desc'>搜索历史</View>
+                        <View className='clear' onClick={clearhistory}>清空</View>
+                    </View>
                 </View>
-                <View className='bottom'>
-                    <View className='desc'>搜索历史</View>
-                    <View className='clear' onClick={clearhistory}>清空</View>
-                </View>
-            </View>}
+            </View>
+            }
         </View>
     )
 }

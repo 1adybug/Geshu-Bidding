@@ -66,6 +66,11 @@ export default function List() {
             {!gotData ? <View className='data-loading-container'>
                 <AtActivityIndicator color='#169E3B' content='加载中...'></AtActivityIndicator>
             </View> : <View className='list'>
+                {/* <View className='top-button-group'>
+                    <View className='download-template'>下载模版</View>
+                    <View className='bulk-import'>批量导入</View>
+                    <View className='export'>导出</View>
+                </View> */}
                 <View className='content'>
                     {projects.map((project: Project) => {
                         return <ProjectCard key={project._id} _id={project._id} projectNo={project.projectNo} projectName={project.projectName} winningTime={project.winningTime} receptionTime={project.receptionTime} shouldPayAmount={project.shouldPayAmount} unpaidAmount={project.unpaidAmount} />

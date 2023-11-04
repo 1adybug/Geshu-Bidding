@@ -48,7 +48,7 @@ export default function DetailSecondSectionForPurchaseSolicitation(props: Detail
                 </View>
                 <View className='data'>{remark ? remark : "无"}</View>
             </View>
-            {haveAttachments && <Attachments attachments={attachments} fileIDPrev={fileIDPrev} modalChange={modalChange} attachmentClicked={attachmentClicked} />}
+            {haveAttachments && <Attachments attachments={attachments} fileIDPrev={fileIDPrev} />}
         </View>
     )
 }

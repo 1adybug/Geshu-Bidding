@@ -47,7 +47,7 @@ const PagePicker = () => {
             })
             return
         }
-        const submitObj = { creator: userIdRes.data.userId, ...e.detail.value, winningTime, receptionTime, deadline, makeOuts: makeOuts, payments: payments, contractFileID: contractFileID, acceptancementFileID: acceptancementFileID }
+        const submitObj = { creator: userIdRes.data.userId, ...e.detail.value, winningTime, receptionTime, deadline, makeOuts: makeOuts, payments: payments, contractFileID: contractFileID, acceptancementFileID: acceptancementFileID, is_deleted: false }
         const createRes = await createProject(submitObj)
         if (!createRes) return
         Taro.navigateBack()
