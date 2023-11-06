@@ -19,10 +19,11 @@ const os = require("os");
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 // eslint-disable-next-line import/no-commonjs
-exports.main = async () => {
+exports.main = async (event) => {
+  
+  const { url } = event;
+
   try {
-    const url =
-      "https://6765-geshu-bidding-5gnhpdzpb49a69a4-1309350967.tcb.qcloud.la/projectList/%E6%97%A0%E6%A0%87%E9%A2%98%E7%94%B5%E5%AD%90%E8%A1%A8%E6%A0%BC.xlsx?sign=f3195f5f1b64a63dffa141ddc274b8f8&t=1699235834";
     const response = await axios.get(url, { responseType: "arraybuffer" });
     if (!response) return;
     const data = new Uint8Array(response.data);
@@ -41,9 +42,99 @@ exports.main = async () => {
       sheetNames: sheetNames,
       cellData: cellData,
     };
+
+    const translationTable = {
+      项目名称: "projectName",
+      项目编号: "projectNumber",
+      中标时间: "bidTime",
+      验收时间: "acceptanceTime",
+      应付金额: "payableAmount",
+      未付金额: "unpaidAmount",
+      到期时间: "dueTime",
+      开票信息: "invoiceInfo",
+      付款信息: "paymentInfo",
+    };
+
+    result.cellData = handle3(
+      handle2(
+        handle1(
+          handle0(
+            Object.entries(result.cellData).map(([key, value]) => {
+              const translatedKey = translationTable[key] || key;
+              return {
+                [translatedKey]: value,
+              };
+            })
+          )
+        )
+      )
+    );
     fs.unlinkSync(tempFilePath);
+
     return result;
   } catch (err) {
     console.log("解析Excel出错：" + err);
   }
 };
+
+function handle0(arr) {
+  let obj = {};
+
+  for (let i = 0; i < arr.length; i++) {
+    const key = Object.keys(arr[i])[0];
+    const value = arr[i][key];
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function handle1(obj1) {
+  const filteredObj = {};
+  for (const key in obj1) {
+    if (!key.match(/[A-I]1/)) {
+      filteredObj[key] = obj1[key];
+    }
+  }
+  return filteredObj;
+}
+
+function handle2(obj2) {
+  const groups = [];
+  let group = {};
+  let i = 0;
+  for (const key in obj2) {
+    group[key] = obj2[key];
+    i++;
+    if (i % 9 === 0) {
+      groups.push(group);
+      group = {};
+    }
+  }
+  return groups;
+}
+
+function handle3(objArray) {
+  const replacedArray = objArray.map((obj) => {
+    const replacedObj = {};
+    let index = 0;
+    for (const key in obj) {
+      const keys = [
+        "项目名称",
+        "项目编号",
+        "中标时间",
+        "验收时间",
+        "应付金额",
+        "未付金额",
+        "到期时间",
+        "开票信息",
+        "付款信息",
+      ];
+      replacedObj[keys[index]] = obj[key];
+      index++;
+    }
+    return replacedObj;
+  });
+
+  return replacedArray;
+}

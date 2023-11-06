@@ -8,6 +8,9 @@ import { AtActivityIndicator } from "taro-ui";
 import { analyzeExcel } from "@/services/analyzeExcel";
 import "./index.module.less"
 import { MakeOutItem } from "../addproject";
+import DownloadTemplateIcon from "../../assets/downloadLilIcon.jpg"
+import ImportLilIcon from "../../assets/importLilIcon.jpg"
+import ExportLilIcon from "../../assets/exportLilIcon.jpg"
 
 export interface Project {
     _id: string
@@ -71,8 +74,13 @@ export default function List() {
                 <AtActivityIndicator color='#169E3B' content='加载中...'></AtActivityIndicator>
             </View> : <View className='list'>
                 <View className='top-button-group'>
-                    <View className='download-template' onClick={handleDownloadTemplate}>下载模版</View>
-                    <View className='bulk-import'>批量导入</View>
+                    <View className='download-template' onClick={handleDownloadTemplate}>
+                        <img src={DownloadTemplateIcon} className='btn-left-icon' />
+                        <View className='btn-text'>下载模版</View>
+                    </View>
+                    <View className='bulk-import'>批量导入
+                    <img src={ImportLilIcon} className='btn-left-icon' />
+                    </View>
                     <View className='export'>导出</View>
                 </View>
                 <View className='content'>
