@@ -5,6 +5,7 @@ import getProjects from "@/services/getProjects";
 import { Fragment, useState } from "react";
 import ProjectCard from "@/components/projectCard";
 import { AtActivityIndicator } from "taro-ui";
+import { analyzeExcel } from "@/services/analyzeExcel";
 import "./index.module.less"
 import { MakeOutItem } from "../addproject";
 
@@ -60,17 +61,20 @@ export default function List() {
         Taro.navigateTo({ url: "/pages/addproject/index" })
     }
 
+    async function handleDownloadTemplate() {
+        await analyzeExcel()
+    }
 
     return (
         <Fragment>
             {!gotData ? <View className='data-loading-container'>
                 <AtActivityIndicator color='#169E3B' content='加载中...'></AtActivityIndicator>
             </View> : <View className='list'>
-                {/* <View className='top-button-group'>
-                    <View className='download-template'>下载模版</View>
+                <View className='top-button-group'>
+                    <View className='download-template' onClick={handleDownloadTemplate}>下载模版</View>
                     <View className='bulk-import'>批量导入</View>
                     <View className='export'>导出</View>
-                </View> */}
+                </View>
                 <View className='content'>
                     {projects.map((project: Project) => {
                         return <ProjectCard key={project._id} _id={project._id} projectNo={project.projectNo} projectName={project.projectName} winningTime={project.winningTime} receptionTime={project.receptionTime} shouldPayAmount={project.shouldPayAmount} unpaidAmount={project.unpaidAmount} />

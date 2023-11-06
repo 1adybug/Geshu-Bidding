@@ -352,3 +352,8 @@ export const Get_Solicitation_Collected = "getSolicitationCollected";
  * 获取收藏的地方公告
  */
 export const Get_Local_Collected = "getLocalCollected";
+
+/**
+ * 解析excel
+*/
+export const Analyze_Excel = "analyzeExcel"
