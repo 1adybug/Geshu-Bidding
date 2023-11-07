@@ -1,22 +1,47 @@
 .list {
   padding-top: 10px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #fbf9f9;
+  row-gap: 20px;
+  height: 100vh;
+  overflow-y: scroll;
   .top-button-group {
-    width: 100%;
     display: flex;
+    align-items: center;
+    width: 100%;
     justify-content: space-between;
-    padding-left: 20px;
-    padding-right: 20px;
+    box-sizing: border-box;
+    padding: 0 20px;
     .download-template,
     .bulk-import,
     .export {
-      padding: 10px 50px;
-      background-color: #169e3b;
-      color: #ffffff;
+      padding: 8px 20px;
       border-radius: 8px;
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+      .btn-left-icon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    .download-template,
+    .export {
+      border: 1px solid #acacac;
+      color: #acacac;
+    }
+    .bulk-import {
+      border: 1px solid #ff9710;
+      color: #ff9710;
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      column-gap: 20px;
+      justify-content: space-between;
     }
   }
   .content {
@@ -24,12 +49,8 @@
     flex-direction: column;
     align-items: center;
     row-gap: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    height: 100vh;
-    overflow-y: scroll;
   }
-  img {
+  .add {
     width: 100px;
     height: 100px;
     position: absolute;

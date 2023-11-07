@@ -53,11 +53,9 @@ export default function ProjectDetail() {
         const findRes = await findProject(_id)
         setDetail(findRes.result.data[0])
         const contractURLRes = await fetchAvatorUrl(findRes.result.data[0].contractFileID)
-        if (!contractURLRes) return
-        setContractURL(contractURLRes.result.fileList[0].tempFileURL)
+        contractURLRes.result && setContractURL(contractURLRes.result.fileList[0].tempFileURL)
         const receptionURLRes = await fetchAvatorUrl(findRes.result.data[0].acceptancementFileID)
-        if (!receptionURLRes) return
-        setReceptionURL(receptionURLRes.result.fileList[0].tempFileURL)
+        receptionURLRes.result && setReceptionURL(receptionURLRes.result.fileList[0].tempFileURL)
     }
 
     function previewContractFIle() {
@@ -153,6 +151,13 @@ export default function ProjectDetail() {
                             <View className='colon'>：</View>
                         </View>
                         <View className='data'>{detail.receptionTime}</View>
+                    </View>
+                    <View className='item'>
+                        <View className='label'>
+                            <View className='text'>合同金额</View>
+                            <View className='colon'>：</View>
+                        </View>
+                        <View className='data'>{detail.contractAmount}</View>
                     </View>
                     <View className='item'>
                         <View className='label'>

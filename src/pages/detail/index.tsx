@@ -326,19 +326,6 @@ export default function Detail() {
         setfreshId(id)
     }
 
-    function handleGrandChildEvent(e: string) {
-        if (e === "请稍后...") {
-            setGotData(false)
-            setActivityIndicatorContent(e)
-            return
-        }
-        if (e === "已完成跳转") {
-            setGotData(true)
-            setActivityIndicatorContent("加载中...")
-            return
-        }
-    }
-
     function onCloseDrawShow() {
         setDrawShow(false)
         setRemarkEditShow(false)

@@ -177,7 +177,6 @@ const Home = () => {
     }
 
     async function exportData() {
-        // setAtActivityIndicatorContent("数据正在处理中...")
         Taro.showLoading({
             title: "正在导出"
         })
@@ -222,11 +221,7 @@ const Home = () => {
                     })
                 }
             }
-        })
-        // setGotData(true)
-        // setExportedFileDownloadURl(resDownloadURl.result.fileList[0].tempFileURL)
-        // copyExportedFileURlModalVisible ? setCopyExportedFileURlModalVisible(false) : setCopyExportedFileURlModalVisible(true)
-    }
+        })}
 
     function onCloseDownloadURLModal() {
         setCopyExportedFileURlModalVisible(false)
