@@ -40,22 +40,24 @@ const Home = () => {
     const [atActivityIndicatorContent, setAtActivityIndicatorContent] = useState("加载中...")
     // const [recentlyCardList, setrecentlyCardList] = useState<RecentlyClickCard[]>([])
     const [pageIndex, setPageIndex] = useState(1)
+    const [clickedListItemId, setClickedListItemId] = useState("")
+    const [clickedSortType, setclickedSortType] = useState<SortType>("desc")
 
-    // useDidShow(() => {
-    //     setPageIndex(1)
-    // });
+    useDidShow(() => {
+        handleListItemClicked()
+    });
 
     useEffect(() => {
         // onListItemClicked("0", "desc")
         // init()
-        // getCrawlData("0").then(res => {
+        // getCrawlData("1").then(res => {
         //     if (res.result) {
         //         extractListData(res.result)
         //     }
         // })
         // queryDataDetails()
         init()
-    }, [pageIndex])
+    }, [])
 
     function init() {
         getCurrentListItemId().then(res => {
@@ -66,6 +68,10 @@ const Home = () => {
         })
         return
     }
+
+    useEffect(() => {
+        handleListItemClicked()
+    }, [clickedListItemId, clickedSortType, pageIndex])
 
     const onOpenDrawShow = () => {
         setDrawShow(true)
@@ -81,51 +87,11 @@ const Home = () => {
         setCopyExportedFileURlModalVisible(false)
     }
 
-    const onListItemClicked = async (listItemId: string, sortType: SortType) => {
+    const onListItemClicked = (listItemId: string, sortType: SortType) => {
         setCurrentListItemId(listItemId)
-        if (listItemId === "0") {
-            const res = await getPurchaseIntentionDisclosures()
-            if (!res.result) return
-            const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-            setGotData(true)
-            const newResultData: CardProps[] = wyDeepClone(resultData)
-            const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
-            if (!res1) return
-            const paginationQueryRes = await paginationQuery(currentListItemId, pageIndex)
-            if (!paginationQueryRes) return
-            if (pageIndex > 1) {
-                const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
-                setProjectList(newProjectList)
-            } else {
-                setProjectList(paginationQueryRes.result)
-            }
-            rememberCurrentListItemId(listItemId)
-            setShouldActivedListItemId(listItemId)
-        }
-        if (listItemId === "1") {
-            const res = await getPurchaseSocilitationAnnouncements()
-            if (!res.result) return
-            const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-            setProjectList(resultData)
-            setGotData(true)
-            const newResultData: CardProps[] = wyDeepClone(resultData)
-            const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
-            if (!res1) return
-            rememberCurrentListItemId(listItemId)
-            setShouldActivedListItemId(listItemId)
-        }
-        if (listItemId === "2") {
-            const res = await fetchLocalAnnouncement()
-            if (!res.result) return
-            const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-            setProjectList(resultData)
-            setGotData(true)
-            const newResultData: CardProps[] = wyDeepClone(resultData)
-            const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
-            if (!res1) return
-            rememberCurrentListItemId(listItemId)
-            setShouldActivedListItemId(listItemId)
-        }
+        setClickedListItemId(listItemId)
+        setclickedSortType(sortType)
+        setPageIndex(1)
         // if (listItemId === "3") {
         //     const res = await fetchRecentlyViewed()
         //     if (!res) return
@@ -149,6 +115,68 @@ const Home = () => {
         // }
     }
 
+    async function handleListItemClicked() {
+        if (clickedListItemId === "0") {
+            const res = await getPurchaseIntentionDisclosures()
+            if (!res.result) return
+            const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), clickedSortType)
+            const newResultData: CardProps[] = wyDeepClone(resultData)
+            const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
+            if (!res1) return
+            const paginationQueryRes = await paginationQuery(clickedListItemId, pageIndex)
+            if (!paginationQueryRes) return
+            if (pageIndex > 1) {
+                const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
+                setProjectList(newProjectList)
+            } else {
+                setProjectList(paginationQueryRes.result)
+            }
+            setGotData(true)
+            rememberCurrentListItemId(clickedListItemId)
+            setShouldActivedListItemId(clickedListItemId)
+        }
+        if (clickedListItemId === "1") {
+            const res = await getPurchaseSocilitationAnnouncements()
+            if (!res.result) return
+            const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), clickedSortType)
+            setProjectList(resultData)
+            setGotData(true)
+            const newResultData: CardProps[] = wyDeepClone(resultData)
+            const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
+            if (!res1) return
+            const paginationQueryRes = await paginationQuery(clickedListItemId, pageIndex)
+            if (!paginationQueryRes) return
+            if (pageIndex > 1) {
+                const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
+                setProjectList(newProjectList)
+            } else {
+                setProjectList(paginationQueryRes.result)
+            }
+            rememberCurrentListItemId(clickedListItemId)
+            setShouldActivedListItemId(clickedListItemId)
+        }
+        if (clickedListItemId === "2") {
+            const res = await fetchLocalAnnouncement()
+            if (!res.result) return
+            const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), clickedSortType)
+            setProjectList(resultData)
+            setGotData(true)
+            const newResultData: CardProps[] = wyDeepClone(resultData)
+            const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
+            if (!res1) return
+            const paginationQueryRes = await paginationQuery(clickedListItemId, pageIndex)
+            if (!paginationQueryRes) return
+            if (pageIndex > 1) {
+                const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
+                setProjectList(newProjectList)
+            } else {
+                setProjectList(paginationQueryRes.result)
+            }
+            rememberCurrentListItemId(clickedListItemId)
+            setShouldActivedListItemId(clickedListItemId)
+        }
+    }
+
     async function rememberCurrentListItemId(id: string) {
         const res = await Taro.setStorage({ key: "currentListItemId", data: { currentListItemId: id } })
         if (!res) return
@@ -169,21 +197,28 @@ const Home = () => {
     }
 
     const onValueInputed = async (keyword: string) => {
-        try {
-            const searchHistoryCache = await Taro.getStorage({ key: "searchHistory" })
-            if (!searchHistoryCache) return
-            let searchHistory: string[] = searchHistoryCache.data
-            searchHistory.push(keyword)
-            searchHistory = Array.from(new Set(searchHistory))
-            await Taro.setStorage({ key: "searchHistory", data: searchHistory })
-        } catch (err) {
-            let searchHistory: string[] = []
-            searchHistory.push(keyword)
-            searchHistory = Array.from(new Set(searchHistory))
-            await Taro.setStorage({ key: "searchHistory", data: searchHistory })
+        if (keyword !== "") {
+            try {
+                const searchHistoryCache = await Taro.getStorage({ key: "searchHistory" })
+                if (!searchHistoryCache) return
+                let searchHistory: string[] = searchHistoryCache.data
+                searchHistory.push(keyword)
+                searchHistory = Array.from(new Set(searchHistory))
+                await Taro.setStorage({ key: "searchHistory", data: searchHistory })
+            } catch (err) {
+                let searchHistory: string[] = []
+                searchHistory.push(keyword)
+                searchHistory = Array.from(new Set(searchHistory))
+                await Taro.setStorage({ key: "searchHistory", data: searchHistory })
+            }
+            const res = await fuzzySearch(currentListItemId, keyword)
+            setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), "desc"))
+            return
         }
-        const res = await fuzzySearch(currentListItemId, keyword)
-        setProjectList(sortListItemData(res.result.filter(e => !e.is_deleted), "desc"))
+        if (keyword === "") {
+            handleListItemClicked()
+            return
+        }
     }
 
     async function exportData() {
@@ -238,12 +273,7 @@ const Home = () => {
         setCopyExportedFileURlModalVisible(false)
     }
 
-    Taro.useReachBottom(async () => {
-        console.log("已经触底！");
-        // const res = await paginationQuery(currentListItemId, pageIndex)
-        // if (!res) return
-        // const newProjectList = wyDeepClone([...projectList, ...res.result])
-        // setProjectList(newProjectList)
+    Taro.useReachBottom(() => {
         setPageIndex(pageIndex + 1)
     })
 
@@ -261,7 +291,7 @@ const Home = () => {
                                 <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} />
                             )
                         })}
-                        {projectList.length > 0 && <View className='next-page'>下拉加载更多</View>}
+                        {projectList.length > 0 && <View className='next-page'>加载更多</View>}
                     </View>
                     <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
                     {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}

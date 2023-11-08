@@ -40,7 +40,7 @@ export function CollectionCard(props: RecycleBinCardProps) {
                     <View className='label'>来源：</View>
                     <View className='data'>{sourceType[type]}</View>
                 </View>
-                <img src={CollectedIcon} alt='' />
+                {/* <img src={CollectedIcon} alt='' /> */}
             </View>
         </View>
     )

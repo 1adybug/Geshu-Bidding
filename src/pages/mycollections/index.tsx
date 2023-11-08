@@ -32,8 +32,6 @@ export default function MyCollections() {
         const res2 = await getLocalCollected()
         if (!res && !res1 && !res2) return
         const list = wyDeepClone([...res.result, ...res1.result, ...res2.result])
-        console.log(list);
-        
         setMycollections(list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix()))
         setGotData(true)
     }

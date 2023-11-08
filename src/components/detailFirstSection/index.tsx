@@ -38,7 +38,7 @@ export default function DetailFirstSection(props: DetailFirstSectionProps) {
                     <img src={Clock} alt='' />
                     <View className='second'>{releaseTime}</View>
                 </View>
-                {source === "homePage" && <View className='collect' onClick={handleCollect}>
+                {(source === "homePage" || source === "myCollections") && <View className='collect' onClick={handleCollect}>
                     {fakeCollectedStatus ? <img src={CollectedIcon} /> : <img src={UnCollectedIcon} />}
                 </View>}
             </View>

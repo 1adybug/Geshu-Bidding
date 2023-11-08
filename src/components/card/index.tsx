@@ -54,10 +54,10 @@ export default function Card(props: CardProps) {
         <View className='card' onClick={handleClick}>
             <View className={src === "recently" ? 'section-one-for-recent' : 'section-one'}>
                 <View className='title'>{title}</View>
-                {src === "recently" && <View className='last-click-time'>上次浏览时间：{lastClickedTime}</View>}
+                {src === "recently" && type && <View className='src'>来源：{recentlyCardType[type]}</View>}
             </View>
             <View className='bottom'>
-                {src === "recently" && type && <View className='src'>来源：{recentlyCardType[type]}</View>}
+                {src === "recently" && <View className='last-click-time'>上次浏览时间：{lastClickedTime}</View>}
                 {src !== "recently" && <View className='release-time'>
                     <img src={Clock} alt='' />
                     <View className='data'>{time}</View>

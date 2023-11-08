@@ -117,7 +117,7 @@ export default function Search(props: SearchProps) {
                         }
                     </View>
                     <View className='bottom'>
-                        <View className='desc'>搜索历史</View>
+                        <View className='desc' onClick={() => setHistoryShow(false)}>取消</View>
                         <View className='clear' onClick={clearhistory}>清空</View>
                     </View>
                 </View>
