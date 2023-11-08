@@ -355,5 +355,10 @@ export const Get_Local_Collected = "getLocalCollected";
 
 /**
  * 解析excel
-*/
-export const Analyze_Excel = "analyzeExcel"
+ */
+export const Analyze_Excel = "analyzeExcel";
+
+/**
+ * 分页查询
+ */
+export const Pagination_Query = "paginationQuery";

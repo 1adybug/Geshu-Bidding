@@ -23,6 +23,7 @@ import { fetchLocalAnnouncementDataWillBeExported } from '@/services/fetchLocalA
 import sortExportData from '@/utils/sortExportData';
 import { fetchRecentlyViewed } from "@/services/fetchRecentlyViewed";
 import recentlySort from "@/utils/recentlySort";
+import { paginationQuery } from "@/services/paginationQuery";
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -38,10 +39,11 @@ const Home = () => {
     const [copyExportedFileURlModalVisible, setCopyExportedFileURlModalVisible] = useState(false)
     const [atActivityIndicatorContent, setAtActivityIndicatorContent] = useState("加载中...")
     // const [recentlyCardList, setrecentlyCardList] = useState<RecentlyClickCard[]>([])
+    const [pageIndex, setPageIndex] = useState(1)
 
-    useDidShow(() => {
-        init()
-    });
+    // useDidShow(() => {
+    //     setPageIndex(1)
+    // });
 
     useEffect(() => {
         // onListItemClicked("0", "desc")
@@ -52,7 +54,8 @@ const Home = () => {
         //     }
         // })
         // queryDataDetails()
-    }, [])
+        init()
+    }, [pageIndex])
 
     function init() {
         getCurrentListItemId().then(res => {
@@ -84,11 +87,18 @@ const Home = () => {
             const res = await getPurchaseIntentionDisclosures()
             if (!res.result) return
             const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), sortType)
-            setProjectList(resultData)
             setGotData(true)
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseIntentionDisclosure: newResultData } })
             if (!res1) return
+            const paginationQueryRes = await paginationQuery(currentListItemId, pageIndex)
+            if (!paginationQueryRes) return
+            if (pageIndex > 1) {
+                const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
+                setProjectList(newProjectList)
+            } else {
+                setProjectList(paginationQueryRes.result)
+            }
             rememberCurrentListItemId(listItemId)
             setShouldActivedListItemId(listItemId)
         }
@@ -221,11 +231,21 @@ const Home = () => {
                     })
                 }
             }
-        })}
+        })
+    }
 
     function onCloseDownloadURLModal() {
         setCopyExportedFileURlModalVisible(false)
     }
+
+    Taro.useReachBottom(async () => {
+        console.log("已经触底！");
+        // const res = await paginationQuery(currentListItemId, pageIndex)
+        // if (!res) return
+        // const newProjectList = wyDeepClone([...projectList, ...res.result])
+        // setProjectList(newProjectList)
+        setPageIndex(pageIndex + 1)
+    })
 
     return (
         <View className='home'>
@@ -241,6 +261,7 @@ const Home = () => {
                                 <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} />
                             )
                         })}
+                        {projectList.length > 0 && <View className='next-page'>下拉加载更多</View>}
                     </View>
                     <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
                     {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}

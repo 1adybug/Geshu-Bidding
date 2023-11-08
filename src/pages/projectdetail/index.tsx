@@ -164,14 +164,14 @@ export default function ProjectDetail() {
                             <View className='text'>合同</View>
                             <View className='colon'>：</View>
                         </View>
-                        <View className='file-preview' onClick={previewContractFIle}>预览</View>
+                        <View className='file-preview' onClick={previewContractFIle}>{detail.contractFileID === "" ? "暂无文件" : "预览"}</View>
                     </View>
                     <View className='item'>
                         <View className='label'>
                             <View className='text'>验收文件</View>
                             <View className='colon'>：</View>
                         </View>
-                        <View className='file-preview' onClick={previewReceptionFile}>预览</View>
+                        <View className='file-preview' onClick={previewReceptionFile}>{detail.acceptancementFileID === "" ? "暂无文件" : "预览"}</View>
                     </View>
                     <View className='item-list'>
                         {detail.makeOuts.map(makeout => {

@@ -8,5 +8,5 @@ export const analyzeExcel = (url: string) => {
       url,
     },
   });
-  return res;
+  return res as any;
 };

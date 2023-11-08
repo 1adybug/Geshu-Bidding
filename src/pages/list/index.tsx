@@ -105,7 +105,7 @@ export default function List() {
                     return
                 }
                 Taro.showLoading({
-                    title: "上传中"
+                    title: "导入中"
                 })
                 const uploadRes = await Taro.cloud.uploadFile({
                     cloudPath: 'projectList/' + "项目导入文件" + "." + extractFileSuffix(file.name),
@@ -115,12 +115,20 @@ export default function List() {
                 const resDownloadUrl = await fetchAvatorUrl(uploadRes.fileID)
                 if (!resDownloadUrl) return
                 const resImportData = await analyzeExcel(resDownloadUrl.result.fileList[0].tempFileURL)
-                if (!resImportData) return
-                Taro.showToast({
-                    title: "导入成功！",
-                    icon: "success",
-                    duration: 2000
-                })
+                if (!resImportData.result) return
+                if (resImportData.result.code === 200) {
+                    Taro.showToast({
+                        title: "导入成功！",
+                        icon: "success",
+                        duration: 2000
+                    })
+                } else {
+                    Taro.showToast({
+                        title: "导入失败！",
+                        icon: "error",
+                        duration: 2000
+                    })
+                }
                 Taro.hideLoading()
                 init()
             },
@@ -146,8 +154,18 @@ export default function List() {
                 item.shouldPayAmount,
                 item.unpaidAmount,
                 item.deadline,
-                item.makeOuts,
-                item.payments
+                JSON.stringify(item.makeOuts.map(e => {
+                    return {
+                        开票时间: e.time,
+                        开票金额: e.amount
+                    }
+                })),
+                JSON.stringify(item.payments.map(e => {
+                    return {
+                        付款时间: e.time,
+                        付款金额: e.amount
+                    }
+                }))
             ]
         })
         initArr.splice(0, 0, ["项目编号", "项目名称", "中标时间", "验收时间", "合同金额", "应付金额", "未付金额", "到期时间", "开票信息", "付款信息"])

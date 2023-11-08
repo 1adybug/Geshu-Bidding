@@ -23,6 +23,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 // eslint-disable-next-line import/no-commonjs
 exports.main = async (event) => {
+  
   const { url } = event;
 
   try {
@@ -56,6 +57,11 @@ exports.main = async (event) => {
     };
   } catch (err) {
     console.log("解析Excel出错：" + err);
+    return {
+      code: 500,
+      msg: "添加成功！",
+      success: true,
+    };
   }
 };
 
@@ -88,8 +94,8 @@ function handleResult(arr) {
   return arr.map((e) => {
     return {
       ...e,
-      makeOuts: handleArray(e.makeOuts),
-      payments: handleArray(e.payments),
+      makeOuts: e.makeOuts ? handleArray(e.makeOuts) : [],
+      payments: e.payments ? handleArray(e.payments) : [],
       acceptancementFileID: "",
       contractFileID: "",
       creator: "",
