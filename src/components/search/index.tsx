@@ -2,7 +2,6 @@ import { BaseEventOrig, Input, View } from "@tarojs/components";
 import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import ClearInputIcon from "@/assets/clearInput.png"
-import SearchIcon from "../../assets/search.png"
 import ExpandSidebarIcon from "../../assets/expandSidebarIcon.png"
 import FilterIcon from "../../assets/filterIcon.png"
 import "./index.module.less"
