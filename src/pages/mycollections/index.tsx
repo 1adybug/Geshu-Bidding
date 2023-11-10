@@ -1,15 +1,10 @@
 import { View } from "@tarojs/components";
 import { Fragment, useEffect, useState } from "react";
-import { getPurchaseIntentionDisclosures } from "@/services/puchaseIntentionDisclosure";
-import { getPurchaseSocilitationAnnouncements } from "@/services/purchaseSocilitationAnnouncement";
 import { wyDeepClone } from "wangyong-utils";
 import { CollectionCard } from "@/components/collectionCard";
 import { AtActivityIndicator } from "taro-ui";
-import { useDidShow } from "@tarojs/taro";
-import { fetchLocalAnnouncement } from "@/services/fetchLocalAnnouncement";
-import getIntentionCollected from "@/services/getIntentionCollected";
-import getSolicitationCollected from "@/services/getSolicitationCollected";
-import getLocalCollected from "@/services/getLocalCollected";
+import Taro, { useDidShow } from "@tarojs/taro";
+import myCollectionsPaginationQuery from "@/services/myCollectionsPaginationQuery";
 import dayjs from "dayjs";
 import "./index.module.less"
 
@@ -17,6 +12,8 @@ export default function MyCollections() {
 
     const [mycollections, setMycollections] = useState<PurchaseIntentionDisclosure[]>([])
     const [gotData, setGotData] = useState(false)
+    const [pageIndex, setPageIndex] = useState(1)
+    const [haveMore, setHaveMore] = useState(true)
 
     useDidShow(() => {
         getAllCollections()
@@ -24,17 +21,25 @@ export default function MyCollections() {
 
     useEffect(() => {
         getAllCollections()
-    }, [])
+    }, [pageIndex])
 
     async function getAllCollections() {
-        const res = await getIntentionCollected()
-        const res1 = await getSolicitationCollected()
-        const res2 = await getLocalCollected()
-        if (!res && !res1 && !res2) return
-        const list = wyDeepClone([...res.result, ...res1.result, ...res2.result])
-        setMycollections(list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix()))
+        const res = await myCollectionsPaginationQuery(pageIndex)
+        if (!res) return
+        const list = wyDeepClone(res.result)
+        if (pageIndex > 1) {
+            setMycollections([...mycollections, ...list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix())])
+            list.length < 15 && setHaveMore(false)
+        } else {
+            setMycollections(list.sort((a: any, b: any) => dayjs(b.time).unix() - dayjs(a.time).unix()))
+            list.length < 15 && setHaveMore(false)
+        }
         setGotData(true)
     }
+
+    Taro.useReachBottom(() => {
+        setPageIndex(pageIndex + 1)
+    })
 
     return (
         <Fragment>
@@ -46,6 +51,7 @@ export default function MyCollections() {
                         <CollectionCard key={item._id} _id={item._id} title={item.title} time={item.time} type={item.type} />
                     )
                 })}
+                {mycollections.length > 0 && <View className='next-page'>加载更多</View>}
             </View>}
         </Fragment>
     )

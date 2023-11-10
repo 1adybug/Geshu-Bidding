@@ -92,27 +92,6 @@ const Home = () => {
         setClickedListItemId(listItemId)
         setclickedSortType(sortType)
         setPageIndex(1)
-        // if (listItemId === "3") {
-        //     const res = await fetchRecentlyViewed()
-        //     if (!res) return
-        //     const copyData = wyDeepClone(recentlySort(res.result.map((e: any) => {
-        //         return {
-        //             _id: e._id,
-        //             title: e.title,
-        //             href: e.href,
-        //             releaseTime: e.time,
-        //             is_collected: e.is_collected,
-        //             is_completely_deleted: e.is_completely_deleted,
-        //             is_deleted: e.is_deleted,
-        //             clickedTime: e.detail[0].clickedTime,
-        //             type: e.type
-        //         }
-        //     })))
-        //     setrecentlyCardList(copyData)
-        //     setGotData(true)
-        //     const res1 = await Taro.setStorage({ key: "homePageData", data: { recentlyViewed: copyData } })
-        //     if (!res1) return
-        // }
     }
 
     async function handleListItemClicked() {
@@ -139,8 +118,6 @@ const Home = () => {
             const res = await getPurchaseSocilitationAnnouncements()
             if (!res.result) return
             const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), clickedSortType)
-            setProjectList(resultData)
-            setGotData(true)
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { purchaseSocilitationAnnouncements: newResultData } })
             if (!res1) return
@@ -152,6 +129,7 @@ const Home = () => {
             } else {
                 setProjectList(paginationQueryRes.result)
             }
+            setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
             setShouldActivedListItemId(clickedListItemId)
         }
@@ -159,8 +137,6 @@ const Home = () => {
             const res = await fetchLocalAnnouncement()
             if (!res.result) return
             const resultData: CardProps[] = sortListItemData(res.result.filter(e => !e.is_deleted), clickedSortType)
-            setProjectList(resultData)
-            setGotData(true)
             const newResultData: CardProps[] = wyDeepClone(resultData)
             const res1 = await Taro.setStorage({ key: "homePageData", data: { localAnnouncement: newResultData } })
             if (!res1) return
@@ -171,7 +147,8 @@ const Home = () => {
                 setProjectList(newProjectList)
             } else {
                 setProjectList(paginationQueryRes.result)
-            }
+            } 
+            setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
             setShouldActivedListItemId(clickedListItemId)
         }

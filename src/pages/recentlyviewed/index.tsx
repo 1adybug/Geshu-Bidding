@@ -1,11 +1,11 @@
 import { Fragment, useState } from "react"
 import { useDidShow } from "@tarojs/taro"
 import { fetchRecentlyViewed } from "@/services/fetchRecentlyViewed"
-import { wyDeepClone } from "wangyong-utils"
-import recentlySort from "@/utils/recentlySort"
 import { View } from "@tarojs/components"
 import Card from "@/components/card"
 import { AtActivityIndicator } from "taro-ui"
+import { wyDeepClone } from "wangyong-utils"
+import dayjs from "dayjs"
 import "./index.module.less"
 
 export default function RecentlyViewed() {
@@ -20,20 +20,8 @@ export default function RecentlyViewed() {
     async function init() {
         const res = await fetchRecentlyViewed()
         if (!res) return
-        const copyData = wyDeepClone(recentlySort(res.result.map((e: any) => {
-            return {
-                _id: e._id,
-                title: e.title,
-                href: e.href,
-                releaseTime: e.time,
-                is_collected: e.is_collected,
-                is_completely_deleted: e.is_completely_deleted,
-                is_deleted: e.is_deleted,
-                clickedTime: e.detail[0].clickedTime,
-                type: e.type
-            }
-        })))
-        setrecentlyCardList(copyData)
+        const dataCopy = wyDeepClone(res.result)
+        setrecentlyCardList(dataCopy.sort((a: any, b: any) => dayjs(b.clickedTime).unix() - dayjs(a.clickedTime).unix()))
         setGotData(true)
     }
 

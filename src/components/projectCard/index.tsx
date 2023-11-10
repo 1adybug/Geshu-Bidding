@@ -64,7 +64,7 @@ export default function ProjectCard(props: ProjectCardProps) {
                 </View>
                 <View className='data-unpaid'>{unpaidAmount}</View>
             </View>
-            <View className='see-more'>点击查看详情&gt;&gt;</View>
+            {/* <View className='see-more'>点击查看详情&gt;&gt;</View> */}
         </View>
     )
 }

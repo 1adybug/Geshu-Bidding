@@ -18,27 +18,28 @@ export default function Attachments(props: AttachmentsProps) {
     const { fileIDPrev, attachments } = props
 
     async function attachmentClick(e: Attachment) {
-        Taro.showLoading({
-            title: "正在打开"
-        })
-        const res = await fetchFileDownloadURl(fileIDPrev + "_" + e.content)
-        if (!res) return
-        const downloadUrl = res.result.fileList[0].tempFileURL
-        Taro.downloadFile({
-            url: downloadUrl,
-            success: function (res1) {
-                if (res1.statusCode === 200) {
-                    Taro.openDocument({
-                        filePath: res1.tempFilePath,
-                        showMenu: true,
-                        success: function (openDocRes) {
-                            Taro.hideLoading()
-                            console.log('打开文档成功', openDocRes)
-                        }
-                    })
-                }
-            }
-        })
+        // Taro.showLoading({
+        //     title: "正在打开"
+        // })
+        // const res = await fetchFileDownloadURl(fileIDPrev + "_" + e.content)
+        // if (!res) return
+        // const downloadUrl = res.result.fileList[0].tempFileURL
+        // Taro.downloadFile({
+        //     url: downloadUrl,
+        //     success: function (res1) {
+        //         if (res1.statusCode === 200) {
+        //             Taro.openDocument({
+        //                 filePath: res1.tempFilePath,
+        //                 showMenu: true,
+        //                 success: function (openDocRes) {
+        //                     Taro.hideLoading()
+        //                     console.log('打开文档成功', openDocRes)
+        //                 }
+        //             })
+        //         }
+        //     }
+        // })
+        
     }
 
     return (

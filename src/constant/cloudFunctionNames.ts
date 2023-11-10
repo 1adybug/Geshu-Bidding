@@ -362,3 +362,8 @@ export const Analyze_Excel = "analyzeExcel";
  * 分页查询
  */
 export const Pagination_Query = "paginationQuery";
+
+/**
+ * 收藏分页查询
+*/
+export const My_Collections_Pagination_Query = "myCollectionsPaginationQuery" 

@@ -205,7 +205,7 @@ const PagePicker = () => {
     }
 
     function addPayment() {
-        const obj = { id: dayjs().format("YYYYMMDDHHmmss"), time: dayjs().format("YYYY-MM-DD"), amount: "" }
+        const obj = { id: dayjs().valueOf().toString(), time: dayjs().format("YYYY-MM-DD"), amount: "" }
         setPayments(prevState => [...prevState, obj])
         const arrCopy = wyDeepClone(detail.payments)
         arrCopy.push(obj)

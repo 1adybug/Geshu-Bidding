@@ -30,15 +30,15 @@ export function CollectionCard(props: RecycleBinCardProps) {
         <View className='collection-card' onClick={handleCardClick}>
             <View className='top'>
                 <View className='project-title'>{title}</View>
-                <View className='release-time'>
-                    <img src={Clock} alt='' />
-                    <View className='data'>{time}</View>
-                </View>
-            </View>
-            <View className='bottom'>
                 <View className='source'>
                     <View className='label'>来源：</View>
                     <View className='data'>{sourceType[type]}</View>
+                </View>
+            </View>
+            <View className='bottom'>
+                <View className='release-time'>
+                    <img src={Clock} alt='' />
+                    <View className='data'>{time}</View>
                 </View>
                 {/* <img src={CollectedIcon} alt='' /> */}
             </View>

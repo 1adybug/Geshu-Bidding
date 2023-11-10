@@ -24,6 +24,9 @@ exports.main = async (event) => {
   try {
     const result = await db
       .collection(collectionName)
+      // .where({
+      //   time: db.command.neq("2023-11-09"),
+      // })
       .orderBy("time", "desc")
       .skip((pageIndex - 1) * 10)
       .limit(10)
