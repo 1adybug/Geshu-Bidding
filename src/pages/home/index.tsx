@@ -24,6 +24,9 @@ import sortExportData from '@/utils/sortExportData';
 import { fetchRecentlyViewed } from "@/services/fetchRecentlyViewed";
 import recentlySort from "@/utils/recentlySort";
 import { paginationQuery } from "@/services/paginationQuery";
+import FloatingBall from "@/components/floatingBall";
+import EmptyRecycleBinIcon from "@/assets/emptyRecycleBinIcon.jpg"
+import { batchRemove } from "@/services/batchRemove";
 import ExportFileIcon from "../../assets/exportFileIcon.jpg"
 import Card, { CardProps } from '../../components/card';
 import "./index.module.less"
@@ -42,15 +45,16 @@ const Home = () => {
     const [pageIndex, setPageIndex] = useState(1)
     const [clickedListItemId, setClickedListItemId] = useState("")
     const [clickedSortType, setclickedSortType] = useState<SortType>("desc")
+    const [deletes, setDeletes] = useState<string[]>([])
 
     useDidShow(() => {
-        handleListItemClicked()
+        judgeInit()
     });
 
     useEffect(() => {
         // onListItemClicked("0", "desc")
         // init()
-        // getCrawlData("0").then(res => {
+        // getCrawlData("1").then(res => {
         //     if (res.result) {
         //         extractListData(res.result)
         //     }
@@ -58,6 +62,16 @@ const Home = () => {
         // queryDataDetails()
         init()
     }, [])
+
+    function judgeInit() {
+        const listItemId = currentListItemId
+        const sortType = "desc"
+        if (pageIndex === 1) {
+            handleListItemClicked()
+        } else (
+            onListItemClicked(listItemId, sortType)
+        )
+    }
 
     function init() {
         getCurrentListItemId().then(res => {
@@ -106,9 +120,9 @@ const Home = () => {
             if (!paginationQueryRes) return
             if (pageIndex > 1) {
                 const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
-                setProjectList(newProjectList)
+                setProjectList(newProjectList.filter(e => !e.is_deleted))
             } else {
-                setProjectList(paginationQueryRes.result)
+                setProjectList(paginationQueryRes.result.filter(e => !e.is_deleted))
             }
             setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
@@ -125,9 +139,9 @@ const Home = () => {
             if (!paginationQueryRes) return
             if (pageIndex > 1) {
                 const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
-                setProjectList(newProjectList)
+                setProjectList(newProjectList.filter(e => !e.is_deleted))
             } else {
-                setProjectList(paginationQueryRes.result)
+                setProjectList(paginationQueryRes.result.filter(e => !e.is_deleted))
             }
             setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
@@ -144,10 +158,10 @@ const Home = () => {
             if (!paginationQueryRes) return
             if (pageIndex > 1) {
                 const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
-                setProjectList(newProjectList)
+                setProjectList(newProjectList.filter(e => !e.is_deleted))
             } else {
-                setProjectList(paginationQueryRes.result)
-            } 
+                setProjectList(paginationQueryRes.result.filter(e => !e.is_deleted))
+            }
             setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
             setShouldActivedListItemId(clickedListItemId)
@@ -254,6 +268,45 @@ const Home = () => {
         setPageIndex(pageIndex + 1)
     })
 
+    function itemClick(listItemId: string, sortType: SortType) {
+        setGotData(false)
+        onListItemClicked(listItemId, sortType)
+    }
+
+    function onDeleteItem(x: string, y: boolean) {
+        setDeletes([...deletes, x])
+        if (y) {
+            deletes.push(x)
+            return
+        }
+        if (!y) {
+            setDeletes(deletes.filter(e => e !== x))
+            return
+        }
+    }
+
+    function handleClearClicked() {
+        Taro.showModal({
+            title: '提示',
+            content: '确定要删除这些数据吗？',
+            success: async function (res) {
+                if (res.confirm) {
+                    const res1 = await batchRemove(currentListItemId, deletes)
+                    if (!res1) return
+                    judgeInit()
+                    Taro.showToast({
+                        title: "删除成功！",
+                        icon: "success",
+                        duration: 2000
+                    })
+                    setDeletes([])
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
+    }
+
     return (
         <View className='home'>
             {!gotData ?
@@ -265,15 +318,17 @@ const Home = () => {
                     <View className='main'>
                         {projectList.map((project: CardProps) => {
                             return (
-                                <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} />
+                                <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} deleteSelect={onDeleteItem} />
                             )
                         })}
                         {projectList.length > 0 && <View className='next-page'>加载更多</View>}
                     </View>
-                    <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={onListItemClicked} activedItemId={shouldActivedListItemId} />
+                    <SideBar visible={drawShow} onClose={onCloseDrawShow} itemClicked={itemClick} activedItemId={shouldActivedListItemId} />
                     {copyExportedFileURlModalVisible && <CopyExportedFileDownloadModal url={exportedFileDownloadURl} closeModal={onCloseDownloadURLModal} />}
-                    {(currentListItemId === "1" || currentListItemId === "2") && <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />}
+                    {(currentListItemId === "1" || currentListItemId === "2") && deletes.length <= 0 && <img className='export-file-icon' src={ExportFileIcon} alt='' onClick={exportData} />}
                     {(drawShow || copyExportedFileURlModalVisible) && <Shadow onClose={onCloseDrawShow} />}
+                    {/* <FloatingBall /> */}
+                    {deletes.length > 0 && <img src={EmptyRecycleBinIcon} className='empty-icon' onClick={handleClearClicked} />}
                 </Fragment>}
         </View>
     )

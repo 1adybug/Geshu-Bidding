@@ -15,6 +15,7 @@ export interface CardProps {
     lastClickedTime?: string
     src?: string
     type?: "purchase_intention" | "purchase_solicitation" | "local_announcement"
+    deleteSelect: (id: string, checked: boolean) => void
 }
 
 const typeRecord: Record<string, string> = {
@@ -37,7 +38,7 @@ const recentlySrcCurrentListItemId: Record<string, string> = {
 
 export default function Card(props: CardProps) {
 
-    const { src, lastClickedTime, currentListItemId, _id, title, time, is_collected, type } = props
+    const { src, lastClickedTime, currentListItemId, _id, title, time, is_collected, type, deleteSelect } = props
 
     const handleClick = async () => {
         if (src === "recently" && type) {
@@ -50,20 +51,27 @@ export default function Card(props: CardProps) {
         if (!res) return
     }
 
+    function test(e:any) {
+        deleteSelect(_id, e.mpEvent.target.checked)
+    }
+
     return (
-        <View className='card' onClick={handleClick}>
-            <View className={src === "recently" ? 'section-one-for-recent' : 'section-one'}>
-                <View className='title'>{title}</View>
-                {src === "recently" && type && <View className='last-click-time'>上次浏览时间：{lastClickedTime}</View>}
+        <View className='wrapper'>
+            <View className='card' onClick={handleClick}>
+                <View className={src === "recently" ? 'section-one-for-recent' : 'section-one'}>
+                    <View className='title'>{title}</View>
+                    {src === "recently" && type && <View className='last-click-time'>上次浏览时间：{lastClickedTime}</View>}
+                </View>
+                <View className='bottom'>
+                    {src === "recently" && type && <View className='src'>来源：{recentlyCardType[type]}</View>}
+                    {src !== "recently" && <View className='release-time'>
+                        <img src={Clock} alt='' />
+                        <View className='data'>{time}</View>
+                    </View>}
+                    {is_collected && <img src={CollectedIcon} alt='' />}
+                </View>
             </View>
-            <View className='bottom'>
-                {src === "recently" && type && <View className='src'>来源：{recentlyCardType[type]}</View>}
-                {src !== "recently" && <View className='release-time'>
-                    <img src={Clock} alt='' />
-                    <View className='data'>{time}</View>
-                </View>}
-                {is_collected && <img src={CollectedIcon} alt='' />}
-            </View>
+            <input type='checkbox' onChange={test} className='checkbox' />
         </View>
     )
 }

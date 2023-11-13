@@ -367,3 +367,8 @@ export const Pagination_Query = "paginationQuery";
  * 收藏分页查询
 */
 export const My_Collections_Pagination_Query = "myCollectionsPaginationQuery" 
+
+/**
+ * 批量删除
+*/
+export const Batch_Remove = "batchRemove"

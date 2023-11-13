@@ -22,8 +22,12 @@ export default function Attachments(props: AttachmentsProps) {
             title: "请稍等"
         })
         const res = await fetchFileDownloadURl(fileIDPrev + "_" + e.content)
+        console.log(1,fileIDPrev + "_" + e.content);
+        
         if (!res) return
         const downloadUrl = res.result.fileList[0].tempFileURL
+        console.log(2,downloadUrl);
+        
         Taro.downloadFile({
             url: downloadUrl,
             success: function (res1) {
