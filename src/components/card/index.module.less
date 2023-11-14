@@ -1,14 +1,14 @@
-.wrapper{
+.wrapper-short,
+.wrapper-default {
   display: flex;
   align-items: center;
   column-gap: 10px;
-  padding-right: 20px;
-  .checkbox{
+  .checkbox {
     width: 20px;
     height: 20px;
   }
-  .card {
-    width: 610px;
+  .card-short,
+  .card-default {
     max-height: 1000px;
     background-color: #ffffff;
     padding: 20px;
@@ -49,7 +49,7 @@
       justify-content: space-between;
       align-items: center;
       .src {
-        color: rgb(120, 119, 119)
+        color: rgb(120, 119, 119);
       }
       img {
         width: 36px;
@@ -64,5 +64,14 @@
       }
     }
   }
+  .card-short {
+    width: 610px;
+  }
+  .card-default {
+    width: 672px;
+  }
 }
 
+.wrapper-short {
+  padding-right: 20px;
+}

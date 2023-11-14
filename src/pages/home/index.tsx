@@ -120,9 +120,9 @@ const Home = () => {
             if (!paginationQueryRes) return
             if (pageIndex > 1) {
                 const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
-                setProjectList(newProjectList.filter(e => !e.is_deleted))
+                setProjectList(newProjectList)
             } else {
-                setProjectList(paginationQueryRes.result.filter(e => !e.is_deleted))
+                setProjectList(paginationQueryRes.result)
             }
             setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
@@ -139,9 +139,9 @@ const Home = () => {
             if (!paginationQueryRes) return
             if (pageIndex > 1) {
                 const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
-                setProjectList(newProjectList.filter(e => !e.is_deleted))
+                setProjectList(newProjectList)
             } else {
-                setProjectList(paginationQueryRes.result.filter(e => !e.is_deleted))
+                setProjectList(paginationQueryRes.result)
             }
             setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
@@ -158,9 +158,9 @@ const Home = () => {
             if (!paginationQueryRes) return
             if (pageIndex > 1) {
                 const newProjectList = wyDeepClone([...projectList, ...paginationQueryRes.result])
-                setProjectList(newProjectList.filter(e => !e.is_deleted))
+                setProjectList(newProjectList)
             } else {
-                setProjectList(paginationQueryRes.result.filter(e => !e.is_deleted))
+                setProjectList(paginationQueryRes.result)
             }
             setGotData(true)
             rememberCurrentListItemId(clickedListItemId)
@@ -318,7 +318,7 @@ const Home = () => {
                     <View className='main'>
                         {projectList.map((project: CardProps) => {
                             return (
-                                <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} deleteSelect={onDeleteItem} />
+                                <Card key={project._id} title={project.title} time={project.time} _id={project._id} is_collected={project.is_collected} currentListItemId={currentListItemId} deleteSelect={onDeleteItem} src='homePage' />
                             )
                         })}
                         {projectList.length > 0 && <View className='next-page'>加载更多</View>}

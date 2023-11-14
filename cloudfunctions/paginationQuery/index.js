@@ -27,6 +27,9 @@ exports.main = async (event) => {
       // .where({
       //   time: db.command.neq("2023-11-10"),
       // })
+      .where({
+        is_deleted: false
+      })
       .orderBy("time", "desc")
       .skip((pageIndex - 1) * 10)
       .limit(10)

@@ -7,7 +7,5 @@ export const findSinglePurchaseIntentionDisclosureDetailByLinkId = (link_id: str
     data: {
       link_id,
     },
-  }) as unknown as Promise<
-    CloudFunctionResultSuccess<PurchaseIntentionDisclosureDetail>
-  >;
+  })
 };

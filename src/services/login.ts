@@ -8,7 +8,7 @@ const login = (loginUsername: string, loginPassword: string) => {
       loginUsername,
       loginPassword,
     },
-  }) as unknown as Promise<any>;
+  }) 
 };
 
 export default login;

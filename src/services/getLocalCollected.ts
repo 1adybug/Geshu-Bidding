@@ -5,7 +5,7 @@ const getLocalCollected = () => {
   return Taro.cloud.callFunction({
     name: Get_Local_Collected,
     data: {},
-  }) as unknown as Promise<any>;
+  }) 
 };
 
 export default getLocalCollected;

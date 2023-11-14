@@ -9,5 +9,5 @@ export const completeltyDeleteSingleLocalAnnouncement = (
     data: {
       _id: willDeleteItemId,
     },
-  }) as unknown as Promise<DeleteRespond>;
+  })
 };

@@ -7,5 +7,5 @@ export const fetchLocalAnnouncementAttachments = (link_href:string) => {
     data: {
         link_href
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

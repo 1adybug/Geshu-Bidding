@@ -5,7 +5,5 @@ export const getOtherAnnouncement = () => {
   return Taro.cloud.callFunction({
     name: Function_Other_Announcement,
     data: {},
-  }) as unknown as Promise<
-    CloudFunctionResultSuccess<PurchaseIntentionDisclosure[]>
-  >;
+  })
 };

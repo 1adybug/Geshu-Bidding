@@ -7,5 +7,5 @@ export const exportToExcelFn = (data: string[][]) => {
     data: {
       data,
     },
-  }) as unknown as Promise<GetExportedFileDownloadURLRespond>;
+  })
 };

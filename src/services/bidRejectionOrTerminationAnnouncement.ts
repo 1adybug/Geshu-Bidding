@@ -5,7 +5,5 @@ export const getbidRejectionOrTerminationAnnouncements = () => {
   return Taro.cloud.callFunction({
     name: Function_BidRejectionOrTermination_Announcement,
     data: {},
-  }) as unknown as Promise<
-    CloudFunctionResultSuccess<PurchaseIntentionDisclosure[]>
-  >;
+  })
 };

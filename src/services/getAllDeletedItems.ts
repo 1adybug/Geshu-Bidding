@@ -5,5 +5,5 @@ export const getAllDeletedItems = () => {
   return Taro.cloud.callFunction({
     name: Function_Get_All_Items_Deleted,
     data: {},
-  }) as unknown as Promise<any>;
+  })
 };

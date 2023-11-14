@@ -8,5 +8,5 @@ export const paginationQuery = (listItemId: string, pageIndex: number) => {
       listItemId,
       pageIndex,
     },
-  }) as unknown as Promise<any>;
+  })
 };

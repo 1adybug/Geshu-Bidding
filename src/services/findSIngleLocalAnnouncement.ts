@@ -7,5 +7,5 @@ export const findSIngleLocalAnnouncement = (id: string) => {
     data: {
       id,
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

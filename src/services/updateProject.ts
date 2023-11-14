@@ -7,5 +7,5 @@ export const updateProject = (submitObj: any) => {
     data: {
       submitObj,
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

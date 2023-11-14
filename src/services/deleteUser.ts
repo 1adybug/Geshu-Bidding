@@ -7,5 +7,5 @@ export const deleteUser = (userId?: string) => {
     data: {
       userId,
     },
-  }) as unknown as Promise<any>;
+  })
 };

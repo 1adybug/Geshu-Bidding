@@ -9,8 +9,6 @@ import "./index.module.less"
 interface AttachmentsProps {
     fileIDPrev: string
     attachments: Attachment[]
-    // attachmentClicked: (gotDataStatus: boolean) => void
-    // modalChange: (title: string, downloadURL: string) => void
 }
 
 export default function Attachments(props: AttachmentsProps) {
@@ -22,12 +20,8 @@ export default function Attachments(props: AttachmentsProps) {
             title: "请稍等"
         })
         const res = await fetchFileDownloadURl(fileIDPrev + "_" + e.content)
-        console.log(1,fileIDPrev + "_" + e.content);
-        
         if (!res) return
         const downloadUrl = res.result.fileList[0].tempFileURL
-        console.log(2,downloadUrl);
-        
         Taro.downloadFile({
             url: downloadUrl,
             success: function (res1) {
@@ -60,7 +54,7 @@ export default function Attachments(props: AttachmentsProps) {
                                 })
                                 return
                             }
-                            return 
+                            return
                         },
                         fail: () => {
                             console.log("打开操作页失败！");

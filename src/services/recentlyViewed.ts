@@ -8,5 +8,5 @@ export const recentlyViewed = (id: string, type?: string) => {
       type,
       id,
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

@@ -9,5 +9,5 @@ export const editAvator = (exten: string, userId?: string, file?: string) => {
       userId,
       exten,
     },
-  }) as unknown as Promise<any>;
+  })
 };

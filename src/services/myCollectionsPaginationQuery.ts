@@ -7,5 +7,5 @@ export default function myCollectionsPaginationQuery(pageIndex:number){
     data: {
         pageIndex
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

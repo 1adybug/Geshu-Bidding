@@ -17,5 +17,5 @@ export const updateUser = (submitObj: UpdateUserProps) => {
       roleName: submitObj.roleName,
       password: submitObj.password,
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

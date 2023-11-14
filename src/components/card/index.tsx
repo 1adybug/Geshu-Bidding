@@ -51,13 +51,13 @@ export default function Card(props: CardProps) {
         if (!res) return
     }
 
-    function test(e:any) {
+    function test(e: any) {
         deleteSelect(_id, e.mpEvent.target.checked)
     }
 
     return (
-        <View className='wrapper'>
-            <View className='card' onClick={handleClick}>
+        <View className={src === "homePage" ? "wrapper-short" : "wrapper-default"}>
+            <View className={src === "homePage" ? "card-short" : "card-default"} onClick={handleClick}>
                 <View className={src === "recently" ? 'section-one-for-recent' : 'section-one'}>
                     <View className='title'>{title}</View>
                     {src === "recently" && type && <View className='last-click-time'>上次浏览时间：{lastClickedTime}</View>}
@@ -71,7 +71,7 @@ export default function Card(props: CardProps) {
                     {is_collected && <img src={CollectedIcon} alt='' />}
                 </View>
             </View>
-            <input type='checkbox' onChange={test} className='checkbox' />
+            {src === "homePage" && <input type='checkbox' onChange={test} className='checkbox' />}
         </View>
     )
 }

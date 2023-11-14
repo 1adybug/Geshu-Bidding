@@ -11,5 +11,5 @@ export const collectSinglePurchaseSolicitationAnnouncement = (
       _id: id,
       collectValue,
     },
-  }) as unknown as Promise<DeleteRespond>;
+  })
 };

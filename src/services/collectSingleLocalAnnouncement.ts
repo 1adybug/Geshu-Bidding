@@ -11,5 +11,5 @@ export const collectSingleLocalAnnouncement = (
       _id: id,
       collectValue,
     },
-  }) as unknown as Promise<DeleteRespond>;
+  }) 
 };

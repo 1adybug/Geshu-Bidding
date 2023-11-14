@@ -8,6 +8,6 @@ export const findUserAvatorUrl = (username: string, password: string) => {
       username,
       password,
     },
-  }) as unknown as Promise<any>;
+  })
 };
 

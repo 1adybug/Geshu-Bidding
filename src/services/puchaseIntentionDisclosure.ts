@@ -5,5 +5,5 @@ export const getPurchaseIntentionDisclosures = () => {
   return Taro.cloud.callFunction({
     name: Function_PurchaseIntention_Disclosure,
     data: {},
-  }) as unknown as Promise<CloudFunctionResultSuccessForGetData<PurchaseIntentionDisclosure>>
+  }) 
 };

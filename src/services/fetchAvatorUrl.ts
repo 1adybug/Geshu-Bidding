@@ -7,5 +7,5 @@ export const fetchAvatorUrl = (fileID: string) => {
     data: {
       fileID,
     },
-  }) as unknown as Promise<any>;
+  })
 };

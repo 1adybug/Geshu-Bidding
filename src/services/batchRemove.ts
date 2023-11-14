@@ -9,5 +9,5 @@ export const batchRemove = (currentListItemId: string, deletes: string[]) => {
       deletes,
     },
   });
-  return res as any;
+  return res;
 };

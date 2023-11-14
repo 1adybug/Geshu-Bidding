@@ -15,5 +15,5 @@ export const updateUserInfoSec = (
       password,
       roleId,
     },
-  }) as unknown as Promise<any>;
+  })
 };

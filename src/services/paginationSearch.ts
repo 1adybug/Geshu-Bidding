@@ -7,7 +7,5 @@ export const getOtherAnnouncement = (listItemId: string) => {
     data: {
       listItemId,
     },
-  }) as unknown as Promise<
-    CloudFunctionResultSuccess<PurchaseIntentionDisclosure[]>
-  >;
+  }) 
 };

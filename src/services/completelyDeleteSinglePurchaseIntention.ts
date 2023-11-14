@@ -7,5 +7,5 @@ export const completelyDeleteSinglePurchaseIntention = (willDeleteItemId: string
     data: {
       _id:willDeleteItemId,
     },
-  }) as unknown as Promise<DeleteRespond>;
+  })
 };

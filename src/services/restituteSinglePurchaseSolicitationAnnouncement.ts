@@ -7,5 +7,5 @@ export const restituteSinglePurchaseSolicitationAnnouncement = (_id?: string) =>
     data: {
       _id,
     },
-  }) as unknown as Promise<DeleteRespond>;
+  }) 
 };

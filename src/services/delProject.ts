@@ -7,5 +7,5 @@ export const delProject = (_id?: string) => {
     data: {
       _id,
     },
-  }) as unknown as Promise<any>;
+  })
 };

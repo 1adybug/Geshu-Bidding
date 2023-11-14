@@ -9,7 +9,5 @@ export const findSinglePurchaseSolicitationAnnouncementDetail = (
     data: {
       link_id,
     },
-  }) as unknown as Promise<
-    CloudFunctionResultSuccess<PurchaseSolicitationAnnouncementDetail>
-  >;
+  })
 };

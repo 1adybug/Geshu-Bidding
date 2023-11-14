@@ -7,7 +7,5 @@ export const findSinglePurchaseIntentionDisclosure = (id: string) => {
     data: {
       id,
     },
-  }) as unknown as Promise<
-    CloudFunctionResultSuccess<PurchaseIntentionDisclosure>
-  >;
+  })
 };

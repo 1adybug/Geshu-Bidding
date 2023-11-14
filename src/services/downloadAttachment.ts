@@ -11,5 +11,5 @@ export const downloadAttachment = (
       fileUrl,
       fileName
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

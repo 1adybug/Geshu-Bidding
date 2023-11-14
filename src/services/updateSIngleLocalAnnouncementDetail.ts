@@ -11,5 +11,5 @@ export const updateSingleLocalAnnouncementDetail = (
       link_id,
       remark: currentRemark,
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

@@ -8,5 +8,5 @@ export const updateAvator = (userId?: string, avatorUrl?: string) => {
       userId,
       avatorUrl,
     },
-  }) as unknown as Promise<any>;
+  })
 };

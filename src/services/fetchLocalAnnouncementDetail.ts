@@ -7,5 +7,5 @@ export const fetchLocalAnnouncementDetail = (id: string) => {
     data: {
       link_id: id,
     },
-  }) as unknown as Promise<any>;
+  })
 };

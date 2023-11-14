@@ -11,5 +11,5 @@ export const updateSinglePurchaseAnnouncementDetail = (
       link_id,
       remark: currentRemark,
     },
-  }) as unknown as Promise<any>;
+  }) 
 };

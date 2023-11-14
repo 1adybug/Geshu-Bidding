@@ -1,4 +1,3 @@
-import { CardProps } from "@/components/card";
 import { Function_Fuzzy_Search } from "@/constant/cloudFunctionNames";
 import Taro from "@tarojs/taro";
 
@@ -9,5 +8,5 @@ export const fuzzySearch = (currentListItemId: string, keyword: string) => {
       currentListItemId,
       keyword,
     },
-  }) as unknown as Promise<SeconTypeCloudFunctionResultSuccess<CardProps>>;
+  })
 };

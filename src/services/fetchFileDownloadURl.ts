@@ -7,5 +7,5 @@ export const fetchFileDownloadURl = (fileIDTail: string) => {
     data: {
       fileIDTail,
     },
-  }) as unknown as Promise<any>;
+  })
 };

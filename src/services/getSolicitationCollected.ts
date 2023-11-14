@@ -5,7 +5,7 @@ const getSolicitationCollected = () => {
   return Taro.cloud.callFunction({
     name: Get_Solicitation_Collected,
     data: {},
-  }) as unknown as Promise<any>;
+  }) 
 };
 
 export default getSolicitationCollected;

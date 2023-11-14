@@ -5,5 +5,5 @@ export const fetchRecentlyViewed = () => {
   return Taro.cloud.callFunction({
     name: Fetch_Recently_Viewes,
     data: {},
-  }) as unknown as Promise<any>;
+  })
 };
